@@ -1,8 +1,13 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Homepage from "./features/home/pages/Homepage";
+
 const App = () => {
   return (
-    <main className="h-screen flex justify-center items-center">
-      <h1 className="text-9xl text-center text-blue-500">Lingvo</h1>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Homepage />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
