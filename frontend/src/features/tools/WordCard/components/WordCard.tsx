@@ -1,33 +1,15 @@
 import { useState } from "react";
 import { motion } from "motion/react";
+import Button from "../../../../components/Button";
 
 type CardProps = {
   frontText: string;
   backText: string;
-  onDontKnow: () => void;
-  onKnow: () => void;
+  onCorrect: () => void;
+  onWrong: () => void;
 };
 
-const CardButton = ({
-  text,
-  onClick,
-  className = "",
-}: {
-  text: string;
-  onClick: () => void;
-  className?: string;
-}) => {
-  return (
-    <button
-      className={`rounded-base-lg cursor-pointer bg-radial-(--primary-gradient) py-4 text-2xl text-white ${className}`}
-      onClick={onClick}
-    >
-      {text}
-    </button>
-  );
-};
-
-const Card = ({ frontText, backText, onDontKnow, onKnow }: CardProps) => {
+const Card = ({ frontText, backText, onWrong, onCorrect }: CardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const durationSeconds = 0.3;
@@ -54,11 +36,7 @@ const Card = ({ frontText, backText, onDontKnow, onKnow }: CardProps) => {
         >
           <div className="text-6xl">{frontText}</div>
           <div className="flex w-full">
-            <CardButton
-              className="flex-1"
-              text="Flip"
-              onClick={handleFlipClick}
-            />
+            <Button className="flex-1" text="Flip" onClick={handleFlipClick} />
           </div>
         </motion.div>
         {/* back */}
@@ -70,12 +48,8 @@ const Card = ({ frontText, backText, onDontKnow, onKnow }: CardProps) => {
         >
           <div className="text-6xl">{backText}</div>
           <div className="flex w-full gap-4">
-            <CardButton
-              className="flex-1"
-              text="Don't know"
-              onClick={onDontKnow}
-            />
-            <CardButton className="flex-1" text="Know" onClick={onKnow} />
+            <Button className="flex-1" text="Don't know" onClick={onWrong} />
+            <Button className="flex-1" text="Know" onClick={onCorrect} />
           </div>
         </motion.div>
       </motion.div>
