@@ -1,23 +1,21 @@
+import WordCard from "../../tools/WordCard/components/WordCard";
+
 const Homepage = () => {
   return (
-    <>
-      <h1 className="m-auto text-center text-9xl text-blue-500">Lingvo</h1>
+    <div className="flex flex-col items-center pt-50">
+      {/* <h1 className="my-30 text-center text-9xl text-blue-400">Lingvo</h1> */}
+      {/* 
+      <div className="bg-glass size-12"></div>
+      <div className="bg-glass-light size-12"></div>
+      <div className="bg-glass-dark size-12"></div> */}
 
-      {/* for navbar test */}
-      {/* <div className="mt-30 flex h-[150vh] flex-col items-center">
-        <h1 className="text-center text-6xl text-blue-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Reprehenderit, quisquam!
-        </h1>
-        <h1 className="text-center text-5xl text-blue-500">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        </h1>
-        <h1 className="text-center text-8xl text-blue-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
-          modi veritatis. Tempora?
-        </h1>
-      </div> */}
-    </>
+      <WordCard
+        frontText="hello"
+        backText="xin chào"
+        onKnow={() => alert("Good boy")}
+        onDontKnow={() => alert("Study more")}
+      />
+    </div>
   );
 };
 

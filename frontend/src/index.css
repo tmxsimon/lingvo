@@ -5,11 +5,35 @@
   --spacing-base: 1rem;
   --spacing-base-lg: 1.5rem;
 
-  --radius-base-sm: 8px;
-  --radius-base: 12px;
-  --radius-base-lg: 16px;
+  --radius-base-sm: 12px;
+  --radius-base: 16px;
+  --radius-base-lg: 20px;
 
-  --color-glass: #ececec66;
+  --color-glass: color-mix(in srgb, var(--color-glassy), transparent 66%);
+  --color-glass-light: color-mix(
+    in srgb,
+    var(--color-glassy-light),
+    transparent 66%
+  );
+  --color-glass-dark: color-mix(
+    in srgb,
+    var(--color-glassy-dark),
+    transparent 66%
+  );
+
+  --color-glassy: #e9f0f8;
+  --color-glassy-light: #b9fafa;
+  --color-glassy-dark: #d1dbe8;
+
+  --color-primary: #1356b9;
+  --color-primary-light: #296ccf;
+  --color-primary-dark: #0e3d82;
+
+  --primary-gradient:
+    circle, rgba(63, 104, 117, 0.6) 0%, rgba(58, 93, 107, 0.6) 100%;
+
+  /* --primary-gradient:
+    circle, rgba(155, 219, 235, 1) 0%, rgba(141, 207, 227, 1) 100%; */
 }
 
 @layer base {
