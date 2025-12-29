@@ -3,10 +3,10 @@ import Navbar from "../components/Navbar";
 
 const MainLayout = () => {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-neutral-400">
       {/* bg-[url(assets/background.jpg)] */}
       <Navbar />
-      <main className="flex flex-1 flex-col items-center backdrop-brightness-75">
+      <main className="flex flex-1 flex-col items-center">
         <Outlet />
       </main>
     </div>
