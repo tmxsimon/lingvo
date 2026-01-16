@@ -36,7 +36,12 @@ const Card = ({ frontText, backText, onWrong, onCorrect }: CardProps) => {
         >
           <div className="text-6xl">{frontText}</div>
           <div className="flex w-full">
-            <Button className="flex-1" text="Flip" onClick={handleFlipClick} />
+            <Button
+              className="flex-1"
+              text="Flip"
+              size="large"
+              onClick={handleFlipClick}
+            />
           </div>
         </motion.div>
         {/* back */}
@@ -47,9 +52,20 @@ const Card = ({ frontText, backText, onWrong, onCorrect }: CardProps) => {
           transition={{ duration: durationSeconds }}
         >
           <div className="text-6xl">{backText}</div>
-          <div className="flex w-full gap-4">
-            <Button className="flex-1" text="Don't know" onClick={onWrong} />
-            <Button className="flex-1" text="Know" onClick={onCorrect} />
+          <div className="gap-base flex w-full">
+            <Button
+              className="flex-1"
+              text="Don't know"
+              theme="danger"
+              size="large"
+              onClick={onWrong}
+            />
+            <Button
+              className="flex-1"
+              text="Know"
+              size="large"
+              onClick={onCorrect}
+            />
           </div>
         </motion.div>
       </motion.div>

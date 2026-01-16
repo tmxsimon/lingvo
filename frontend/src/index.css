@@ -5,7 +5,7 @@
   --spacing-base: 1rem;
   --spacing-base-lg: 1.5rem;
 
-  --radius-base-sm: 12px;
+  --radius-base-sm: 10px;
   --radius-base: 16px;
   --radius-base-lg: 20px;
 
@@ -25,21 +25,37 @@
   --color-glassy-light: #b9fafa;
   --color-glassy-dark: #d1dbe8;
 
-  --color-primary: #1356b9;
-  --color-primary-light: #296ccf;
-  --color-primary-dark: #0e3d82;
+  --color-primary-100: #e5f1ff;
+  --color-primary-200: #7fafee;
+  --color-primary-300: #347ad5;
+  --color-primary-400: #174b8f;
+  --color-primary-500: #031935;
 
-  --primary-gradient:
-    circle, rgba(63, 104, 117, 0.6) 0%, rgba(58, 93, 107, 0.6) 100%;
+  --color-danger-100: #ffe5e5;
+  --color-danger-200: #ee7f7f;
+  --color-danger-300: #d53434;
+  --color-danger-400: #8f1717;
+  --color-danger-500: #350303;
 
-  /* --primary-gradient:
-    circle, rgba(155, 219, 235, 1) 0%, rgba(141, 207, 227, 1) 100%; */
+  --color-warning-100: #fff6e5;
+  --color-warning-200: #eec77f;
+  --color-warning-300: #d59d34;
+  --color-warning-400: #8f6517;
+  --color-warning-500: #352303;
+
+  --color-neutral-100: #eff4fe;
+  --color-neutral-200: #cdd6ea;
+  --color-neutral-300: #9daac7;
+  --color-neutral-400: #4d5a76;
+  --color-neutral-500: #2b3752;
+  --color-neutral-600: #14203c;
+  --color-neutral-700: #050e21;
 }
 
 @layer base {
   svg {
     width: 100%;
     height: 100%;
-    fill: var(--contrast);
+    stroke: blue;
   }
 }

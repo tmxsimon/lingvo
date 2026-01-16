@@ -31,20 +31,23 @@ const WordOption = ({
       <div className="w-full text-center text-4xl">
         {parts.part1} ... {parts.part2}
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="gap-base-sm flex flex-col">
         <Button
           text={options.option1.text}
+          size="large"
           onClick={() => onOptionClick(options.option1.isCorrect)}
           className="w-full"
         />
         <Button
           text={options.option2.text}
+          size="large"
           onClick={() => onOptionClick(options.option2.isCorrect)}
           className="w-full"
         />
         {options.option3 && (
           <Button
             text={options.option3.text}
+            size="large"
             onClick={() => onOptionClick(options.option3!.isCorrect)}
             className="w-full"
           />
@@ -52,6 +55,7 @@ const WordOption = ({
         {options.option4 && (
           <Button
             text={options.option4.text}
+            size="large"
             onClick={() => onOptionClick(options.option4!.isCorrect)}
             className="w-full"
           />

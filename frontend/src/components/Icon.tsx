@@ -5,7 +5,8 @@ type IconProps = {
   className?: string;
 };
 
-const Icon = ({ name, className = "" }: IconProps) => {
+const Icon = ({ name, className = "size-full" }: IconProps) => {
+  className += " stroke-current";
   const IconElement = ICONS[name];
   return <IconElement className={className} />;
 };
