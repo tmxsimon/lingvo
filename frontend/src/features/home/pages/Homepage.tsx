@@ -9,7 +9,7 @@ const Homepage = () => {
           <div className="w-3/7">
             <h1 className="text-5xl font-bold">Learn with Lingvo</h1>
             <hr className="text-brand-300 mt-base-sm w-1/5 border-3" />
-            <p className="mt-base-lg w-5/7 text-2xl">
+            <p className="mt-base-lg w-6/7 text-2xl">
               Your daily assistant for language learning. Make your study more
               comfortable and effective with everything you need. Start for
               free.
@@ -43,11 +43,20 @@ const Homepage = () => {
         type="square"
         className="bg-brand-100 absolute top-25 left-100 -rotate-20"
       />
-      <Shape type="circle" className="bg-brand-200 absolute top-120 -left-15" />
-      <Shape type="circle" className="bg-brand-100 absolute top-35 -right-15" />
+      <Shape
+        type="circle"
+        size="large"
+        className="bg-brand-200 absolute top-120 -left-15"
+      />
+      <Shape
+        type="circle"
+        size="large"
+        className="bg-brand-100 absolute top-35 -right-15"
+      />
       <Shape type="square" className="bg-brand-100 absolute top-180 left-100" />
       <Shape
         type="circle"
+        size="large"
         className="bg-brand-200 absolute top-160 left-220 rotate-20"
       />
       <Shape
