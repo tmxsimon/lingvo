@@ -37,7 +37,7 @@ const colorMap: Record<string, Record<string, string>> = {
 const sizeMap: Record<string, string> = {
   small: "px-base-sm py-2 text-sm",
   medium: "px-base py-2 text-md",
-  large: "px-base py-2 text-lg",
+  large: "px-base-lg py-2 text-lg",
 };
 
 const iconSizeMap: Record<string, string> = {

@@ -1,172 +1,67 @@
 import Button from "../../../components/Button";
-import Icon from "../../../components/Icon";
-import Card from "../../tools/Card/components/Card";
-import WordOption from "../../tools/WordOption/components/WordOption";
+import Shape from "../../../components/Shape";
 
 const Homepage = () => {
   return (
-    <div className="gap-base flex flex-col items-center pt-32">
-      <div className="flex flex-col gap-2">
-        <div className="mx-auto flex gap-2">
-          <Button
-            text="button"
-            type="primary"
-            theme="primary"
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            type="secondary"
-            theme="primary"
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            type="tertiary"
-            theme="primary"
-            onClick={() => console.log("123")}
-          />
-        </div>
-        <div className="mx-auto flex gap-2">
-          <Button
-            text="button"
-            type="primary"
-            theme="neutral"
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            type="secondary"
-            theme="neutral"
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            type="tertiary"
-            theme="neutral"
-            onClick={() => console.log("123")}
-          />
-        </div>
-        <div className="mx-auto flex gap-2">
-          <Button
-            text="button"
-            type="primary"
-            theme="warning"
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            type="secondary"
-            theme="warning"
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            type="tertiary"
-            theme="warning"
-            onClick={() => console.log("123")}
-          />
-        </div>
-        <div className="mx-auto flex gap-2">
-          <Button
-            text="button"
-            type="primary"
-            theme="danger"
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            type="secondary"
-            theme="danger"
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            type="tertiary"
-            theme="danger"
-            onClick={() => console.log("123")}
-          />
-        </div>
-        <div className="mt-base-sm mx-auto inline-block space-x-2">
-          <Button
-            text="button"
-            size="small"
-            underline
-            onClick={() => console.log("123")}
-          />
-          <Button text="button" underline onClick={() => console.log("123")} />
-          <Button
-            text="button"
-            size="large"
-            underline
-            onClick={() => console.log("123")}
-          />
-        </div>
-
-        <div className="mt-base-sm mx-auto inline-block space-x-2">
-          <Button
-            text="button"
-            type="secondary"
-            iconFront={<Icon name="globe" />}
-            size="small"
-            underline
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            type="secondary"
-            iconFront={<Icon name="globe" />}
-            underline
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            type="secondary"
-            iconFront={<Icon name="globe" />}
-            size="large"
-            underline
-            onClick={() => console.log("123")}
-          />
-        </div>
-        <div className="my-base mx-auto inline-block space-x-2">
-          <Button
-            text="button"
-            iconBack={<Icon name="globe" />}
-            size="small"
-            underline
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            iconBack={<Icon name="globe" />}
-            underline
-            onClick={() => console.log("123")}
-          />
-          <Button
-            text="button"
-            iconBack={<Icon name="globe" />}
-            size="large"
-            underline
-            onClick={() => console.log("123")}
-          />
+    <div className="relative">
+      <div className="gap-base flex flex-col items-center pt-54">
+        <div className="flex items-center justify-center gap-8">
+          <div className="w-3/7">
+            <h1 className="text-5xl font-bold">Learn with Lingvo</h1>
+            <hr className="text-primary-300 mt-base-sm w-1/5 border-3" />
+            <p className="mt-base-lg w-5/7 text-2xl">
+              Your daily assistant for language learning. Make your study more
+              comfortable and effective with everything you need. Start for
+              free.
+            </p>
+            <div className="gap-base mt-base-lg flex">
+              <Button
+                text="Get Started"
+                type="primary"
+                theme="primary"
+                size="large"
+                onClick={() => console.log("Get started clicked")}
+              />
+              <Button
+                text="Pricing"
+                type="secondary"
+                theme="primary"
+                size="large"
+                onClick={() => console.log("Pricing clicked")}
+              />
+            </div>
+          </div>
+          <div className="bg-primary-300 size-108 shrink-0 rounded-full"></div>
+          {/* <img
+            className="size-108"
+            src="src/assets/images/globe.png"
+            alt="globe"
+          /> */}
         </div>
       </div>
-      <Card
-        frontText="hello"
-        backText="xin chào"
-        onCorrect={() => alert("Good boy")}
-        onWrong={() => alert("Study more")}
+      <Shape
+        type="square"
+        className="bg-primary-100 absolute top-25 left-100 -rotate-20"
       />
-      <WordOption
-        parts={{ part1: "His name ", part2: " John." }}
-        options={{
-          option1: { text: "are", isCorrect: false },
-          option2: { text: "is", isCorrect: true },
-          option3: { text: "it", isCorrect: false },
-          option4: { text: "call", isCorrect: false },
-        }}
-        onCorrect={() => alert("Correct")}
-        onWrong={() => alert("Wrong")}
+      <Shape
+        type="circle"
+        className="bg-primary-200 absolute top-120 -left-15"
+      />
+      <Shape
+        type="circle"
+        className="bg-primary-100 absolute top-35 -right-15"
+      />
+      <Shape
+        type="square"
+        className="bg-primary-100 absolute top-180 left-100"
+      />
+      <Shape
+        type="circle"
+        className="bg-primary-200 absolute top-160 left-220 rotate-20"
+      />
+      <Shape
+        type="square"
+        className="bg-primary-200 absolute top-180 right-60 rotate-20"
       />
     </div>
   );

@@ -5,9 +5,9 @@
   --spacing-base: 1rem;
   --spacing-base-lg: 1.5rem;
 
-  --radius-base-sm: 10px;
-  --radius-base: 16px;
-  --radius-base-lg: 20px;
+  --radius-base-sm: 26px;
+  --radius-base: 30px;
+  --radius-base-lg: 36px;
 
   --color-glass: color-mix(in srgb, var(--color-glassy), transparent 66%);
   --color-glass-light: color-mix(
