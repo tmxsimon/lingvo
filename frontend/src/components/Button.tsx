@@ -3,7 +3,7 @@ type ButtonProps = {
   iconFront?: React.ReactNode;
   iconBack?: React.ReactNode;
   type?: "primary" | "secondary" | "tertiary";
-  theme?: "primary" | "neutral" | "danger" | "warning";
+  theme?: "brand" | "neutral" | "danger" | "warning";
   size?: "small" | "medium" | "large";
   underline?: boolean;
   hoverEffect?: boolean;
@@ -12,10 +12,10 @@ type ButtonProps = {
 };
 
 const colorMap: Record<string, Record<string, string>> = {
-  primary: {
-    primary: "bg-primary-300 text-white",
-    secondary: "bg-primary-100 text-primary-300",
-    tertiary: "border border-primary-300 text-primary-300",
+  brand: {
+    primary: "bg-brand-300 text-white",
+    secondary: "bg-brand-100 text-brand-300",
+    tertiary: "border border-brand-300 text-brand-300",
   },
   neutral: {
     primary: "bg-neutral-400 text-white",
@@ -51,7 +51,7 @@ const Button = ({
   iconFront,
   iconBack,
   type = "primary",
-  theme = "primary",
+  theme = "brand",
   size = "medium",
   underline = false,
   hoverEffect = true,

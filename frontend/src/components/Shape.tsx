@@ -9,10 +9,7 @@ const shapeClasses = {
   triangle: "clip-triangle",
 };
 
-const Shape = ({
-  type = "circle",
-  className = "bg-primary-300",
-}: ShapeProps) => {
+const Shape = ({ type = "circle", className = "bg-brand-300" }: ShapeProps) => {
   return (
     <div className={`${className} -z-10 size-28 ${shapeClasses[type]}`}></div>
   );
