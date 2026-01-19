@@ -4,7 +4,7 @@ import Icon from "./Icon";
 const Navbar = () => {
   return (
     <div className="fixed top-8 z-50 flex w-screen justify-center">
-      <nav className="bg-glass border-glass flex h-16 w-112 items-center justify-between rounded-4xl border px-6 backdrop-blur-sm">
+      <nav className="flex h-16 w-112 items-center justify-between rounded-4xl bg-neutral-100 px-6">
         <div className="text-2xl">Lingvo</div>
         <div className="gap-base-sm flex items-center">
           <Link to="/languages">
