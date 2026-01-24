@@ -1,14 +1,19 @@
-type ButtonProps = {
-  text: string;
+import type { button } from "motion/react-client";
+
+type ButtonProps = Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "size" | "type"
+> & {
+  text?: string;
+  icon?: React.ReactNode;
   iconFront?: React.ReactNode;
   iconBack?: React.ReactNode;
   type?: "primary" | "secondary" | "tertiary";
   theme?: "brand" | "neutral" | "danger" | "warning";
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | "auto";
+  autoWidth?: boolean;
   underline?: boolean;
   hoverEffect?: boolean;
-  onClick: () => void;
-  className?: string;
 };
 
 const colorMap: Record<string, Record<string, string>> = {
@@ -48,29 +53,32 @@ const iconSizeMap: Record<string, string> = {
 
 const Button = ({
   text,
+  icon,
   iconFront,
   iconBack,
   type = "primary",
   theme = "brand",
   size = "medium",
+  autoWidth = false,
   underline = false,
   hoverEffect = true,
-  onClick,
   className = "",
+  ...buttonProps
 }: ButtonProps) => {
   className += ` ${colorMap[theme][type]} ${sizeMap[size]}`;
   const iconSizeClass = iconSizeMap[size];
 
   return (
     <button
-      className={`rounded-base-sm cursor-pointer ${underline ? "hover:underline" : ""} ${hoverEffect ? "hover:brightness-103" : ""} active:brightness-97 ${className}`}
-      onClick={onClick}
+      className={`rounded-base-sm ${autoWidth ? "w-full" : ""} cursor-pointer ${underline ? "hover:underline" : ""} ${hoverEffect ? "hover:brightness-103" : ""} active:brightness-97 ${className}`}
+      {...buttonProps}
     >
       <div className="flex items-center justify-center">
         {iconFront && (
           <div className={`mr-1 ${iconSizeClass}`}>{iconFront}</div>
         )}
         {text}
+        {icon}
         {iconBack && <div className={`ml-1 ${iconSizeClass}`}>{iconBack}</div>}
       </div>
     </button>

@@ -5,6 +5,7 @@
   --spacing-base: 1rem;
   --spacing-base-lg: 1.5rem;
 
+  --radius-base-xs: 16px;
   --radius-base-sm: 26px;
   --radius-base: 30px;
   --radius-base-lg: 36px;
@@ -17,7 +18,7 @@
 
   --color-danger-100: #ffe5e5;
   --color-danger-200: #ee7f7f;
-  --color-danger-300: #d53434;
+  --color-danger-300: #df3f3f;
   --color-danger-400: #8f1717;
   --color-danger-500: #350303;
 
@@ -27,13 +28,21 @@
   --color-warning-400: #8f6517;
   --color-warning-500: #352303;
 
-  --color-neutral-100: #eff4fe;
-  --color-neutral-200: #cdd6ea;
-  --color-neutral-300: #9daac7;
-  --color-neutral-400: #4d5a76;
-  --color-neutral-500: #2b3752;
-  --color-neutral-600: #14203c;
-  --color-neutral-700: #050e21;
+  --color-brand-neutral-100: #eef0f5;
+  --color-brand-neutral-200: #d8dde6;
+  --color-brand-neutral-300: #abb1bf;
+  --color-brand-neutral-400: #7e8699;
+  --color-brand-neutral-500: #455066;
+  --color-brand-neutral-600: #1c2333;
+  --color-brand-neutral-700: #090e1a;
+
+  --color-gray-neutral-100: #f0f0f0;
+  --color-gray-neutral-200: #d6d6d6;
+  --color-gray-neutral-300: #b3b3b3;
+  --color-gray-neutral-400: #808080;
+  --color-gray-neutral-500: #595959;
+  --color-gray-neutral-600: #333333;
+  --color-gray-neutral-700: #171717;
 }
 
 @layer base {
@@ -41,5 +50,8 @@
     width: 100%;
     height: 100%;
     stroke: blue;
+  }
+
+  body {
   }
 }
