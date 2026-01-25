@@ -173,6 +173,9 @@ const DictionaryPage = () => {
         }}
         deleteGroup={() => {
           deleteGroup.mutate(chosenGroup!.id);
+          if (currentGroup?.id === chosenGroup!.id) {
+            setCurrentGroup(undefined);
+          }
           closeModalGroupsEdit();
         }}
       />
