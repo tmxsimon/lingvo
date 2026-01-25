@@ -1,7 +1,13 @@
-import Globe from "../assets/icons/globe.svg?react";
+import {
+  Globe,
+  BookText,
+  BookOpenText,
+  Volume2,
+  Flame,
+  BookMarked,
+} from "lucide-react";
 import Settings from "../assets/icons/settings.svg?react";
 import Change from "../assets/icons/change.svg?react";
-import Dictionary from "../assets/icons/dictionary.svg?react";
 import Close from "../assets/icons/close.svg?react";
 import List from "../assets/icons/list.svg?react";
 import Books from "../assets/icons/books.svg?react";
@@ -14,11 +20,17 @@ const ICONS = {
   globe: Globe,
   settings: Settings,
   change: Change,
-  dictionary: Dictionary,
+  bookText: BookText,
   list: List,
   books: Books,
   cards: Cards,
   arrowRight: ArrowRight,
+
+  // CardText icons
+  bookOpenText: BookOpenText,
+  volume: Volume2,
+  flame: Flame,
+  fileText: BookMarked,
 };
 
 export default ICONS;
