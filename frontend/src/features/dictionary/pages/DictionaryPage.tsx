@@ -169,6 +169,9 @@ const DictionaryPage = () => {
         closeModal={closeModalGroupsEdit}
         editGroup={(id: number, name: string) => {
           editGroup.mutate({ id, name });
+          if (currentGroup?.id === chosenGroup!.id) {
+            setCurrentGroup({ ...currentGroup, name });
+          }
           closeModalGroupsEdit();
         }}
         deleteGroup={() => {
