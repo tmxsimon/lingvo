@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import type { DictionaryGroupType } from "../../types";
+import resetStateValues from "../../../../utils/resetStateValues";
 
 type ModalEditGroupProps = {
   group: DictionaryGroupType | null;
@@ -19,11 +20,10 @@ const ModalEditGroup = ({
   editGroup,
   deleteGroup,
 }: ModalEditGroupProps) => {
-  const nameRef = useRef<HTMLInputElement>(null);
-  const [inputName, setInputName] = useState(group?.name || "");
+  const [name, setName] = useState(group?.name || "");
 
   useEffect(() => {
-    setInputName(group?.name || "");
+    setName(group?.name || "");
   }, [group]);
 
   return (
@@ -35,12 +35,12 @@ const ModalEditGroup = ({
         <div>
           <div className="text-2xl">Content</div>{" "}
           <Input
-            value={inputName}
+            value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setInputName(e.target.value)
+              setName(e.target.value)
             }
+            minLength={1}
             maxLength={30}
-            ref={nameRef}
             required
           />
         </div>,
@@ -57,7 +57,10 @@ const ModalEditGroup = ({
           text="Edit"
           size="large"
           autoWidth
-          onClick={() => editGroup(group!.id, nameRef.current?.value || "")}
+          onClick={() => {
+            editGroup(group!.id, name || "");
+            resetStateValues([setName]);
+          }}
         />,
       ]}
     />

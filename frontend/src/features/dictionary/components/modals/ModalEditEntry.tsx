@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import type { DictionaryEntryType } from "../../types";
+import resetStateValues from "../../../../utils/resetStateValues";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
@@ -19,17 +20,12 @@ const ModalEditEntry = ({
   editEntry,
   deleteEntry,
 }: ModalEditEntryProps) => {
-  const contentRef = useRef<HTMLInputElement>(null);
-  const translationRef = useRef<HTMLInputElement>(null);
-
-  const [inputContent, setInputContent] = useState(entry?.content || "");
-  const [inputTranslation, setInputTranslation] = useState(
-    entry?.translation || "",
-  );
+  const [content, setContent] = useState(entry?.content || "");
+  const [translation, setTranslation] = useState(entry?.translation || "");
 
   useEffect(() => {
-    setInputContent(entry?.content || "");
-    setInputTranslation(entry?.translation || "");
+    setContent(entry?.content || "");
+    setTranslation(entry?.translation || "");
   }, [entry]);
 
   return (
@@ -41,24 +37,24 @@ const ModalEditEntry = ({
         <div>
           <div className="text-2xl">Content</div>{" "}
           <Input
-            value={inputContent}
+            value={content}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setInputContent(e.target.value)
+              setContent(e.target.value)
             }
+            minLength={1}
             maxLength={30}
-            ref={contentRef}
             required
           />
         </div>,
         <div>
           <div className="text-2xl">Translation</div>
           <Input
-            value={inputTranslation}
+            value={translation}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setInputTranslation(e.target.value)
+              setTranslation(e.target.value)
             }
+            minLength={1}
             maxLength={30}
-            ref={translationRef}
             required
           />
         </div>,
@@ -75,13 +71,10 @@ const ModalEditEntry = ({
           text="Edit"
           size="large"
           autoWidth
-          onClick={() =>
-            editEntry(
-              entry!.id,
-              contentRef.current?.value || "",
-              translationRef.current?.value || "",
-            )
-          }
+          onClick={() => {
+            editEntry(entry!.id, content || "", translation || "");
+            resetStateValues([setContent, setTranslation]);
+          }}
         />,
       ]}
     />

@@ -1,7 +1,8 @@
-import { useRef } from "react";
+import { useState } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
+import resetStateValues from "../../../../utils/resetStateValues";
 
 type ModalAddGroupProps = {
   isOpen: boolean;
@@ -14,7 +15,7 @@ const ModalAddGroup = ({
   closeModal,
   addGroup,
 }: ModalAddGroupProps) => {
-  const nameRef = useRef<HTMLInputElement>(null);
+  const [name, setName] = useState<string>();
 
   return (
     <Modal
@@ -23,7 +24,14 @@ const ModalAddGroup = ({
       title="Add group"
       content={[
         <div>
-          <div className="text-2xl">Name</div> <Input ref={nameRef} />
+          <div className="text-2xl">Name</div>{" "}
+          <Input
+            minLength={1}
+            maxLength={30}
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>,
       ]}
       buttons={[
@@ -31,7 +39,10 @@ const ModalAddGroup = ({
           text="Add"
           size="large"
           autoWidth
-          onClick={() => addGroup(nameRef.current?.value || "")}
+          onClick={() => {
+            addGroup(name || "");
+            resetStateValues([setName]);
+          }}
         />,
       ]}
     />

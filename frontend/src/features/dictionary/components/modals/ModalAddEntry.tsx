@@ -1,7 +1,8 @@
-import { useRef } from "react";
+import { useState } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
+import resetStateValues from "../../../../utils/resetStateValues";
 
 type ModalAddEntryProps = {
   isOpen: boolean;
@@ -14,8 +15,8 @@ const ModalAddEntry = ({
   closeModal,
   addEntry,
 }: ModalAddEntryProps) => {
-  const contentRef = useRef<HTMLInputElement>(null);
-  const translationRef = useRef<HTMLInputElement>(null);
+  const [content, setContent] = useState<string>();
+  const [translation, setTranslation] = useState<string>();
 
   return (
     <Modal
@@ -24,11 +25,24 @@ const ModalAddEntry = ({
       title="Add entry"
       content={[
         <div>
-          <div className="text-2xl">Content</div> <Input ref={contentRef} />
+          <div className="text-2xl">Content</div>
+          <Input
+            minLength={1}
+            maxLength={30}
+            required
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
         </div>,
         <div>
           <div className="text-2xl">Translation</div>
-          <Input ref={translationRef} />
+          <Input
+            minLength={1}
+            maxLength={30}
+            required
+            value={translation}
+            onChange={(e) => setTranslation(e.target.value)}
+          />
         </div>,
       ]}
       buttons={[
@@ -36,12 +50,10 @@ const ModalAddEntry = ({
           text="Add"
           size="large"
           autoWidth
-          onClick={() =>
-            addEntry(
-              contentRef.current?.value || "",
-              translationRef.current?.value || "",
-            )
-          }
+          onClick={() => {
+            addEntry(content || "", translation || "");
+            resetStateValues([setContent, setTranslation]);
+          }}
         />,
       ]}
     />
