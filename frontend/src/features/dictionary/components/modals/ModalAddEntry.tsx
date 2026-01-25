@@ -6,13 +6,7 @@ import Button from "../../../../components/Button";
 type ModalAddEntryProps = {
   isOpen: boolean;
   closeModal: () => void;
-  addEntry: ({
-    content,
-    translation,
-  }: {
-    content: string;
-    translation: string;
-  }) => void;
+  addEntry: (content: string, translation: string) => void;
 };
 
 const ModalAddEntry = ({
@@ -27,6 +21,7 @@ const ModalAddEntry = ({
     <Modal
       open={isOpen}
       closeModal={closeModal}
+      title="Add entry"
       content={[
         <div>
           <div className="text-2xl">Content</div> <Input ref={contentRef} />
@@ -42,10 +37,10 @@ const ModalAddEntry = ({
           size="large"
           autoWidth
           onClick={() =>
-            addEntry({
-              content: contentRef.current?.value || "",
-              translation: translationRef.current?.value || "",
-            })
+            addEntry(
+              contentRef.current?.value || "",
+              translationRef.current?.value || "",
+            )
           }
         />,
       ]}

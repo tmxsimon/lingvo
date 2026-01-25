@@ -1,15 +1,19 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
-import { fetchDictionary } from "../services";
+import { fetchGroupEntries } from "../services";
 
 const PATH = "/dictionary";
 
-export function useDictionary() {
+export function useDictionaryEntries(groupId?: number) {
   const queryClient = useQueryClient();
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["dictionary"],
-    queryFn: () => fetchDictionary(),
+  const {
+    data: entries,
+    isLoading: isLoading,
+    error: error,
+  } = useQuery({
+    queryKey: ["entries", groupId],
+    queryFn: () => fetchGroupEntries(groupId),
   });
 
   const addEntry = useMutation({
@@ -21,10 +25,14 @@ export function useDictionary() {
       translation: string;
     }) =>
       api.post(`${PATH}/entries`, null, {
-        params: { content: content, translation: translation },
+        params: {
+          content: content,
+          translation: translation,
+          group_id: groupId,
+        },
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["dictionary"] });
+      queryClient.invalidateQueries({ queryKey: ["entries"] });
     },
   });
 
@@ -42,19 +50,19 @@ export function useDictionary() {
         params: { content: content, translation: translation },
       }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["dictionary"] });
+      queryClient.invalidateQueries({ queryKey: ["entries"] });
     },
   });
 
   const deleteEntry = useMutation({
     mutationFn: (id: number) => api.delete(`${PATH}/entries/${id}`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["dictionary"] });
+      queryClient.invalidateQueries({ queryKey: ["entries"] });
     },
   });
 
   return {
-    data,
+    entries,
     isLoading,
     error,
     addEntry,

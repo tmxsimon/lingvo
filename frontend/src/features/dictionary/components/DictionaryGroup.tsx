@@ -1,25 +1,27 @@
 import Icon from "../../../components/Icon";
 
-type DictionaryItemProps = {
-  content: string;
-  translation: string;
+type DictionaryGroupProps = {
+  name: string;
+  onClickSelect: () => void;
   onClickSettings: () => void;
 };
 
-const DictionaryItem = ({
-  content,
-  translation,
+const DictionaryGroup = ({
+  name,
+  onClickSelect,
   onClickSettings,
-}: DictionaryItemProps) => {
+}: DictionaryGroupProps) => {
   return (
     <div className="rounded-base px-base py-base-sm bg-brand-neutral-100 border-brand-neutral-200 flex h-14 w-168 items-center justify-between border">
-      <div className="flex-1">{content}</div>
-      <div className="flex-1">{translation}</div>
+      <div className="flex-1">{name}</div>
       <div className="cursor-pointer" onClick={onClickSettings}>
         <Icon name="settings" className="size-8" />
+      </div>
+      <div className="cursor-pointer" onClick={onClickSelect}>
+        <Icon name="arrowRight" className="size-8" />
       </div>
     </div>
   );
 };
 
-export default DictionaryItem;
+export default DictionaryGroup;

@@ -1,7 +1,7 @@
-import useModal from "../hooks/useModal";
 import Icon from "./Icon";
 
 type ModalProps = {
+  title?: string;
   content: React.ReactNode[];
   buttons: React.ReactNode[]; // autoWidth must be on
   closable?: boolean;
@@ -10,6 +10,7 @@ type ModalProps = {
 };
 
 const Modal = ({
+  title,
   content,
   buttons,
   closable = true,
@@ -21,9 +22,12 @@ const Modal = ({
       {open && (
         <div className="absolute z-50 flex h-screen w-screen items-center justify-center backdrop-brightness-70">
           <div className="bg-brand-neutral-100 border-brand-neutral-200 rounded-base px-base pb-base-lg relative flex h-136 w-112 flex-col justify-between border pt-12">
+            <div className="top-base text-brand-neutral-300 absolute self-center">
+              {title}
+            </div>
             {closable && (
               <Icon
-                name="dismiss"
+                name="close"
                 className="right-base top-base text-brand-neutral-300 absolute size-8 cursor-pointer"
                 onClick={closeModal}
               />

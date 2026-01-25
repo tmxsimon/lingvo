@@ -5,10 +5,10 @@ from dictionary.models import DictionaryEntry, EntriesGroup
 # entries
 
 def get_entries_no_group_db(session: Session):
-    return session.exec(select(DictionaryEntry).where(DictionaryEntry.group_id == None)).all() 
+    return session.exec(select(DictionaryEntry).where(DictionaryEntry.group_id == None).order_by(DictionaryEntry.id.desc())).all() 
 
 def get_entries_by_group_db(session: Session, group_id: int):
-    return session.exec(select(DictionaryEntry).where(DictionaryEntry.group_id == group_id)).all() 
+    return session.exec(select(DictionaryEntry).where(DictionaryEntry.group_id == group_id).order_by(DictionaryEntry.id.desc())).all() 
 
 def create_entry_db(
     session: Session,
@@ -109,7 +109,7 @@ def change_temperature_db(
 # groups
 
 def get_groups_db(session: Session):
-    return session.exec(select(EntriesGroup)).all()
+    return session.exec(select(EntriesGroup).order_by(EntriesGroup.id.desc())).all()
 
 def create_group_db(
     session: Session,

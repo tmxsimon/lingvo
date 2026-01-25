@@ -36,6 +36,7 @@ const ModalEditEntry = ({
     <Modal
       open={isOpen}
       closeModal={closeModal}
+      title="Edit entry"
       content={[
         <div>
           <div className="text-2xl">Content</div>{" "}
