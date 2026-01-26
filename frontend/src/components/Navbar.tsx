@@ -12,9 +12,11 @@ const Navbar = () => {
           <Link to="/dictionary">
             <Icon name="bookText" className="size-8 hover:text-brand-300 duration-300" />
           </Link>
+          {/*
           <Link to="/">
             <Icon name="globe" className="size-8 hover:text-brand-300 duration-300" />
           </Link>
+          */}
         </div>
       </nav>
     </div>

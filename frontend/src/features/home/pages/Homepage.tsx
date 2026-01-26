@@ -1,7 +1,7 @@
 import Button from "../../../components/Button";
 import Shape from "../../../components/Shape";
-import CardText from "../../../components/CardText";
-import FaqItem from "../../../components/FaqItem";
+import CardText from "../components/CardText";
+import FaqItem from "../components/FaqItem";
 
 const Homepage = () => {
   return (
