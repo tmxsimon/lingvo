@@ -29,25 +29,25 @@ const FaqItem = () => {
 
   return (
       <div className="max-w-3xl w-full">
-        <div className="text-center mb-16">
-          <p className="text-brand-300 text-xl font-semibold mb-4">CO VÁS JEŠTĚ MŮŽE ZAJÍMAT?</p>
-          <h2 className="text-5xl font-bold mb-6 flex flex-col gap-4">
+        <div className="text-center mb-base-lg">
+          <p className="text-brand-300 text-xl font-semibold mb-base">CO VÁS JEŠTĚ MŮŽE ZAJÍMAT?</p>
+          <h2 className="text-5xl font-bold mb-base-lg flex flex-col gap-md">
             <p>Máte otázky?</p>
             <p>My na ně odpovíme.</p>
           </h2>
-          <p className="text-neutral-400 text-[1.05rem] text-center max-w-[415px] mx-auto">
+          <p className="text-neutral-400 text-base text-center max-w-md mx-auto">
             Odpovědi na často kladené otázky, které Vám pomohou lépe porozumět jak aplikace funguje.
           </p>
         </div>
 
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <details key={index} className="border-b border-gray-300 pb-4">
-              <summary className="cursor-pointer font-semibold text-base flex justify-between items-center py-2">
+            <details key={index} className="border-b borde pb-base">
+              <summary className="cursor-pointer font-semibold text-base flex justify-between items-center py-base-sm">
                 {faq.question}
                 <span className="text-lg">▼</span>
               </summary>
-              <p className="text-gray-600 text-sm mt-2">{faq.answer}</p>
+              <p className="text-neutral-500 text-sm mt-base-sm">{faq.answer}</p>
             </details>
           ))}
         </div>

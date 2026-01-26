@@ -35,20 +35,20 @@ const CardText = () => {
 
   return (
     <div className="flex flex-col items-center px-6 py-20">
-      <div className="text-center mb-16 max-w-4xl">
+      <div className="text-center mb-base-lg max-w-4xl">
         <p className="text-brand-300 text-xl font-semibold mb-5">JAK APLIKACI VYUŽÍT?</p>
-        <h2 className="text-5xl font-bold mb-5 flex flex-col gap-4">
+        <h2 className="text-5xl font-bold mb-base-lg flex flex-col gap-base-lg">
           <p>Cizí jazyk</p>
           <p>bez zbytečného šprtání</p>
         </h2>
       </div>
-      <div className="grid grid-cols-4 gap-6 w-full max-w-7xl">
+      <div className="grid grid-cols-4 gap-base-lg w-full max-w-7xl">
         {cards.map((card, index) => {
           const IconComponent = card.icon;
           return (
             <div
               key={index}
-              className="bg-white flex h-90 w-70 flex-col gap-4 rounded-3xl p-8 text-left shadow-md"
+              className="bg-white flex h-90 w-70 flex-col gap-base rounded-3xl p-8 text-left shadow-md"
             >
               <div className={`${card.bgColor} inline-flex size-12 items-center justify-center rounded-2xl`}>
                 <IconComponent 
@@ -58,7 +58,7 @@ const CardText = () => {
                 />
               </div>
               <h3 className="text-2xl font-semibold text-brand-neutral-900">{card.title}</h3>
-              <p className="text-[1.05rem] leading-relaxed text-brand-neutral-700">
+              <p className="text-base leading-relaxed text-brand-neutral-700">
                 {card.description}
               </p>
             </div>

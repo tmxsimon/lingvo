@@ -8,13 +8,15 @@ const Navbar = () => {
         <Link className="text-2xl text-brand-300 font-bold ml-4" to="/">
           Lingvo
         </Link>
-        <div className="gap-4 flex items-center mr-4">
+        <div className="gap-sm flex items-center mr-4">
           <Link to="/dictionary">
             <Icon name="bookText" className="size-8 hover:text-brand-300 duration-300" />
           </Link>
+          {/*} 
           <Link to="/">
             <Icon name="globe" className="size-8 hover:text-brand-300 duration-300" />
           </Link>
+          */}
         </div>
       </nav>
     </div>
