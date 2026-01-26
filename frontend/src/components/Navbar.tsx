@@ -18,12 +18,14 @@ const Navbar = () => {
               className="hover:text-brand-300 size-8 duration-300"
             />
           </Link>
+          {/*
           <Link to="/">
             <Icon
               name="globe"
               className="hover:text-brand-300 size-8 duration-300"
             />
           </Link>
+          */}
         </div>
       </nav>
     </div>
