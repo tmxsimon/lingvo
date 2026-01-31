@@ -14,18 +14,22 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ card }) => {
   const IconComponent = card.icon;
-  
+
   return (
-    <div className="bg-white flex h-90 w-70 flex-col gap-base rounded-3xl p-8 text-left shadow-md">
-      <div className={`${card.bgColor} inline-flex size-12 items-center justify-center rounded-2xl`}>
-        <IconComponent 
-          className="w-8 h-8"
+    <div className="gap-base flex h-90 w-70 flex-col rounded-3xl bg-white p-8 text-left shadow-md">
+      <div
+        className={`${card.bgColor} inline-flex size-12 items-center justify-center rounded-2xl`}
+      >
+        <IconComponent
+          className="h-8 w-8"
           style={{ stroke: card.iconColor }}
           strokeWidth={2}
         />
       </div>
-      <h3 className="text-2xl font-semibold text-brand-neutral-900">{card.title}</h3>
-      <p className="text-base leading-relaxed text-brand-neutral-700">
+      <h3 className="text-brand-neutral-900 text-2xl font-semibold">
+        {card.title}
+      </h3>
+      <p className="text-brand-neutral-700 text-base leading-relaxed">
         {card.description}
       </p>
     </div>
@@ -35,30 +39,34 @@ const Card: React.FC<CardProps> = ({ card }) => {
 const CardText: React.FC = () => {
   const cards: CardItem[] = [
     {
-      icon: ICONS.bookOpenText,
+      icon: ICONS.openBook,
       title: "Vlastní digitální slovník",
-      description: "Sestave si seznamy slovíček přesně podle toho, co se zrovna potřebujete naučit.",
+      description:
+        "Sestave si seznamy slovíček přesně podle toho, co se zrovna potřebujete naučit.",
       bgColor: "bg-brand-100",
       iconColor: "var(--color-brand-300)",
     },
     {
       icon: ICONS.volume,
       title: "Audio výslovnost",
-      description: "Nejen čtěte, ale i slyšte. Každý slovíček si můžete přehrát pro správnou výslovnost.",
+      description:
+        "Nejen čtěte, ale i slyšte. Každý slovíček si můžete přehrát pro správnou výslovnost.",
       bgColor: "bg-purple-100",
       iconColor: "var(--color-purple-300)",
     },
     {
       icon: ICONS.flame,
       title: "Sledování pokroku",
-      description: "Diky ukazateli \"Temperature\" přesně vidite, která slova už umite procvičit.",
+      description:
+        'Diky ukazateli "Temperature" přesně vidite, která slova už umite procvičit.',
       bgColor: "bg-green-100",
       iconColor: "var(--color-green-300)",
     },
     {
       icon: ICONS.fileText,
       title: "Komplexní zápisky",
-      description: "Pište si přehledy gramatiky, taháky nebo celé texty. Mějte veškerou teorii přehledně vedle svých slovíček.",
+      description:
+        "Pište si přehledy gramatiky, taháky nebo celé texty. Mějte veškerou teorii přehledně vedle svých slovíček.",
       bgColor: "bg-orange-100",
       iconColor: "var(--color-orange-300)",
     },
@@ -66,14 +74,16 @@ const CardText: React.FC = () => {
 
   return (
     <section className="flex flex-col items-center px-6 py-20">
-      <div className="text-center mb-base-lg max-w-4xl">
-        <p className="text-brand-300 text-xl font-semibold mb-base-lg">JAK APLIKACI VYUŽÍT?</p>
-        <h2 className="text-5xl font-bold mb-base-lg flex flex-col gap-base-lg">
+      <div className="mb-base-lg max-w-4xl text-center">
+        <p className="text-brand-300 mb-base-lg text-xl font-semibold">
+          JAK APLIKACI VYUŽÍT?
+        </p>
+        <h2 className="mb-base-lg gap-base-lg flex flex-col text-5xl font-bold">
           <span>Cizí jazyk</span>
           <span>bez zbytečného šprtání</span>
         </h2>
       </div>
-      <div className="grid grid-cols-4 gap-base-lg w-full max-w-7xl">
+      <div className="gap-base-lg grid w-full max-w-7xl grid-cols-4">
         {cards.map((card) => (
           <Card key={card.title} card={card} />
         ))}
