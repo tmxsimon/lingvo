@@ -8,6 +8,10 @@ import {
 } from "lucide-react";
 import Settings from "../assets/icons/settings.svg?react";
 import Change from "../assets/icons/change.svg?react";
+<<<<<<< HEAD
+=======
+import Dictionary from "../assets/icons/dictionary.svg?react";
+>>>>>>> 8da7604 (feat: add basic card mode)
 import Close from "../assets/icons/close.svg?react";
 import List from "../assets/icons/list.svg?react";
 import Books from "../assets/icons/books.svg?react";
