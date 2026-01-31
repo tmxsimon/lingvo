@@ -83,13 +83,14 @@ class TemperatureActionEnum(str, Enum):
 def change_temperature_db(
     session: Session,
     id: int,
-    action: TemperatureActionEnum
+    action: TemperatureActionEnum,
+    step: int,
 ):
     entry = session.get(DictionaryEntry, id)
     if entry is None:
         return None
     
-    changeStep = 20
+    changeStep = step
 
     if action == "increase":
         temperature = min(100, entry.temperature + changeStep)
@@ -107,6 +108,9 @@ def change_temperature_db(
     return entry
 
 # groups
+
+def get_group_db(session: Session, id: int):
+    return session.exec(select(EntriesGroup).where(EntriesGroup.id == id)).first()
 
 def get_groups_db(session: Session):
     return session.exec(select(EntriesGroup).order_by(EntriesGroup.id.desc())).all()

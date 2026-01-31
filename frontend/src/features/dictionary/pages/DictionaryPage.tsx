@@ -46,6 +46,8 @@ const DictionaryPage = () => {
     closeModal: closeModalGroupsEdit,
   } = useModal();
 
+  const [mode, setMode] = useState<"entries" | "groups">("entries");
+
   const {
     entries,
     addEntry,
@@ -54,8 +56,6 @@ const DictionaryPage = () => {
     isLoading: isLoadingEntries,
     error: errorEntries,
   } = useDictionaryEntries(currentGroup?.id);
-
-  const [mode, setMode] = useState<"entries" | "groups">("entries");
 
   const {
     groups,
@@ -93,7 +93,7 @@ const DictionaryPage = () => {
         <div className="mt-base flex flex-col items-center gap-2">
           {currentGroup && (
             <div
-              className="my-base-sm flex cursor-pointer items-center text-xl text-gray-500"
+              className="my-base-sm text-gray-neutral-300 flex cursor-pointer items-center gap-1 text-xl"
               onClick={() => setCurrentGroup(undefined)}
             >
               {currentGroup.name}
