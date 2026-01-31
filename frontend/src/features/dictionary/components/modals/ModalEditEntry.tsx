@@ -3,7 +3,6 @@ import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import type { DictionaryEntryType } from "../../types";
-import resetStateValues from "../../../../utils/resetStateValues";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
@@ -71,10 +70,7 @@ const ModalEditEntry = ({
           text="Edit"
           size="large"
           autoWidth
-          onClick={() => {
-            editEntry(entry!.id, content || "", translation || "");
-            resetStateValues([setContent, setTranslation]);
-          }}
+          onClick={() => editEntry(entry!.id, content || "", translation || "")}
         />,
       ]}
     />

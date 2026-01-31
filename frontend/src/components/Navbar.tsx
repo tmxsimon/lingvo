@@ -9,6 +9,9 @@ const Navbar = () => {
           Lingvo
         </Link>
         <div className="gap-base-sm flex items-center">
+          <Link to="/cards">
+            <Icon name="cards" className="size-8" />
+          </Link>
           <Link to="/dictionary">
             <Icon name="dictionary" className="size-8" />
           </Link>

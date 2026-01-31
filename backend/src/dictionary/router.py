@@ -8,6 +8,7 @@ from .service import (
     update_entry_db,
     TemperatureActionEnum,
     change_temperature_db,
+    get_group_db,
     get_groups_db,
     create_group_db,
     delete_group_db,
@@ -97,11 +98,12 @@ async def update_entry(
     return entry
 
 @router.put("/entries/{id}/temperature")
-async def change_temperature(id: int, action: TemperatureActionEnum, session = SessionDep):
+async def change_temperature(id: int, action: TemperatureActionEnum, step: int, session = SessionDep):
     entry = change_temperature_db(
         session = session,
         id=id,
-        action=action
+        action=action,
+        step=step
     )
     if entry is None:
         raise HTTPException(
@@ -112,6 +114,16 @@ async def change_temperature(id: int, action: TemperatureActionEnum, session = S
     
 
 # groups
+
+@router.get("/group/{id}")
+async def get_group(id: int, session = SessionDep):
+    group = get_group_db(session=session, id=id)
+    if group is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Group not found"
+        )
+    return group
 
 @router.get("/groups")
 async def get_groups(session = SessionDep):

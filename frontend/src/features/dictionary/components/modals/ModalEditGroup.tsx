@@ -3,7 +3,6 @@ import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import type { DictionaryGroupType } from "../../types";
-import resetStateValues from "../../../../utils/resetStateValues";
 
 type ModalEditGroupProps = {
   group: DictionaryGroupType | null;
@@ -57,10 +56,7 @@ const ModalEditGroup = ({
           text="Edit"
           size="large"
           autoWidth
-          onClick={() => {
-            editGroup(group!.id, name || "");
-            resetStateValues([setName]);
-          }}
+          onClick={() => editGroup(group!.id, name || "")}
         />,
       ]}
     />

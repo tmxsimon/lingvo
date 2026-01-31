@@ -9,8 +9,8 @@ export function useDictionaryEntries(groupId?: number) {
 
   const {
     data: entries,
-    isLoading: isLoading,
-    error: error,
+    isLoading,
+    error,
   } = useQuery({
     queryKey: ["entries", groupId],
     queryFn: () => fetchGroupEntries(groupId),
@@ -61,6 +61,25 @@ export function useDictionaryEntries(groupId?: number) {
     },
   });
 
+  const changeTemperature = useMutation({
+    mutationFn: ({
+      id,
+      action,
+      step = 20,
+    }: {
+      id: number;
+      action: "increase" | "decrease";
+      step?: number;
+    }) =>
+      api.put(`${PATH}/entries/${id}/temperature`, null, {
+        params: { action: action, step: step },
+      }),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["entries"] });
+      return data;
+    },
+  });
+
   return {
     entries,
     isLoading,
@@ -68,5 +87,6 @@ export function useDictionaryEntries(groupId?: number) {
     addEntry,
     editEntry,
     deleteEntry,
+    changeTemperature,
   };
 }
