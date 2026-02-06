@@ -7,6 +7,7 @@ class DictionaryEntry(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     content: str
     translation: str
+    note: str | None = None
     temperature: int # 0 - 100 (%)
     group: EntriesGroup = Relationship(back_populates="entries")
     group_id: int | None = Field(default=None, foreign_key="entries_group.id")

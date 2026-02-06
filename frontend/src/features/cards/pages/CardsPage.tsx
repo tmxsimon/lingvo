@@ -54,6 +54,7 @@ const CardsPage = () => {
                 isActive={isActive}
                 content={currentEntry?.content || ""}
                 translation={currentEntry?.translation || ""}
+                note={currentEntry.note}
               />
             </div>
 

@@ -2,6 +2,7 @@ export type DictionaryEntryType = {
   id: number;
   content: string;
   translation: string;
+  note?: string;
   temperature: number;
   group_id: number;
   created_at: string;

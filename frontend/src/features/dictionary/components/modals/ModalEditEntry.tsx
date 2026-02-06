@@ -8,7 +8,12 @@ type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
   isOpen: boolean;
   closeModal: () => void;
-  editEntry: (id: number, content: string, translation: string) => void;
+  editEntry: (
+    id: number,
+    content: string,
+    translation: string,
+    note?: string,
+  ) => void;
   deleteEntry: (id: number) => void;
 };
 
@@ -21,10 +26,12 @@ const ModalEditEntry = ({
 }: ModalEditEntryProps) => {
   const [content, setContent] = useState(entry?.content || "");
   const [translation, setTranslation] = useState(entry?.translation || "");
+  const [note, setNote] = useState(entry?.note || "");
 
   useEffect(() => {
     setContent(entry?.content || "");
     setTranslation(entry?.translation || "");
+    setNote(entry?.note || "");
   }, [entry]);
 
   return (
@@ -57,6 +64,16 @@ const ModalEditEntry = ({
             required
           />
         </div>,
+        <div>
+          <div className="text-2xl">Note</div>
+          <Input
+            value={note}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setNote(e.target.value)
+            }
+            maxLength={350}
+          />
+        </div>,
       ]}
       buttons={[
         <Button
@@ -70,7 +87,9 @@ const ModalEditEntry = ({
           text="Edit"
           size="large"
           autoWidth
-          onClick={() => editEntry(entry!.id, content || "", translation || "")}
+          onClick={() =>
+            editEntry(entry!.id, content || "", translation || "", note)
+          }
         />,
       ]}
     />

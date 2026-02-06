@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Tooltip } from "react-tooltip";
 import Button from "../../../components/Button";
 import useModal from "../../../hooks/useModal";
 import DictionaryEntry from "../components/DictionaryEntry";
@@ -106,6 +107,7 @@ const DictionaryPage = () => {
                 key={entry.id}
                 content={entry.content}
                 translation={entry.translation}
+                note={entry.note}
                 onClickSettings={() => {
                   setChosenEntry(entry);
                   openModalEntriesEdit();
@@ -133,12 +135,14 @@ const DictionaryPage = () => {
         </div>
       </div>
 
+      <Tooltip id="note-tooltip" className="z-50 max-w-92 break-all" />
+
       {/* modals */}
       <ModalAddEntry
         isOpen={isOpenEntriesAdd}
         closeModal={closeModalEntriesAdd}
-        addEntry={(content: string, translation: string) => {
-          addEntry.mutate({ content, translation });
+        addEntry={(content: string, translation: string, note?: string) => {
+          addEntry.mutate({ content, translation, note });
           closeModalEntriesAdd();
         }}
       />
@@ -146,8 +150,13 @@ const DictionaryPage = () => {
         entry={chosenEntry!}
         isOpen={isOpenEntriesEdit}
         closeModal={closeModalEntriesEdit}
-        editEntry={(id: number, content: string, translation: string) => {
-          editEntry.mutate({ id, content, translation });
+        editEntry={(
+          id: number,
+          content: string,
+          translation: string,
+          note?: string,
+        ) => {
+          editEntry.mutate({ id, content, translation, note });
           closeModalEntriesEdit();
         }}
         deleteEntry={() => {

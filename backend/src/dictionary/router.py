@@ -46,12 +46,14 @@ async def get_entries_by_group(group_id: int, session = SessionDep):
 async def create_entry(
     content: str,
     translation: str,
+    note: str | None = None,
     group_id: int | None = None,
     session = SessionDep
     ):
     entry = create_entry_db(session = session,
         content=content,
         translation=translation,
+        note=note,
         temperature=100,
         group_id=group_id
     )
@@ -78,17 +80,19 @@ async def update_entry(
     id: int,
     content: str | None = None,
     translation: str | None = None,
+    note: str | None = None,
     temperature: int | None = None,
     group_id: int | None = None,
     session = SessionDep
 ):
     entry = update_entry_db(
-        session,
-        id,
-        content,
-        translation,
-        temperature,
-        group_id
+        session = session,
+        id=id,
+        content=content,
+        translation=translation,
+        note=note,
+        temperature=temperature,
+        group_id=group_id
     )
     if entry is None:
         raise HTTPException(

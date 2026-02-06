@@ -15,6 +15,7 @@ def create_entry_db(
     content: str,
     translation: str,
     temperature: int,
+    note: str | None = None,
     group_id: int | None = None
 ):
     if group_id is not None:
@@ -25,6 +26,7 @@ def create_entry_db(
     entry = DictionaryEntry(
         content=content,
         translation=translation,
+        note=note,
         temperature=temperature,
         group_id=group_id,
     )
@@ -53,6 +55,7 @@ def update_entry_db(
     id: int,
     content: str | None = None,
     translation: str | None = None,
+    note: str | None = None,
     temperature: int | None = None,
     group_id: int | None = None
 ):
@@ -64,6 +67,8 @@ def update_entry_db(
         entry.content = content
     if translation:
         entry.translation = translation
+    if note:
+        entry.note = note
     if temperature is not None and 0 <= temperature <= 100:
         entry.temperature = temperature
     if group_id is not None:

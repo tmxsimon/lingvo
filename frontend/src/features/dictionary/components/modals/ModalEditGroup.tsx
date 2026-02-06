@@ -32,7 +32,7 @@ const ModalEditGroup = ({
       title="Edit group"
       content={[
         <div>
-          <div className="text-2xl">Content</div>{" "}
+          <div className="text-2xl">Content</div>
           <Input
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

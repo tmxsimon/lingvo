@@ -7,7 +7,7 @@ import resetStateValues from "../../../../utils/resetStateValues";
 type ModalAddEntryProps = {
   isOpen: boolean;
   closeModal: () => void;
-  addEntry: (content: string, translation: string) => void;
+  addEntry: (content: string, translation: string, note?: string) => void;
 };
 
 const ModalAddEntry = ({
@@ -17,6 +17,7 @@ const ModalAddEntry = ({
 }: ModalAddEntryProps) => {
   const [content, setContent] = useState<string>();
   const [translation, setTranslation] = useState<string>();
+  const [note, setNote] = useState<string>();
 
   return (
     <Modal
@@ -44,6 +45,14 @@ const ModalAddEntry = ({
             onChange={(e) => setTranslation(e.target.value)}
           />
         </div>,
+        <div>
+          <div className="text-2xl">Note</div>
+          <Input
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            maxLength={350}
+          />
+        </div>,
       ]}
       buttons={[
         <Button
@@ -51,8 +60,8 @@ const ModalAddEntry = ({
           size="large"
           autoWidth
           onClick={() => {
-            addEntry(content || "", translation || "");
-            resetStateValues([setContent, setTranslation]);
+            addEntry(content || "", translation || "", note);
+            resetStateValues([setContent, setTranslation, setNote]);
           }}
         />,
       ]}

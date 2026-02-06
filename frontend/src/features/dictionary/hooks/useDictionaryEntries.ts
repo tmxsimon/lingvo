@@ -20,14 +20,17 @@ export function useDictionaryEntries(groupId?: number) {
     mutationFn: ({
       content,
       translation,
+      note,
     }: {
       content: string;
       translation: string;
+      note?: string;
     }) =>
       api.post(`${PATH}/entries`, null, {
         params: {
           content: content,
           translation: translation,
+          note: note,
           group_id: groupId,
         },
       }),
@@ -41,13 +44,15 @@ export function useDictionaryEntries(groupId?: number) {
       id,
       content,
       translation,
+      note,
     }: {
       id: number;
       content?: string;
       translation?: string;
+      note?: string;
     }) =>
       api.put(`${PATH}/entries/${id}`, null, {
-        params: { content: content, translation: translation },
+        params: { content: content, translation: translation, note: note },
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["entries"] });
