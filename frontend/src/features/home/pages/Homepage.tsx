@@ -57,7 +57,10 @@ const Homepage = () => {
           size="large"
           className="bg-brand-100 absolute top-35 -right-15"
         />
-        <Shape type="square" className="bg-brand-100 absolute top-180 left-100" />
+        <Shape
+          type="square"
+          className="bg-brand-100 absolute top-180 left-100"
+        />
         <Shape
           type="circle"
           size="large"
@@ -69,14 +72,12 @@ const Homepage = () => {
         />
       </div>
 
-      {/* Features section */}
-      <div className="w-full flex justify-center px-6 bg-brand-100">
-          <CardText />
+      <div className="bg-brand-100 flex w-full justify-center px-6">
+        <CardText />
       </div>
 
-      {/* FAQ section */}
-      <div className="w-full flex justify-center px-6 py-20">
-          <FaqItem />
+      <div className="flex w-full justify-center px-6 py-20">
+        <FaqItem />
       </div>
     </>
   );

@@ -1,14 +1,15 @@
+import { Link } from "react-router-dom";
 import Icon from "../../../components/Icon";
 
 type DictionaryGroupProps = {
+  id: number;
   name: string;
-  onClickSelect: () => void;
-  onClickSettings: () => void;
+  onClickSettings?: () => void;
 };
 
 const DictionaryGroup = ({
+  id,
   name,
-  onClickSelect,
   onClickSettings,
 }: DictionaryGroupProps) => {
   return (
@@ -18,9 +19,9 @@ const DictionaryGroup = ({
         <div className="cursor-pointer" onClick={onClickSettings}>
           <Icon name="settings" className="size-8" />
         </div>
-        <div className="cursor-pointer" onClick={onClickSelect}>
+        <Link to={`${id}`} className="cursor-pointer">
           <Icon name="arrowRight" className="size-8" />
-        </div>
+        </Link>
       </div>
     </div>
   );

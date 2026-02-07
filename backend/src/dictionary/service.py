@@ -1,11 +1,32 @@
 from enum import Enum
+from datetime import datetime
 from sqlmodel import Session, select
 from dictionary.models import DictionaryEntry, EntriesGroup
 
 # entries
 
-def get_entries_no_group_db(session: Session):
-    return session.exec(select(DictionaryEntry).where(DictionaryEntry.group_id == None).order_by(DictionaryEntry.id.desc())).all() 
+def get_entries_db(session: Session):
+    entries = session.exec(select(DictionaryEntry).order_by(DictionaryEntry.id.desc())).all() 
+
+    group = EntriesGroup(id=0, name="All entries", created_at=str(datetime.now()), entries=entries)
+
+    return {
+        "id": group.id,
+        "name": group.name,
+        "created_at": group.created_at,
+        "entries": [
+            {
+                "id": e.id,
+                "content": e.content,
+                "translation": e.translation,
+                "note": e.note,
+                "temperature": e.temperature,
+                "created_at": e.created_at,
+            }
+            for e in group.entries
+        ],
+    }
+        
 
 def get_entries_by_group_db(session: Session, group_id: int):
     return session.exec(select(DictionaryEntry).where(DictionaryEntry.group_id == group_id).order_by(DictionaryEntry.id.desc())).all() 
@@ -15,13 +36,13 @@ def create_entry_db(
     content: str,
     translation: str,
     temperature: int,
+    group_id: int,
     note: str | None = None,
-    group_id: int | None = None
 ):
-    if group_id is not None:
-        group = session.get(EntriesGroup, group_id)
-        if group is None:
-            return None
+    
+    group = session.get(EntriesGroup, group_id)
+    if group is None:
+        return None
 
     entry = DictionaryEntry(
         content=content,
@@ -84,7 +105,6 @@ class TemperatureActionEnum(str, Enum):
     increase = "increase"
     decrease = "decrease"
 
-# change temperature on phone by gesture
 def change_temperature_db(
     session: Session,
     id: int,
@@ -115,7 +135,26 @@ def change_temperature_db(
 # groups
 
 def get_group_db(session: Session, id: int):
-    return session.exec(select(EntriesGroup).where(EntriesGroup.id == id)).first()
+    group = session.exec(select(EntriesGroup).where(EntriesGroup.id == id)).first()
+
+    return {
+        "id": group.id,
+        "name": group.name,
+        "created_at": group.created_at,
+        "entries": [
+            {
+                "id": e.id,
+                "content": e.content,
+                "translation": e.translation,
+                "note": e.note,
+                "temperature": e.temperature,
+                "created_at": e.created_at,
+            }
+            for e in group.entries
+        ],
+    }
+
+
 
 def get_groups_db(session: Session):
     return session.exec(select(EntriesGroup).order_by(EntriesGroup.id.desc())).all()

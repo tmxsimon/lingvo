@@ -8,16 +8,16 @@ import type { SelectOptionType } from "../../../../types";
 
 type ModalChangeGroupProps = {
   group?: DictionaryGroupType;
+  changeGroupId: (id: number | "") => void;
   isOpen: boolean;
   closeModal: () => void;
-  changeGroupId: (id: number | "") => Promise<void>;
 };
 
 const ModalChangeGroup = ({
   group,
+  changeGroupId,
   isOpen,
   closeModal,
-  changeGroupId,
 }: ModalChangeGroupProps) => {
   const [currentGroupOption, setCurrentGroupOption] = useState<
     SelectOptionType | ""
@@ -28,7 +28,7 @@ const ModalChangeGroup = ({
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
-  const options: SelectOptionType[] = [{ value: "", text: "No group" }];
+  const options: SelectOptionType[] = [{ value: "", text: "All entries" }];
 
   groups?.forEach((group) => {
     options.push({ value: group.id, text: group.name });

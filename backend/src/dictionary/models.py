@@ -9,8 +9,8 @@ class DictionaryEntry(SQLModel, table=True):
     translation: str
     note: str | None = None
     temperature: int # 0 - 100 (%)
+    group_id: int = Field(foreign_key="entries_group.id")
     group: EntriesGroup = Relationship(back_populates="entries")
-    group_id: int | None = Field(default=None, foreign_key="entries_group.id")
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )

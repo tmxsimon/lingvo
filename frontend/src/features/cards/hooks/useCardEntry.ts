@@ -1,54 +1,40 @@
 import { useEffect, useState } from "react";
-import type {
-  DictionaryEntryType,
-  DictionaryGroupType,
-} from "../../dictionary/types";
-import { fetchGroup, fetchGroupEntries } from "../../dictionary/services";
+import type { DictionaryEntryType } from "../../dictionary/types";
+import { fetchGroup } from "../../dictionary/services";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import api from "../../../lib/api";
 
-type ChangeTemperatureMutation = {
-  mutate: (
-    variables: { id: number; action: "increase" | "decrease"; step: number },
-    options?: { onSuccess?: (updatedEntry: any) => void },
-  ) => void;
-};
+const PATH = "/dictionary";
 
-const temperatureStep = 15;
+export default function useCardEntry(id?: number) {
+  const queryClient = useQueryClient();
 
-export default function useCardEntry(
-  entries: DictionaryEntryType[] | undefined,
-  changeTemperature: ChangeTemperatureMutation,
-) {
+  const {
+    data: group,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["group", id],
+    queryFn: () => fetchGroup(id),
+  });
+
   const [currentEntry, setCurrentEntry] = useState<
     DictionaryEntryType | undefined
   >(undefined);
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
-  const sortedEntries = entries
+  const sortedEntries = group?.entries
     ?.slice()
     .sort((a, b) => b.temperature - a.temperature);
 
   useEffect(() => {
-    if (!sortedEntries?.length) return;
-    else if (!sortedEntries.some((e) => e.id === currentEntry?.id)) {
+    if (sortedEntries?.length) {
       setCurrentEntry(sortedEntries[0]);
+    } else {
+      setCurrentEntry(undefined);
     }
-  }, [sortedEntries]);
-
-  const changeGroup = async (
-    id: number | "",
-    setCurrentGroup: React.Dispatch<
-      React.SetStateAction<DictionaryGroupType | undefined>
-    >,
-  ) => {
-    setCurrentEntry(undefined);
-    setCurrentGroup(undefined);
-    setIsActive(false);
-    if (id) {
-      const group = await fetchGroup(id);
-      setCurrentGroup(group);
-    }
-  };
+  }, [group]);
 
   const handleNext = () => {
     if (!sortedEntries) return;
@@ -63,33 +49,32 @@ export default function useCardEntry(
     setIsActive(false);
   };
 
-  const handleChangeTemperature = ({
-    id,
-    action,
-    step = temperatureStep,
-  }: {
-    id: number;
-    action: "increase" | "decrease";
-    step?: number;
-  }) => {
-    changeTemperature.mutate(
-      { id, action, step },
-      {
-        onSuccess: (updatedEntry) => {
-          setCurrentEntry(updatedEntry?.data || updatedEntry);
-        },
-      },
-    );
-  };
+  const changeTemperature = useMutation({
+    mutationFn: ({
+      action,
+      step = 20,
+    }: {
+      action: "increase" | "decrease";
+      step?: number;
+    }) =>
+      api.put(`${PATH}/entries/${currentEntry?.id}/temperature`, null, {
+        params: { action: action, step: step },
+      }),
+    onSuccess: (response) => {
+      setCurrentEntry(response.data);
+    },
+  });
 
   return {
+    group,
     isActive,
     setIsActive,
     currentEntry,
     setCurrentEntry,
     sortedEntries,
-    changeGroup,
     handleNext,
-    handleChangeTemperature,
+    changeTemperature,
+    isLoading,
+    error,
   };
 }

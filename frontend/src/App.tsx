@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from "./features/home/pages/Homepage";
 import MainLayout from "./layouts/MainLayout";
-import DictionaryPage from "./features/dictionary/pages/DictionaryPage";
 import CardsPage from "./features/cards/pages/CardsPage";
+import DictionaryGroupsPage from "./features/dictionary/pages/DictionaryGroupsPage";
+import DictionaryWordsPage from "./features/dictionary/pages/DictionaryWordsPage";
 
 const App = () => {
   return (
@@ -10,8 +11,11 @@ const App = () => {
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<Homepage />} />
-          <Route path="/dictionary" element={<DictionaryPage />} />
-          <Route path="/cards" element={<CardsPage />} />
+          <Route path="/dictionary">
+            <Route index element={<DictionaryGroupsPage />} />
+            <Route path=":groupId" element={<DictionaryWordsPage />} />
+          </Route>
+          <Route path="/cards/:groupId?" element={<CardsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

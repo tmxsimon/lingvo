@@ -3,8 +3,10 @@ import type { DictionaryGroupType, DictionaryEntryType } from "./types";
 
 const PATH = "/dictionary";
 
-export const fetchGroup = async (id: number) => {
-  const response = await api.get<DictionaryGroupType>(`${PATH}/group/${id}`);
+export const fetchGroup = async (id?: number) => {
+  const response = await api.get<DictionaryGroupType>(
+    `${PATH}/${id ? `groups/${id}` : "entries"}`,
+  );
   return response.data;
 };
 

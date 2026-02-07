@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { type DictionaryGroupType } from "../../dictionary/types";
-import { useDictionaryEntries } from "../../dictionary/hooks/useDictionaryEntries";
 import ModalChangeGroup from "../components/modals/ModalChangeGroup";
 import useModal from "../../../hooks/useModal";
 import Icon from "../../../components/Icon";
@@ -8,26 +5,24 @@ import Card from "../components/Card";
 import Button from "../../../components/Button";
 import useCardEntry from "../hooks/useCardEntry";
 import Temperature from "../components/Temperature";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CardsPage = () => {
-  const [currentGroup, setCurrentGroup] = useState<
-    DictionaryGroupType | undefined
-  >(undefined);
+  const { groupId } = useParams();
+  const navigate = useNavigate();
 
   const { isOpen, openModal, closeModal } = useModal();
 
-  const { entries, changeTemperature, isLoading, error } = useDictionaryEntries(
-    currentGroup?.id,
-  );
-
   const {
+    group: currentGroup,
     isActive,
     setIsActive,
     currentEntry,
-    changeGroup,
     handleNext,
-    handleChangeTemperature,
-  } = useCardEntry(entries, changeTemperature);
+    changeTemperature,
+    isLoading,
+    error,
+  } = useCardEntry(groupId ? Number.parseInt(groupId!) : undefined);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
@@ -63,8 +58,7 @@ const CardsPage = () => {
                 <Button
                   text="Decrease"
                   onClick={() =>
-                    handleChangeTemperature({
-                      id: currentEntry.id!,
+                    changeTemperature.mutate({
                       action: "decrease",
                     })
                   }
@@ -73,8 +67,7 @@ const CardsPage = () => {
                 <Button
                   text="Increase"
                   onClick={() =>
-                    handleChangeTemperature({
-                      id: currentEntry.id!,
+                    changeTemperature.mutate({
                       action: "increase",
                     })
                   }
@@ -97,7 +90,7 @@ const CardsPage = () => {
       <ModalChangeGroup
         group={currentGroup}
         changeGroupId={async (id: number | "") => {
-          changeGroup(id, setCurrentGroup);
+          navigate(`/cards/${id}`);
           closeModal();
         }}
         isOpen={isOpen}

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 from dependencies import SessionDep
 from .service import (
-    get_entries_no_group_db,
+    get_entries_db,
     get_entries_by_group_db,
     create_entry_db,
     delete_entry_db,
@@ -23,8 +23,8 @@ router = APIRouter(
 # entries
 
 @router.get("/entries")
-async def get_entries_no_group(session = SessionDep):
-    entries = get_entries_no_group_db(session)
+async def get_entries_group(session = SessionDep):
+    entries = get_entries_db(session)
     if entries is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -46,8 +46,8 @@ async def get_entries_by_group(group_id: int, session = SessionDep):
 async def create_entry(
     content: str,
     translation: str,
+    group_id: int,
     note: str | None = None,
-    group_id: int | None = None,
     session = SessionDep
     ):
     entry = create_entry_db(session = session,
@@ -119,14 +119,15 @@ async def change_temperature(id: int, action: TemperatureActionEnum, step: int, 
 
 # groups
 
-@router.get("/group/{id}")
-async def get_group(id: int, session = SessionDep):
+@router.get("/groups/{id}")
+async def get_group(id: int | None = None, session = SessionDep):
     group = get_group_db(session=session, id=id)
     if group is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Group not found"
         )
+
     return group
 
 @router.get("/groups")
