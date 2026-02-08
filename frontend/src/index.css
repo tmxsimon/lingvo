@@ -10,52 +10,165 @@
   --radius-base: 30px;
   --radius-base-lg: 36px;
 
-  --color-brand-100: #e5f1ff;
-  --color-brand-200: #7fafee;
-  --color-brand-300: #347ad5;
-  --color-brand-400: #174b8f;
-  --color-brand-500: #031935;
+  --color-bg: var(--color-bg);
+  --color-text: var(--color-text);
 
-  --color-danger-100: #ffe5e5;
-  --color-danger-200: #ee7f7f;
-  --color-danger-300: #df3f3f;
-  --color-danger-400: #8f1717;
-  --color-danger-500: #350303;
+  /* brand */
+  --color-brand-100: var(--color-brand-100);
+  --color-brand-200: var(--color-brand-200);
+  --color-brand-300: var(--color-brand-300);
+  --color-brand-400: var(--color-brand-400);
+  --color-brand-500: var(--color-brand-500);
 
-  --color-warning-100: #fff6e5;
-  --color-warning-200: #eec77f;
-  --color-warning-300: #d59d34;
-  --color-warning-400: #8f6517;
-  --color-warning-500: #352303;
+  /* danger */
+  --color-danger-100: var(--color-danger-100);
+  --color-danger-200: var(--color-danger-200);
+  --color-danger-300: var(--color-danger-300);
+  --color-danger-400: var(--color-danger-400);
+  --color-danger-500: var(--color-danger-500);
 
-  --color-brand-neutral-100: #eef0f5;
-  --color-brand-neutral-200: #d8dde6;
-  --color-brand-neutral-300: #abb1bf;
-  --color-brand-neutral-400: #7e8699;
-  --color-brand-neutral-500: #455066;
-  --color-brand-neutral-600: #1c2333;
-  --color-brand-neutral-700: #090e1a;
+  /* warning */
+  --color-warning-100: var(--color-warning-100);
+  --color-warning-200: var(--color-warning-200);
+  --color-warning-300: var(--color-warning-300);
+  --color-warning-400: var(--color-warning-400);
+  --color-warning-500: var(--color-warning-500);
 
-  --color-gray-neutral-100: #f0f0f0;
-  --color-gray-neutral-200: #d6d6d6;
-  --color-gray-neutral-300: #b3b3b3;
-  --color-gray-neutral-400: #808080;
-  --color-gray-neutral-500: #595959;
-  --color-gray-neutral-600: #333333;
-  --color-gray-neutral-700: #171717;
+  /* brand neutral */
+  --color-brand-neutral-100: var(--color-brand-neutral-100);
+  --color-brand-neutral-200: var(--color-brand-neutral-200);
+  --color-brand-neutral-300: var(--color-brand-neutral-300);
+  --color-brand-neutral-400: var(--color-brand-neutral-400);
+  --color-brand-neutral-500: var(--color-brand-neutral-500);
+  --color-brand-neutral-600: var(--color-brand-neutral-600);
+  --color-brand-neutral-700: var(--color-brand-neutral-700);
 
-  --color-purple-100: #D9D7FF;
-  --color-purple-300: #6961F9;
-  --color-green-100: #B8FFC9;
-  --color-green-300: #36B354;
-  --color-orange-100: #FFE0B2;
-  --color-orange-300: #C98011;
+  /* gray neutral */
+  --color-gray-neutral-100: var(--color-gray-neutral-100);
+  --color-gray-neutral-200: var(--color-gray-neutral-200);
+  --color-gray-neutral-300: var(--color-gray-neutral-300);
+  --color-gray-neutral-400: var(--color-gray-neutral-400);
+  --color-gray-neutral-500: var(--color-gray-neutral-500);
+  --color-gray-neutral-600: var(--color-gray-neutral-600);
+  --color-gray-neutral-700: var(--color-gray-neutral-700);
+
+  /* accents */
+  --color-purple-100: var(--color-purple-100);
+  --color-purple-300: var(--color-purple-300);
+  --color-green-100: var(--color-green-100);
+  --color-green-300: var(--color-green-300);
+  --color-orange-100: var(--color-orange-100);
+  --color-orange-300: var(--color-orange-300);
 }
 
 @layer base {
   svg {
     width: 100%;
     height: 100%;
-    stroke: blue;
+  }
+
+  .light {
+    --color-bg: #ffffff;
+
+    /* brand */
+    --color-brand-100: #e5f1ff;
+    --color-brand-200: #7fafee;
+    --color-brand-300: #347ad5;
+    --color-brand-400: #174b8f;
+    --color-brand-500: #031935;
+
+    /* danger */
+    --color-danger-100: #ffe5e5;
+    --color-danger-200: #ee7f7f;
+    --color-danger-300: #df3f3f;
+    --color-danger-400: #8f1717;
+    --color-danger-500: #350303;
+
+    /* warning */
+    --color-warning-100: #fff6e5;
+    --color-warning-200: #eec77f;
+    --color-warning-300: #d59d34;
+    --color-warning-400: #8f6517;
+    --color-warning-500: #352303;
+
+    /* brand neutral */
+    --color-brand-neutral-100: #eef0f5;
+    --color-brand-neutral-200: #d8dde6;
+    --color-brand-neutral-300: #abb1bf;
+    --color-brand-neutral-400: #7e8699;
+    --color-brand-neutral-500: #455066;
+    --color-brand-neutral-600: #1c2333;
+    --color-brand-neutral-700: #090e1a;
+
+    /* gray neutral */
+    --color-gray-neutral-100: #f0f0f0;
+    --color-gray-neutral-200: #d6d6d6;
+    --color-gray-neutral-300: #b3b3b3;
+    --color-gray-neutral-400: #808080;
+    --color-gray-neutral-500: #595959;
+    --color-gray-neutral-600: #333333;
+    --color-gray-neutral-700: #171717;
+
+    /* accents */
+    --color-purple-100: #d9d7ff;
+    --color-purple-300: #6961f9;
+    --color-green-100: #b8ffc9;
+    --color-green-300: #36b354;
+    --color-orange-100: #ffe0b2;
+    --color-orange-300: #c98011;
+  }
+
+  .dark {
+    --color-bg: #1d2022;
+    --color-text: #d6d6d6;
+
+    /* brand */
+    --color-brand-100: #041020;
+    --color-brand-200: #152d4b;
+    --color-brand-300: #2a5894;
+    --color-brand-400: #4e78a1;
+    --color-brand-500: #98aebf;
+
+    /* danger */
+    --color-danger-100: #221516;
+    --color-danger-200: #612828;
+    --color-danger-300: #a53939;
+    --color-danger-400: #ba615e;
+    --color-danger-500: #e0bbb7;
+
+    /* warning */
+    --color-warning-100: #eec77f;
+    --color-warning-200: #d59d34;
+    --color-warning-300: #8f6517;
+    --color-warning-400: #352303;
+    --color-warning-500: #1a1101;
+
+    /* brand neutral */
+    --color-brand-neutral-100: #191a1d;
+    --color-brand-neutral-200: #25272c;
+    --color-brand-neutral-300: #444750;
+    --color-brand-neutral-400: #6e7585;
+    --color-brand-neutral-500: #8e9197;
+    --color-brand-neutral-600: #a1a4ab;
+    --color-brand-neutral-700: #bdc1c8;
+
+    /* gray neutral */
+    --color-gray-neutral-100: #191919;
+    --color-gray-neutral-200: #343434;
+    --color-gray-neutral-300: #5a5a5a;
+    --color-gray-neutral-400: #808080;
+    --color-gray-neutral-500: #929292;
+    --color-gray-neutral-600: #a2a2a2;
+    --color-gray-neutral-700: #b0b0b0;
+
+    /* accents */
+    --color-purple-100: #6a66bd;
+    --color-purple-300: #464298;
+
+    --color-green-100: #29863f;
+    --color-green-300: #185629;
+
+    --color-orange-100: #a97321;
+    --color-orange-300: #765017;
   }
 }

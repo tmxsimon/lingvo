@@ -16,7 +16,7 @@ const Card: React.FC<CardProps> = ({ card }) => {
   const IconComponent = card.icon;
 
   return (
-    <div className="gap-base flex h-90 w-70 flex-col rounded-3xl bg-white p-8 text-left shadow-md">
+    <div className="gap-base bg-bg flex h-90 w-70 flex-col rounded-3xl p-8 text-left shadow-md">
       <div
         className={`${card.bgColor} inline-flex size-12 items-center justify-center rounded-2xl`}
       >
