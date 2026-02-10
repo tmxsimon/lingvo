@@ -10,8 +10,11 @@ import type { DictionaryEntryType, DictionaryGroupType } from "../types";
 import Icon from "../../../components/Icon";
 import { Link, useParams } from "react-router-dom";
 import { useDictionaryGroup } from "../hooks/useDictionaryGroup";
+import { useTranslation } from "react-i18next";
 
 const DictionaryWordsPage = () => {
+  const { t } = useTranslation();
+
   const { groupId } = useParams();
 
   const { group: currentGroup } = useDictionaryGroup(Number.parseInt(groupId!));
@@ -40,7 +43,11 @@ const DictionaryWordsPage = () => {
   return (
     <>
       <div className="flex flex-col items-center pt-32">
-        <Button text="Add entry" size="large" onClick={openModalEntriesAdd} />
+        <Button
+          text={t("dictionary.addEntry")}
+          size="large"
+          onClick={openModalEntriesAdd}
+        />
         <div className="mt-base flex flex-col items-center gap-2">
           {currentGroup && (
             <Link

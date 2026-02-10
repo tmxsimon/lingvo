@@ -1,9 +1,12 @@
+import { useTranslation } from "react-i18next";
 import Button from "../../../components/Button";
 import Shape from "../../../components/Shape";
 import CardText from "../components/CardText";
 import FaqItem from "../components/FaqItem";
 
 const Homepage = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       {/* Main section*/}
@@ -11,23 +14,19 @@ const Homepage = () => {
         <div className="gap-base flex flex-col items-center pt-54">
           <div className="flex items-center justify-center gap-8">
             <div className="w-3/7">
-              <h1 className="text-5xl font-bold">Learn with Lingvo</h1>
+              <h1 className="text-5xl font-bold">{t("home.title")}</h1>
               <hr className="text-brand-300 mt-base-sm w-1/5 border-3" />
-              <p className="mt-base-lg w-6/7 text-2xl">
-                Your daily assistant for language learning. Make your study more
-                comfortable and effective with everything you need. Start for
-                free.
-              </p>
+              <p className="mt-base-lg w-6/7 text-2xl">{t("home.text")}</p>
               <div className="gap-base mt-base-lg flex">
                 <Button
-                  text="Get Started"
+                  text={t("home.getStarted")}
                   type="primary"
                   theme="brand"
                   size="large"
                   onClick={() => console.log("Get started clicked")}
                 />
                 <Button
-                  text="Pricing"
+                  text={t("home.pricing")}
                   type="secondary"
                   theme="brand"
                   size="large"

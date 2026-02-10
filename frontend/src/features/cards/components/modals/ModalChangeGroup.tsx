@@ -5,6 +5,7 @@ import type { DictionaryGroupType } from "../../../dictionary/types";
 import Select from "../../../../components/Select";
 import { useDictionaryGroups } from "../../../dictionary/hooks/useDictionaryGroups";
 import type { SelectOptionType } from "../../../../types";
+import { useTranslation } from "react-i18next";
 
 type ModalChangeGroupProps = {
   group?: DictionaryGroupType;
@@ -19,6 +20,7 @@ const ModalChangeGroup = ({
   isOpen,
   closeModal,
 }: ModalChangeGroupProps) => {
+  const { t } = useTranslation();
   const [currentGroupOption, setCurrentGroupOption] = useState<
     SelectOptionType | ""
   >(group ? { value: group.id, text: group.name } : "");
@@ -28,7 +30,9 @@ const ModalChangeGroup = ({
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
-  const options: SelectOptionType[] = [{ value: "", text: "All entries" }];
+  const options: SelectOptionType[] = [
+    { value: "", text: t("cards.allEntries") },
+  ];
 
   groups?.forEach((group) => {
     options.push({ value: group.id, text: group.name });
@@ -38,10 +42,10 @@ const ModalChangeGroup = ({
     <Modal
       open={isOpen}
       closeModal={closeModal}
-      title="Change group"
+      title={t("cards.changeGroup")}
       content={[
         <div>
-          <div className="text-2xl">Group</div>
+          <div className="text-2xl">{t("group")}</div>
           <Select
             value={
               (typeof currentGroupOption !== "string" &&
@@ -60,7 +64,7 @@ const ModalChangeGroup = ({
       ]}
       buttons={[
         <Button
-          text="Change"
+          text={t("change")}
           size="large"
           autoWidth
           onClick={() => {

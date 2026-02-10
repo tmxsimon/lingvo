@@ -6,8 +6,11 @@ import Button from "../../../components/Button";
 import useCardEntry from "../hooks/useCardEntry";
 import Temperature from "../components/Temperature";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const CardsPage = () => {
+  const { t } = useTranslation();
+
   const { groupId } = useParams();
   const navigate = useNavigate();
 
@@ -34,7 +37,7 @@ const CardsPage = () => {
           className="text-gray-neutral-300 gap-base-sm flex h-8 cursor-pointer items-center text-xl"
           onClick={openModal}
         >
-          {currentGroup?.name || "No group"}
+          {currentGroup?.name || t("cards.allEntries")}
           <Icon name="change" className="size-5" />
         </div>
         {currentEntry ? (
@@ -56,7 +59,7 @@ const CardsPage = () => {
             <div className="gap-base-sm flex flex-col items-center">
               <div className="gap-base flex">
                 <Button
-                  text="Decrease"
+                  text={t("cards.decrease")}
                   onClick={() =>
                     changeTemperature.mutate({
                       action: "decrease",
@@ -65,7 +68,7 @@ const CardsPage = () => {
                 />
 
                 <Button
-                  text="Increase"
+                  text={t("cards.increase")}
                   onClick={() =>
                     changeTemperature.mutate({
                       action: "increase",
@@ -75,13 +78,13 @@ const CardsPage = () => {
               </div>
               <div className="gap-base flex items-center">
                 <Temperature value={currentEntry.temperature} />
-                <Button text="Next" onClick={handleNext} />
+                <Button text={t("cards.next")} onClick={handleNext} />
               </div>
             </div>
           </div>
         ) : (
           <div className="text-gray-neutral-300 mt-40 text-4xl">
-            Entries not found
+            {t("cards.entriesNotFound")}
           </div>
         )}
       </div>

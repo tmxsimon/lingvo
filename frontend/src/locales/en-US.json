@@ -1,0 +1,96 @@
+{
+  "translation": {
+    "add": "Add",
+    "edit": "Edit",
+    "change": "Change",
+    "delete": "Delete",
+
+    "group": "Group",
+    "entry": "Entry",
+
+    "homepage": {
+      "welcome": "Welcome to Organizer",
+      "organizerDesription": "A personal organizer for your daily tasks"
+    },
+
+    "dictionary": {
+      "dictionary": "Dictionary",
+      "addGroup": "Add group",
+      "editGroup": "Edit group",
+      "addEntry": "Add entry",
+      "editEntry": "Edit entry",
+      "name": "Name",
+      "content": "Content",
+      "translation": "Translation",
+      "note": "Note"
+    },
+
+    "cards": {
+      "cards": "Cards",
+      "allEntries": "All entries",
+      "changeGroup": "Change group",
+      "increase": "Increase",
+      "decrease": "Decrease",
+      "next": "Next",
+      "entriesNotFound": "Entries not found"
+    },
+
+    "home": {
+      "title": "Learn with Lingvo",
+      "text": "Your daily assistant for language learning. Make your study more comfortable and effective with everything you need. Start for free.",
+      "getStarted": "Get Started",
+      "pricing": "Pricing",
+
+      "cards": {
+        "title": "HOW TO USE THE APP?",
+        "subtitle1": "Learn a foreign language",
+        "subtitle2": "without pointless cramming",
+
+        "card1": {
+          "header": "Your own digital dictionary",
+          "text": "Create vocabulary lists exactly according to what you need to learn right now."
+        },
+        "card2": {
+          "header": "Audio pronunciation",
+          "text": "Don’t just read — listen too. You can play every word to hear the correct pronunciation."
+        },
+        "card3": {
+          "header": "Progress tracking",
+          "text": "Thanks to the \"Temperature\" indicator, you can clearly see which words you already know well enough to practice."
+        },
+        "card4": {
+          "header": "Comprehensive notes",
+          "text": "Write grammar summaries, cheat sheets, or full texts. Keep all your theory clearly organized next to your vocabulary."
+        }
+      },
+
+      "faq": {
+        "title": "WHAT ELSE MIGHT YOU WANT TO KNOW?",
+        "subtitle1": "Do you have questions?",
+        "subtitle2": "We have the answers.",
+        "text": "Answers to frequently asked questions that will help you better understand how the app works.",
+
+        "faq1": {
+          "question": "What is Lingvo?",
+          "answer": "Lingvo is a modern language-learning app that combines a digital dictionary, audio pronunciation, and advanced progress tracking."
+        },
+        "faq2": {
+          "question": "Is the app free?",
+          "answer": "Yes, the basic version of the app is completely free. We also offer premium features for a small fee."
+        },
+        "faq3": {
+          "question": "Who is this app for?",
+          "answer": "The app is designed for anyone who wants to learn foreign languages — from beginners to advanced learners."
+        },
+        "faq4": {
+          "question": "Does the website work on mobile and tablet?",
+          "answer": "Yes, the app is fully responsive and works on all devices — desktop, tablet, and mobile phone."
+        },
+        "faq5": {
+          "question": "Can I customize the app for any language?",
+          "answer": "Yes, you can create your own dictionaries for any language you want to study."
+        }
+      }
+    }
+  }
+}

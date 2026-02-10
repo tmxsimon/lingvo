@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./lib/i18n";
 import Homepage from "./features/home/pages/Homepage";
 import MainLayout from "./layouts/MainLayout";
 import CardsPage from "./features/cards/pages/CardsPage";

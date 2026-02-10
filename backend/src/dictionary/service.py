@@ -8,7 +8,7 @@ from dictionary.models import DictionaryEntry, EntriesGroup
 def get_entries_db(session: Session):
     entries = session.exec(select(DictionaryEntry).order_by(DictionaryEntry.id.desc())).all() 
 
-    group = EntriesGroup(id=0, name="All entries", created_at=str(datetime.now()), entries=entries)
+    group = EntriesGroup(id=0, name="", created_at=str(datetime.now()), entries=entries)
 
     return {
         "id": group.id,

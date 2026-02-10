@@ -29,6 +29,7 @@ export default function useCardEntry(id?: number) {
     .sort((a, b) => b.temperature - a.temperature);
 
   useEffect(() => {
+    setIsActive(false);
     if (sortedEntries?.length) {
       setCurrentEntry(sortedEntries[0]);
     } else {

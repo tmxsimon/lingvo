@@ -15,6 +15,10 @@ import OpenBook from "../assets/icons/open-book.svg?react";
 import Volume from "../assets/icons/volume.svg?react";
 import Flame from "../assets/icons/flame.svg?react";
 
+import English from "../assets/icons/flags/en-US.svg?react";
+import Czech from "../assets/icons/flags/cs-CZ.svg?react";
+import Russian from "../assets/icons/flags/ru-RU.svg?react";
+
 const ICONS = {
   // Common
   close: Close,
@@ -35,6 +39,11 @@ const ICONS = {
   volume: Volume,
   flame: Flame,
   fileText: Dictionary,
+
+  // Languages
+  "en-US": English,
+  "cs-CZ": Czech,
+  "ru-RU": Russian,
 };
 
 export default ICONS;

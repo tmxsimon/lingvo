@@ -1,0 +1,96 @@
+{
+  "translation": {
+    "add": "Přidat",
+    "edit": "Upravit",
+    "change": "Změnit",
+    "delete": "Smazat",
+
+    "group": "Skupina",
+    "entry": "Záznam",
+
+    "homepage": {
+      "welcome": "Vítejte v Organizeru",
+      "organizerDesription": "Osobní organizér pro vaše každodenní úkoly"
+    },
+
+    "dictionary": {
+      "dictionary": "Slovník",
+      "addGroup": "Přidat skupinu",
+      "editGroup": "Upravit skupinu",
+      "addEntry": "Přidat záznam",
+      "editEntry": "Upravit záznam",
+      "name": "Název",
+      "content": "Obsah",
+      "translation": "Překlad",
+      "note": "Poznámka"
+    },
+
+    "cards": {
+      "cards": "Kartičky",
+      "allEntries": "Všechny záznamy",
+      "changeGroup": "Změnit skupinu",
+      "increase": "Zvýšit",
+      "decrease": "Snížit",
+      "next": "Další",
+      "entriesNotFound": "Záznamy nebyly nalezeny"
+    },
+
+    "home": {
+      "title": "Učte se jazyky s Lingvo",
+      "text": "Váš každodenní pomocník při studiu jazyků. Udělejte si učení pohodlnější a efektivnější se vším, co potřebujete. Začněte zdarma.",
+      "getStarted": "Začít",
+      "pricing": "Ceník",
+
+      "cards": {
+        "title": "JAK APLIKACI POUŽÍVAT?",
+        "subtitle1": "Učte se cizí jazyk",
+        "subtitle2": "bez zbytečného biflování",
+
+        "card1": {
+          "header": "Vlastní digitální slovník",
+          "text": "Vytvářejte si seznamy slov přesně podle toho, co se potřebujete naučit právě teď."
+        },
+        "card2": {
+          "header": "Audio výslovnost",
+          "text": "Nejen čtěte — ale i poslouchejte. Každé slovo si můžete přehrát a slyšet správnou výslovnost."
+        },
+        "card3": {
+          "header": "Sledování pokroku",
+          "text": "Díky indikátoru „Teplota“ snadno uvidíte, která slova už znáte dostatečně dobře pro procvičování."
+        },
+        "card4": {
+          "header": "Přehledné poznámky",
+          "text": "Pište si gramatické přehledy, taháky nebo celé texty. Veškerá teorie bude přehledně uspořádaná vedle vaší slovní zásoby."
+        }
+      },
+
+      "faq": {
+        "title": "CO BY VÁS JEŠTĚ MOHLO ZAJÍMAT?",
+        "subtitle1": "Máte otázky?",
+        "subtitle2": "Máme odpovědi.",
+        "text": "Odpovědi na nejčastější otázky, které vám pomohou lépe pochopit, jak aplikace funguje.",
+
+        "faq1": {
+          "question": "Co je Lingvo?",
+          "answer": "Lingvo je moderní aplikace pro výuku jazyků, která kombinuje digitální slovník, audio výslovnost a pokročilé sledování pokroku."
+        },
+        "faq2": {
+          "question": "Je aplikace zdarma?",
+          "answer": "Ano, základní verze aplikace je zcela zdarma. Nabízíme také prémiové funkce za malý poplatek."
+        },
+        "faq3": {
+          "question": "Pro koho je aplikace určena?",
+          "answer": "Aplikace je určena pro každého, kdo se chce učit cizí jazyky — od začátečníků až po pokročilé."
+        },
+        "faq4": {
+          "question": "Funguje web na mobilu a tabletu?",
+          "answer": "Ano, aplikace je plně responzivní a funguje na všech zařízeních — počítačích, tabletech i mobilních telefonech."
+        },
+        "faq5": {
+          "question": "Mohu aplikaci přizpůsobit pro jakýkoli jazyk?",
+          "answer": "Ano, můžete si vytvářet vlastní slovníky pro jakýkoli jazyk, který se chcete učit."
+        }
+      }
+    }
+  }
+}

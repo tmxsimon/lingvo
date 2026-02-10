@@ -3,6 +3,7 @@ import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import type { DictionaryGroupType } from "../../types";
+import { useTranslation } from "react-i18next";
 
 type ModalEditGroupProps = {
   group: DictionaryGroupType | null;
@@ -19,6 +20,7 @@ const ModalEditGroup = ({
   editGroup,
   deleteGroup,
 }: ModalEditGroupProps) => {
+  const { t } = useTranslation();
   const [name, setName] = useState(group?.name || "");
 
   useEffect(() => {
@@ -29,10 +31,10 @@ const ModalEditGroup = ({
     <Modal
       open={isOpen}
       closeModal={closeModal}
-      title="Edit group"
+      title={t("dictionary.editGroup")}
       content={[
         <div>
-          <div className="text-2xl">Content</div>
+          <div className="text-2xl">{t("dictionary.content")}</div>
           <Input
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -46,14 +48,14 @@ const ModalEditGroup = ({
       ]}
       buttons={[
         <Button
-          text="Delete"
+          text={t("delete")}
           theme="danger"
           size="large"
           autoWidth
           onClick={() => deleteGroup(group!.id)}
         />,
         <Button
-          text="Edit"
+          text={t("edit")}
           size="large"
           autoWidth
           onClick={() => editGroup(group!.id, name || "")}

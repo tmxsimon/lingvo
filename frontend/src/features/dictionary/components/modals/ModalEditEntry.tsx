@@ -3,6 +3,7 @@ import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import type { DictionaryEntryType } from "../../types";
+import { useTranslation } from "react-i18next";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
@@ -24,6 +25,8 @@ const ModalEditEntry = ({
   editEntry,
   deleteEntry,
 }: ModalEditEntryProps) => {
+  const { t } = useTranslation();
+
   const [content, setContent] = useState(entry?.content || "");
   const [translation, setTranslation] = useState(entry?.translation || "");
   const [note, setNote] = useState(entry?.note || "");
@@ -41,7 +44,7 @@ const ModalEditEntry = ({
       title="Edit entry"
       content={[
         <div>
-          <div className="text-2xl">Content</div>{" "}
+          <div className="text-2xl">{t("dictionary.content")}</div>{" "}
           <Input
             value={content}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -53,7 +56,7 @@ const ModalEditEntry = ({
           />
         </div>,
         <div>
-          <div className="text-2xl">Translation</div>
+          <div className="text-2xl">{t("dictionary.translation")}</div>
           <Input
             value={translation}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -65,7 +68,7 @@ const ModalEditEntry = ({
           />
         </div>,
         <div>
-          <div className="text-2xl">Note</div>
+          <div className="text-2xl">{t("dictionary.note")}</div>
           <Input
             value={note}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -77,14 +80,14 @@ const ModalEditEntry = ({
       ]}
       buttons={[
         <Button
-          text="Delete"
+          text={t("delete")}
           theme="danger"
           size="large"
           autoWidth
           onClick={() => deleteEntry(entry!.id)}
         />,
         <Button
-          text="Edit"
+          text={t("edit")}
           size="large"
           autoWidth
           onClick={() =>

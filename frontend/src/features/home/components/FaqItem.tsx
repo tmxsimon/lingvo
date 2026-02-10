@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 type FaqQuestion = {
   question: string;
   answer: string;
@@ -9,7 +11,7 @@ type FaqItemProps = {
 
 const FaqItemComponent: React.FC<FaqItemProps> = ({ faq }) => {
   return (
-    <details className="borde pb-base border-b">
+    <details className="pb-base border-b">
       <summary className="py-base-sm flex cursor-pointer items-center justify-between text-base font-semibold">
         {faq.question}
         <span className="text-lg">▼</span>
@@ -19,67 +21,46 @@ const FaqItemComponent: React.FC<FaqItemProps> = ({ faq }) => {
   );
 };
 
-type FaqHeaderProps = {
-  title: string;
-  subtitle: string;
-  description: string;
-};
-
 const FaqItem: React.FC = () => {
+  const { t } = useTranslation();
+
   const faqs: FaqQuestion[] = [
     {
-      question: "What is Lingvo?",
-      answer:
-        "Lingvo is a modern language-learning app that combines a digital dictionary, audio pronunciation, and advanced progress tracking.",
+      question: t("home.faq.faq1.question"),
+      answer: t("home.faq.faq1.answer"),
     },
     {
-      question: "Is the app free?",
-      answer:
-        "Yes, the basic version of the app is completely free. We also offer premium features for a small fee.",
+      question: t("home.faq.faq2.question"),
+      answer: t("home.faq.faq2.answer"),
     },
     {
-      question: "Who is this app for?",
-      answer:
-        "The app is designed for anyone who wants to learn foreign languages — from beginners to advanced learners.",
+      question: t("home.faq.faq3.question"),
+      answer: t("home.faq.faq3.answer"),
     },
     {
-      question: "Does the website work on mobile and tablet?",
-      answer:
-        "Yes, the app is fully responsive and works on all devices — desktop, tablet, and mobile phone.",
+      question: t("home.faq.faq4.question"),
+      answer: t("home.faq.faq4.answer"),
     },
     {
-      question: "Can I customize the app for any language?",
-      answer:
-        "Yes, you can create your own dictionaries for any language you want to study.",
+      question: t("home.faq.faq5.question"),
+      answer: t("home.faq.faq5.answer"),
     },
   ];
 
-  const FaqHeader: React.FC<FaqHeaderProps> = ({
-    title,
-    subtitle,
-    description,
-  }) => {
-    return (
-      <div className="mb-base-lg text-center">
-        <p className="text-brand-300 mb-base text-xl font-semibold">{title}</p>
-        <h2 className="mb-base-lg gap-md flex flex-col text-5xl font-bold">
-          <span>{subtitle}</span>
-          <span>We have the answers.</span>
-        </h2>
-        <p className="mx-auto max-w-md text-center text-base text-neutral-400">
-          {description}
-        </p>
-      </div>
-    );
-  };
-
   return (
     <section className="w-full max-w-3xl">
-      <FaqHeader
-        title="WHAT ELSE MIGHT YOU WANT TO KNOW?"
-        subtitle="Do you have questions?"
-        description="Answers to frequently asked questions that will help you better understand how the app works."
-      />
+      <div className="mb-base-lg text-center">
+        <p className="text-brand-300 mb-base text-xl font-semibold">
+          {t("home.faq.title")}
+        </p>
+        <h2 className="mb-base-lg gap-md flex flex-col text-5xl font-bold">
+          <span>{t("home.faq.subtitle1")}</span>
+          <span>{t("home.faq.subtitle2")}</span>
+        </h2>
+        <p className="mx-auto max-w-md text-center text-base text-neutral-400">
+          {t("home.faq.text")}
+        </p>
+      </div>
 
       <div className="space-y-base">
         {faqs.map((faq) => (

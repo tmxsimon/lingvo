@@ -6,8 +6,11 @@ import DictionaryGroup from "../components/DictionaryGroup";
 import ModalAddGroup from "../components/modals/ModalAddGroup";
 import ModalEditGroup from "../components/modals/ModalEditGroup";
 import type { DictionaryGroupType } from "../types";
+import { useTranslation } from "react-i18next";
 
 const DictionaryGroupsPage = () => {
+  const { t } = useTranslation();
+
   const [chosenGroup, setChosenGroup] = useState<DictionaryGroupType | null>(
     null,
   );
@@ -32,7 +35,11 @@ const DictionaryGroupsPage = () => {
   return (
     <>
       <div className="flex flex-col items-center pt-32">
-        <Button text="Add group" size="large" onClick={openModalGroupsAdd} />
+        <Button
+          text={t("dictionary.addGroup")}
+          size="large"
+          onClick={openModalGroupsAdd}
+        />
         <div className="mt-base flex flex-col items-center gap-2">
           {groups?.map((group) => (
             <DictionaryGroup
