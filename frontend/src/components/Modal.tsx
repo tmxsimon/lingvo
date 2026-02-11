@@ -20,7 +20,7 @@ const Modal = ({
   return (
     <>
       {open && (
-        <div className="absolute z-50 flex h-screen w-screen items-center justify-center backdrop-brightness-70">
+        <div className="absolute top-0 z-50 flex h-screen w-screen items-center justify-center backdrop-brightness-70">
           <div className="bg-brand-neutral-100 border-brand-neutral-200 rounded-base px-base pb-base-lg relative flex h-136 w-112 flex-col justify-between border pt-12">
             <div className="top-base text-brand-neutral-300 absolute self-center">
               {title}

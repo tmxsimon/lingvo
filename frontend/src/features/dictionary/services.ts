@@ -3,11 +3,9 @@ import type { DictionaryGroupType, DictionaryEntryType } from "./types";
 
 const PATH = "/dictionary";
 
-export const fetchGroup = async (id?: number) => {
-  const response = await api.get<DictionaryGroupType>(
-    `${PATH}/${id ? `groups/${id}` : "entries"}`,
-  );
-  return response.data;
+export const fetchGroup = async (id: number) => {
+  const result = await api.get<DictionaryGroupType>(`${PATH}/groups/${id}`);
+  return result.data;
 };
 
 export const fetchGroups = async () => {
@@ -15,9 +13,12 @@ export const fetchGroups = async () => {
   return result.data;
 };
 
-export const fetchGroupEntries = async (id?: number) => {
-  const result = await api.get<DictionaryEntryType[]>(
-    `${PATH}/${id ? `groups/${id}/` : ""}entries`, // if there's group id get group entries otherwise entries without group
-  );
+export const fetchGroupEntries = async (id: number) => {
+  const result = await api.get<DictionaryGroupType>(`${PATH}/groups/${id}`);
+  return result.data;
+};
+
+export const fetchEntries = async () => {
+  const result = await api.get<DictionaryGroupType>(`${PATH}/entries`);
   return result.data;
 };

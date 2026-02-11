@@ -7,6 +7,7 @@ import useCardEntry from "../hooks/useCardEntry";
 import Temperature from "../components/Temperature";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import Loading from "../../../components/Loading";
 
 const CardsPage = () => {
   const { t } = useTranslation();
@@ -27,12 +28,12 @@ const CardsPage = () => {
     error,
   } = useCardEntry(groupId ? Number.parseInt(groupId!) : undefined);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
 
   return (
     <>
-      <div className="pb-base-lg flex h-screen flex-col items-center pt-38">
+      <div className="pb-base-lg h-screen-no-navbar flex flex-col items-center">
         <div
           className="text-gray-neutral-300 gap-base-sm flex h-8 cursor-pointer items-center text-xl"
           onClick={openModal}

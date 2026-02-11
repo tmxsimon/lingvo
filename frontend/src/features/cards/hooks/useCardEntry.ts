@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import type { DictionaryEntryType } from "../../dictionary/types";
-import { fetchGroup } from "../../dictionary/services";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { fetchEntries, fetchGroupEntries } from "../../dictionary/services";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import api from "../../../lib/api";
 
 const PATH = "/dictionary";
 
-export default function useCardEntry(id?: number) {
-  const queryClient = useQueryClient();
-
+// the code is quite trash i generated most of it with ai... but it works
+// TODO: fix the code 😭
+export default function useCardEntry(groupId?: number) {
   const {
     data: group,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["group", id],
-    queryFn: () => fetchGroup(id),
+    queryKey: ["group", groupId && groupId],
+    queryFn: () => (groupId ? fetchGroupEntries(groupId) : fetchEntries()),
   });
 
   const [currentEntry, setCurrentEntry] = useState<
@@ -29,12 +29,17 @@ export default function useCardEntry(id?: number) {
     .sort((a, b) => b.temperature - a.temperature);
 
   useEffect(() => {
-    setIsActive(false);
-    if (sortedEntries?.length) {
-      setCurrentEntry(sortedEntries[0]);
-    } else {
+    if (!sortedEntries?.length) {
       setCurrentEntry(undefined);
+      return;
     }
+    setIsActive(false);
+    setCurrentEntry((prev) => {
+      if (prev && sortedEntries.some((e) => e.id === prev.id)) {
+        return prev;
+      }
+      return sortedEntries[0];
+    });
   }, [group]);
 
   const handleNext = () => {

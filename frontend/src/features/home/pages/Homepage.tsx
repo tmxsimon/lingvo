@@ -10,9 +10,9 @@ const Homepage = () => {
   return (
     <>
       {/* Main section*/}
-      <div className="relative pb-96">
-        <div className="gap-base flex flex-col items-center pt-54">
-          <div className="flex items-center justify-center gap-8">
+      <div className="relative">
+        <div className="gap-base h-screen-no-navbar flex flex-col items-center justify-center">
+          <div className="mb-after-navbar flex items-center justify-center gap-8">
             <div className="w-3/7">
               <h1 className="text-5xl font-bold">{t("home.title")}</h1>
               <hr className="text-brand-300 mt-base-sm w-1/5 border-3" />

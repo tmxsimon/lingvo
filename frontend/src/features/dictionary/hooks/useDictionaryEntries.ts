@@ -4,11 +4,11 @@ import { fetchGroupEntries } from "../services";
 
 const PATH = "/dictionary";
 
-export function useDictionaryEntries(groupId?: number) {
+export function useDictionaryEntries(groupId: number) {
   const queryClient = useQueryClient();
 
   const {
-    data: entries,
+    data: group,
     isLoading,
     error,
   } = useQuery({
@@ -67,7 +67,7 @@ export function useDictionaryEntries(groupId?: number) {
   });
 
   return {
-    entries,
+    group,
     isLoading,
     error,
     addEntry,

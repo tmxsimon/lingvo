@@ -6,19 +6,16 @@ import DictionaryEntry from "../components/DictionaryEntry";
 import ModalAddEntry from "../components/modals/ModalAddEntry";
 import ModalEditEntry from "../components/modals/ModalEditEntry";
 import { useDictionaryEntries } from "../hooks/useDictionaryEntries";
-import type { DictionaryEntryType, DictionaryGroupType } from "../types";
+import type { DictionaryEntryType } from "../types";
 import Icon from "../../../components/Icon";
 import { Link, useParams } from "react-router-dom";
-import { useDictionaryGroup } from "../hooks/useDictionaryGroup";
 import { useTranslation } from "react-i18next";
+import Loading from "../../../components/Loading";
 
 const DictionaryWordsPage = () => {
   const { t } = useTranslation();
 
   const { groupId } = useParams();
-
-  const { group: currentGroup } = useDictionaryGroup(Number.parseInt(groupId!));
-
   const [chosenEntry, setChosenEntry] = useState<DictionaryEntryType | null>(
     null,
   );
@@ -34,43 +31,44 @@ const DictionaryWordsPage = () => {
     closeModal: closeModalEntriesEdit,
   } = useModal();
 
-  const { entries, addEntry, editEntry, deleteEntry, isLoading, error } =
-    useDictionaryEntries(currentGroup?.id);
+  const { group, addEntry, editEntry, deleteEntry, isLoading, error } =
+    useDictionaryEntries(Number.parseInt(groupId!));
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
 
   return (
     <>
-      <div className="flex flex-col items-center pt-32">
+      <div className="flex flex-col items-center">
         <Button
           text={t("dictionary.addEntry")}
           size="large"
           onClick={openModalEntriesAdd}
         />
         <div className="mt-base flex flex-col items-center gap-2">
-          {currentGroup && (
+          {group && (
             <Link
               to={"/dictionary"}
               className="my-base-sm text-gray-neutral-300 flex cursor-pointer items-center gap-1 text-xl"
             >
-              {currentGroup.name}
+              {group.name}
               <Icon name="close" className="size-5 stroke-2" />
             </Link>
           )}
 
-          {entries?.map((entry) => (
-            <DictionaryEntry
-              key={entry.id}
-              content={entry.content}
-              translation={entry.translation}
-              note={entry.note}
-              onClickSettings={() => {
-                setChosenEntry(entry);
-                openModalEntriesEdit();
-              }}
-            />
-          ))}
+          {group &&
+            group?.entries.map((entry) => (
+              <DictionaryEntry
+                key={entry.id}
+                content={entry.content}
+                translation={entry.translation}
+                note={entry.note}
+                onClickSettings={() => {
+                  setChosenEntry(entry);
+                  openModalEntriesEdit();
+                }}
+              />
+            ))}
         </div>
       </div>
 

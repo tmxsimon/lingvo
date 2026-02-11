@@ -7,6 +7,7 @@ import ModalAddGroup from "../components/modals/ModalAddGroup";
 import ModalEditGroup from "../components/modals/ModalEditGroup";
 import type { DictionaryGroupType } from "../types";
 import { useTranslation } from "react-i18next";
+import Loading from "../../../components/Loading";
 
 const DictionaryGroupsPage = () => {
   const { t } = useTranslation();
@@ -29,12 +30,12 @@ const DictionaryGroupsPage = () => {
   const { groups, addGroup, editGroup, deleteGroup, isLoading, error } =
     useDictionaryGroups();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
 
   return (
     <>
-      <div className="flex flex-col items-center pt-32">
+      <div className="flex flex-col items-center">
         <Button
           text={t("dictionary.addGroup")}
           size="large"
