@@ -34,7 +34,14 @@
       "next": "Další",
       "entriesNotFound": "Záznamy nebyly nalezeny"
     },
-
+    "notebook": {
+      "notebook": "Sešit",
+      "myNotes": "Moje poznámky",
+      "description": "Organizujte svou cestu učením se s krásně strukturovanými poznámkami",
+      "addNote": "Přidat poznámku",
+      "search": "Hledat poznámky...",
+      "filter": "Filtr"
+    },
     "home": {
       "title": "Učte se jazyky s Lingvo",
       "text": "Váš každodenní pomocník při studiu jazyků. Udělejte si učení pohodlnější a efektivnější se vším, co potřebujete. Začněte zdarma.",

@@ -5,6 +5,7 @@ import MainLayout from "./layouts/MainLayout";
 import CardsPage from "./features/cards/pages/CardsPage";
 import DictionaryGroupsPage from "./features/dictionary/pages/DictionaryGroupsPage";
 import DictionaryWordsPage from "./features/dictionary/pages/DictionaryWordsPage";
+import NotebookPage from "./features/notebook/pages/NotebookPage";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
             <Route path=":groupId" element={<DictionaryWordsPage />} />
           </Route>
           <Route path="/cards/:groupId?" element={<CardsPage />} />
+        <Route path="/notebook" element={<NotebookPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

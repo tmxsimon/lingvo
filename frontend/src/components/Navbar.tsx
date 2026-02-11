@@ -31,6 +31,9 @@ const Navbar = () => {
           <Link to="/cards">
             <Icon className="hover:text-brand-300 size-8" name="cards" />
           </Link>
+          <Link to="/notebook">
+            <Icon className="hover:text-brand-300 size-8" name="openBook" />
+          </Link>
           <Link to="/dictionary">
             <Icon className="hover:text-brand-300 size-8" name="dictionary" />
           </Link>
