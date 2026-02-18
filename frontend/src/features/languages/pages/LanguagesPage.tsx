@@ -42,7 +42,11 @@ const LanguagesPage = () => {
   return (
     <>
       <div className="flex flex-col items-center">
-        <Button text={"Add language"} size="large" onClick={openModalAdd} />
+        <Button
+          text={t("languages.addLanguage")}
+          size="large"
+          onClick={openModalAdd}
+        />
         <div className="space-y-base mt-base">
           <div className="w text-center text-2xl">
             {t("languages.yourLanguages")}

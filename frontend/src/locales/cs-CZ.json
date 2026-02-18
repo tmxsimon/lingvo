@@ -35,6 +35,14 @@
       "entriesNotFound": "Záznamy nebyly nalezeny"
     },
 
+    "languages": {
+      "yourLanguages": "Vaše jazyky",
+      "addLanguage": "Přidat jazyk",
+      "editLanguage": "Upravit jazyk",
+      "name": "Název",
+      "image": "Obrázek"
+    },
+
     "home": {
       "title": "Učte se jazyky s Lingvo",
       "text": "Váš každodenní pomocník při studiu jazyků. Udělejte si učení pohodlnější a efektivnější se vším, co potřebujete. Začněte zdarma.",
