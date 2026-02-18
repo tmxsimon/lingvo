@@ -3,7 +3,7 @@ import { fetchGroup } from "../services";
 
 const PATH = "/dictionary";
 
-export function useDictionaryGroup(id: number) {
+export function useDictionaryGroup(id: number, language: string) {
   const queryClient = useQueryClient();
 
   const {
@@ -11,8 +11,8 @@ export function useDictionaryGroup(id: number) {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["group"],
-    queryFn: () => fetchGroup(id),
+    queryKey: ["group", id, language],
+    queryFn: () => fetchGroup(id, language),
   });
 
   return {

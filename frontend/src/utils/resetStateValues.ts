@@ -2,10 +2,10 @@ import type React from "react";
 
 const resetStateValues = (
   setters: React.Dispatch<React.SetStateAction<any>>[],
-  setValue: any = "",
+  value: any = "",
 ) => {
   setters.forEach((setter) => {
-    setter(setValue);
+    setter(value);
   });
 };
 

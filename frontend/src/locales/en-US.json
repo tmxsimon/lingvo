@@ -35,6 +35,14 @@
       "entriesNotFound": "Entries not found"
     },
 
+    "languages": {
+      "yourLanguages": "Your languages",
+      "addLanguage": "Add language",
+      "editLanguage": "Edit language",
+      "name": "Name",
+      "image": "Image"
+    },
+
     "home": {
       "title": "Learn with Lingvo",
       "text": "Your daily assistant for language learning. Make your study more comfortable and effective with everything you need. Start for free.",

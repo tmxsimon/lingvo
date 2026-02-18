@@ -2,37 +2,51 @@ import { useState } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
-import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
 
-type ModalAddGroupProps = {
+type ModalAddLanguageProps = {
   isOpen: boolean;
   closeModal: () => void;
-  addGroup: (name: string) => void;
+  addLanguage: (name: string, image: File) => void;
 };
 
-const ModalAddGroup = ({
+const ModalAddLanguage = ({
   isOpen,
   closeModal,
-  addGroup,
-}: ModalAddGroupProps) => {
+  addLanguage,
+}: ModalAddLanguageProps) => {
   const { t } = useTranslation();
+
   const [name, setName] = useState<string>("");
+  const [image, setImage] = useState<File | null>(null);
 
   return (
     <Modal
       open={isOpen}
       closeModal={closeModal}
-      title={t("dictionary.addGroup")}
+      title={t("languages.addLanguage")}
       content={[
         <div>
-          <div className="text-2xl">{t("dictionary.name")}</div>
+          <div className="text-2xl">{t("languages.name")}</div>
           <Input
             minLength={1}
             maxLength={30}
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+        </div>,
+        <div>
+          <div className="text-2xl">{t("languages.image")}</div>
+          <Input
+            minLength={1}
+            type="file"
+            accept="image/*"
+            required
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              const file = e.target.files?.[0] || null;
+              setImage(file);
+            }}
           />
         </div>,
       ]}
@@ -42,8 +56,9 @@ const ModalAddGroup = ({
           size="large"
           autoWidth
           onClick={() => {
-            addGroup(name || "");
-            resetStateValues([setName]);
+            addLanguage(name, image!);
+            setName("");
+            setImage(null);
             closeModal();
           }}
         />,
@@ -52,4 +67,4 @@ const ModalAddGroup = ({
   );
 };
 
-export default ModalAddGroup;
+export default ModalAddLanguage;

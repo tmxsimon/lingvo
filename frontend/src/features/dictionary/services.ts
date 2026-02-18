@@ -3,22 +3,30 @@ import type { DictionaryGroupType, DictionaryEntryType } from "./types";
 
 const PATH = "/dictionary";
 
-export const fetchGroup = async (id: number) => {
-  const result = await api.get<DictionaryGroupType>(`${PATH}/groups/${id}`);
+export const fetchGroup = async (id: number, language: string) => {
+  const result = await api.get<DictionaryGroupType>(
+    `${PATH}/${language}/groups/${id}`,
+  );
   return result.data;
 };
 
-export const fetchGroups = async () => {
-  const result = await api.get<DictionaryGroupType[]>(`${PATH}/groups`);
+export const fetchGroups = async (language: string) => {
+  const result = await api.get<DictionaryGroupType[]>(
+    `${PATH}/${language}/groups`,
+  );
   return result.data;
 };
 
-export const fetchGroupEntries = async (id: number) => {
-  const result = await api.get<DictionaryGroupType>(`${PATH}/groups/${id}`);
+export const fetchGroupEntries = async (id: number, language: string) => {
+  const result = await api.get<DictionaryGroupType>(
+    `${PATH}/${language}/groups/${id}`,
+  );
   return result.data;
 };
 
-export const fetchEntries = async () => {
-  const result = await api.get<DictionaryGroupType>(`${PATH}/entries`);
+export const fetchEntries = async (language: string) => {
+  const result = await api.get<DictionaryGroupType>(
+    `${PATH}/${language}/entries`,
+  );
   return result.data;
 };

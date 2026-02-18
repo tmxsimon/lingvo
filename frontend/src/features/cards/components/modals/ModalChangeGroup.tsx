@@ -6,9 +6,11 @@ import Select from "../../../../components/Select";
 import { useDictionaryGroups } from "../../../dictionary/hooks/useDictionaryGroups";
 import type { SelectOptionType } from "../../../../types";
 import { useTranslation } from "react-i18next";
+import Loading from "../../../../components/Loading";
 
 type ModalChangeGroupProps = {
   group?: DictionaryGroupType;
+  language: string;
   changeGroupId: (id: number | "") => void;
   isOpen: boolean;
   closeModal: () => void;
@@ -16,6 +18,7 @@ type ModalChangeGroupProps = {
 
 const ModalChangeGroup = ({
   group,
+  language,
   changeGroupId,
   isOpen,
   closeModal,
@@ -25,9 +28,9 @@ const ModalChangeGroup = ({
     SelectOptionType | ""
   >(group ? { value: group.id, text: group.name } : "");
 
-  const { groups, isLoading, error } = useDictionaryGroups();
+  const { groups, isLoading, error } = useDictionaryGroups(language);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
 
   const options: SelectOptionType[] = [
@@ -73,6 +76,7 @@ const ModalChangeGroup = ({
                 (currentGroupOption?.value as number)) ||
                 "",
             );
+            closeModal();
           }}
         />,
       ]}

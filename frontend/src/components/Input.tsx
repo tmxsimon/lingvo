@@ -12,7 +12,7 @@ const Input = ({ placeholder, className, ...inputProps }: InputProps) => {
       className={`p-base-sm rounded-base-xs border-brand-neutral-200 bg-bg w-full border ${className}`}
       placeholder={placeholder}
       {...inputProps}
-    ></input>
+    />
   );
 };
 

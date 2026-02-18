@@ -8,9 +8,12 @@ import Temperature from "../components/Temperature";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
+import { useLanguageContext } from "../../languages/contexts/languageProvider";
 
 const CardsPage = () => {
   const { t } = useTranslation();
+
+  const { language } = useLanguageContext();
 
   const { groupId } = useParams();
   const navigate = useNavigate();
@@ -26,7 +29,7 @@ const CardsPage = () => {
     changeTemperature,
     isLoading,
     error,
-  } = useCardEntry(groupId ? Number.parseInt(groupId!) : undefined);
+  } = useCardEntry(groupId ? Number.parseInt(groupId!) : null, language!);
 
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
@@ -93,10 +96,10 @@ const CardsPage = () => {
       {/* modals */}
       <ModalChangeGroup
         group={currentGroup}
-        changeGroupId={async (id: number | "") => {
-          navigate(`/cards/${id}`);
-          closeModal();
-        }}
+        language={language!}
+        changeGroupId={async (id: number | "") =>
+          navigate(`/${language}/cards/${id}`)
+        }
         isOpen={isOpen}
         closeModal={closeModal}
       />

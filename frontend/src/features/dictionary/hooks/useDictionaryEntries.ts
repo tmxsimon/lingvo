@@ -4,7 +4,7 @@ import { fetchGroupEntries } from "../services";
 
 const PATH = "/dictionary";
 
-export function useDictionaryEntries(groupId: number) {
+export function useDictionaryEntries(groupId: number, language: string) {
   const queryClient = useQueryClient();
 
   const {
@@ -12,8 +12,8 @@ export function useDictionaryEntries(groupId: number) {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["entries", groupId],
-    queryFn: () => fetchGroupEntries(groupId),
+    queryKey: ["entries", groupId, language],
+    queryFn: () => fetchGroupEntries(groupId, language),
   });
 
   const addEntry = useMutation({
@@ -26,7 +26,7 @@ export function useDictionaryEntries(groupId: number) {
       translation: string;
       note?: string;
     }) =>
-      api.post(`${PATH}/entries`, null, {
+      api.post(`${PATH}/${language}/entries`, null, {
         params: {
           content: content,
           translation: translation,
@@ -51,7 +51,7 @@ export function useDictionaryEntries(groupId: number) {
       translation?: string;
       note?: string;
     }) =>
-      api.put(`${PATH}/entries/${id}`, null, {
+      api.put(`${PATH}/${language}/entries/${id}`, null, {
         params: { content: content, translation: translation, note: note },
       }),
     onSuccess: () => {
@@ -60,7 +60,7 @@ export function useDictionaryEntries(groupId: number) {
   });
 
   const deleteEntry = useMutation({
-    mutationFn: (id: number) => api.delete(`${PATH}/entries/${id}`),
+    mutationFn: (id: number) => api.delete(`${PATH}/${language}/entries/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["entries"] });
     },

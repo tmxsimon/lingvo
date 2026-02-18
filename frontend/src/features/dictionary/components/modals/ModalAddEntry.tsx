@@ -18,9 +18,9 @@ const ModalAddEntry = ({
 }: ModalAddEntryProps) => {
   const { t } = useTranslation();
 
-  const [content, setContent] = useState<string>();
-  const [translation, setTranslation] = useState<string>();
-  const [note, setNote] = useState<string>();
+  const [content, setContent] = useState<string>("");
+  const [translation, setTranslation] = useState<string>("");
+  const [note, setNote] = useState<string>("");
 
   return (
     <Modal
@@ -65,6 +65,7 @@ const ModalAddEntry = ({
           onClick={() => {
             addEntry(content || "", translation || "", note);
             resetStateValues([setContent, setTranslation, setNote]);
+            closeModal();
           }}
         />,
       ]}

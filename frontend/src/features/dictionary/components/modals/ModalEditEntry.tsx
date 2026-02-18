@@ -84,15 +84,19 @@ const ModalEditEntry = ({
           theme="danger"
           size="large"
           autoWidth
-          onClick={() => deleteEntry(entry!.id)}
+          onClick={() => {
+            deleteEntry(entry!.id);
+            closeModal();
+          }}
         />,
         <Button
           text={t("edit")}
           size="large"
           autoWidth
-          onClick={() =>
-            editEntry(entry!.id, content || "", translation || "", note)
-          }
+          onClick={() => {
+            editEntry(entry!.id, content || "", translation || "", note);
+            closeModal();
+          }}
         />,
       ]}
     />

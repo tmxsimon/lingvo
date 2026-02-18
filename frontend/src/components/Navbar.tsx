@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Icon from "./Icon";
 import { useTheme } from "../contexts/themeProvider";
 import { switchLanguage } from "../utils/switchLanguage";
 import i18n from "../lib/i18n";
 import type ICONS from "../constants/icons";
 import { useState } from "react";
+import { useLanguageContext } from "../features/languages/contexts/languageProvider";
 
 const Navbar = () => {
+  const { language } = useLanguageContext();
+
   const { theme, toggleTheme } = useTheme();
   const [lng, setLng] = useState(i18n.language);
 
@@ -28,11 +31,21 @@ const Navbar = () => {
             name={theme === "dark" ? "moon" : "sun"}
             onClick={toggleTheme}
           ></Icon>
-          <Link to="/cards">
-            <Icon className="hover:text-brand-300 size-8" name="cards" />
-          </Link>
-          <Link to="/dictionary">
-            <Icon className="hover:text-brand-300 size-8" name="dictionary" />
+          {language && (
+            <>
+              <Link to="/cards">
+                <Icon className="hover:text-brand-300 size-8" name="cards" />
+              </Link>
+              <Link to="/dictionary">
+                <Icon
+                  className="hover:text-brand-300 size-8"
+                  name="dictionary"
+                />
+              </Link>
+            </>
+          )}
+          <Link to="/languages">
+            <Icon className="hover:text-brand-300 size-8" name="languages" />
           </Link>
         </div>
       </nav>

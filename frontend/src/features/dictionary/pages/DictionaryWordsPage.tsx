@@ -11,11 +11,17 @@ import Icon from "../../../components/Icon";
 import { Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
+import { useLanguageContext } from "../../languages/contexts/languageProvider";
 
 const DictionaryWordsPage = () => {
   const { t } = useTranslation();
 
-  const { groupId } = useParams();
+  const { groupId } = useParams<{
+    groupId: string;
+  }>();
+
+  const { language } = useLanguageContext();
+
   const [chosenEntry, setChosenEntry] = useState<DictionaryEntryType | null>(
     null,
   );
@@ -32,7 +38,7 @@ const DictionaryWordsPage = () => {
   } = useModal();
 
   const { group, addEntry, editEntry, deleteEntry, isLoading, error } =
-    useDictionaryEntries(Number.parseInt(groupId!));
+    useDictionaryEntries(Number.parseInt(groupId!), language!);
 
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
@@ -78,10 +84,9 @@ const DictionaryWordsPage = () => {
       <ModalAddEntry
         isOpen={isOpenEntriesAdd}
         closeModal={closeModalEntriesAdd}
-        addEntry={(content: string, translation: string, note?: string) => {
-          addEntry.mutate({ content, translation, note });
-          closeModalEntriesAdd();
-        }}
+        addEntry={(content: string, translation: string, note?: string) =>
+          addEntry.mutate({ content, translation, note })
+        }
       />
       <ModalEditEntry
         entry={chosenEntry!}
@@ -92,14 +97,8 @@ const DictionaryWordsPage = () => {
           content: string,
           translation: string,
           note?: string,
-        ) => {
-          editEntry.mutate({ id, content, translation, note });
-          closeModalEntriesEdit();
-        }}
-        deleteEntry={() => {
-          deleteEntry.mutate(chosenEntry!.id);
-          closeModalEntriesEdit();
-        }}
+        ) => editEntry.mutate({ id, content, translation, note })}
+        deleteEntry={() => deleteEntry.mutate(chosenEntry!.id)}
       />
     </>
   );

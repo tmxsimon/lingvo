@@ -52,13 +52,19 @@ const ModalEditGroup = ({
           theme="danger"
           size="large"
           autoWidth
-          onClick={() => deleteGroup(group!.id)}
+          onClick={() => {
+            deleteGroup(group!.id);
+            closeModal();
+          }}
         />,
         <Button
           text={t("edit")}
           size="large"
           autoWidth
-          onClick={() => editGroup(group!.id, name || "")}
+          onClick={() => {
+            editGroup(group!.id, name || "");
+            closeModal();
+          }}
         />,
       ]}
     />

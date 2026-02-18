@@ -8,9 +8,13 @@ import ModalEditGroup from "../components/modals/ModalEditGroup";
 import type { DictionaryGroupType } from "../types";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
+import { useParams } from "react-router-dom";
+import { useLanguageContext } from "../../languages/contexts/languageProvider";
 
 const DictionaryGroupsPage = () => {
   const { t } = useTranslation();
+
+  const { language } = useLanguageContext();
 
   const [chosenGroup, setChosenGroup] = useState<DictionaryGroupType | null>(
     null,
@@ -28,7 +32,7 @@ const DictionaryGroupsPage = () => {
   } = useModal();
 
   const { groups, addGroup, editGroup, deleteGroup, isLoading, error } =
-    useDictionaryGroups();
+    useDictionaryGroups(language!);
 
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
@@ -71,12 +75,8 @@ const DictionaryGroupsPage = () => {
         closeModal={closeModalGroupsEdit}
         editGroup={(id: number, name: string) => {
           editGroup.mutate({ id, name });
-          closeModalGroupsEdit();
         }}
-        deleteGroup={() => {
-          deleteGroup.mutate(chosenGroup!.id);
-          closeModalGroupsEdit();
-        }}
+        deleteGroup={() => deleteGroup.mutate(chosenGroup!.id)}
       />
     </>
   );

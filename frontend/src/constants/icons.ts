@@ -10,6 +10,7 @@ import ArrowRight from "../assets/icons/arrow-right.svg?react";
 import Info from "../assets/icons/info.svg?react";
 import Sun from "../assets/icons/sun.svg?react";
 import Moon from "../assets/icons/moon.svg?react";
+import Languages from "../assets/icons/languages.svg?react";
 
 import OpenBook from "../assets/icons/open-book.svg?react";
 import Volume from "../assets/icons/volume.svg?react";
@@ -33,6 +34,7 @@ const ICONS = {
   info: Info,
   sun: Sun,
   moon: Moon,
+  languages: Languages,
 
   // CardText icons
   openBook: OpenBook,

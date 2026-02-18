@@ -1,3 +1,5 @@
 __pycache__
 .venv
 *.db
+src/uploads/user_uploads/*
+!src/uploads/user_uploads/README.md

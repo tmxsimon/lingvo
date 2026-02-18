@@ -5,8 +5,8 @@ from dictionary.models import DictionaryEntry, EntriesGroup
 
 # entries
 
-def get_entries_db(session: Session):
-    entries = session.exec(select(DictionaryEntry).order_by(DictionaryEntry.id.desc())).all() 
+def get_entries_db(session: Session, language: str):
+    entries = session.exec(select(DictionaryEntry).where(DictionaryEntry.language_name == language).order_by(DictionaryEntry.id.desc())).all() 
 
     group = EntriesGroup(id=0, name="", created_at=str(datetime.now()), entries=entries)
 
@@ -17,6 +17,7 @@ def get_entries_db(session: Session):
         "entries": [
             {
                 "id": e.id,
+                "language_name": e.language_name,
                 "content": e.content,
                 "translation": e.translation,
                 "note": e.note,
@@ -28,11 +29,12 @@ def get_entries_db(session: Session):
     }
         
 
-def get_entries_by_group_db(session: Session, group_id: int):
-    return session.exec(select(DictionaryEntry).where(DictionaryEntry.group_id == group_id).order_by(DictionaryEntry.id.desc())).all() 
+def get_entries_by_group_db(session: Session, group_id: int, language: str):
+    return session.exec(select(DictionaryEntry).where(DictionaryEntry.group_id == group_id and DictionaryEntry.language_name == language).order_by(DictionaryEntry.id.desc())).all() 
 
 def create_entry_db(
     session: Session,
+    language: str,
     content: str,
     translation: str,
     temperature: int,
@@ -40,11 +42,12 @@ def create_entry_db(
     note: str | None = None,
 ):
     
-    group = session.get(EntriesGroup, group_id)
+    group = session.exec(select(EntriesGroup).where(EntriesGroup.id == group_id and EntriesGroup.language_name == language)).first()
     if group is None:
         return None
 
     entry = DictionaryEntry(
+        language_name=group.language_name,
         content=content,
         translation=translation,
         note=note,
@@ -61,8 +64,8 @@ def create_entry_db(
     return entry
 
 
-def delete_entry_db(session: Session, id: int):
-    entry = session.get(DictionaryEntry, id)
+def delete_entry_db(session: Session,  id: int, language: str):
+    entry = session.exec(select(DictionaryEntry).where(DictionaryEntry.id == id and DictionaryEntry.language_name == language)).first()
     if entry is None:
         return None
 
@@ -74,16 +77,19 @@ def delete_entry_db(session: Session, id: int):
 def update_entry_db(
     session: Session,
     id: int,
+    language: str,
     content: str | None = None,
     translation: str | None = None,
     note: str | None = None,
     temperature: int | None = None,
     group_id: int | None = None
 ):
-    entry = session.get(DictionaryEntry, id)
+    entry = session.exec(select(DictionaryEntry).where(DictionaryEntry.id == id and DictionaryEntry.language_name == language)).first()
     if entry is None:
         return None
 
+    if entry.language != language:
+        return None
     if content:
         entry.content = content
     if translation:
@@ -108,10 +114,11 @@ class TemperatureActionEnum(str, Enum):
 def change_temperature_db(
     session: Session,
     id: int,
+    language: str,
     action: TemperatureActionEnum,
     step: int,
 ):
-    entry = session.get(DictionaryEntry, id)
+    entry = session.exec(select(DictionaryEntry).where(DictionaryEntry.id == id and DictionaryEntry.language_name == language)).first()
     if entry is None:
         return None
     
@@ -134,8 +141,8 @@ def change_temperature_db(
 
 # groups
 
-def get_group_db(session: Session, id: int):
-    group = session.exec(select(EntriesGroup).where(EntriesGroup.id == id)).first()
+def get_group_db(session: Session, id: int, language: str):
+    group = session.exec(select(EntriesGroup).where(EntriesGroup.id == id and EntriesGroup.language_name == language)).first()
 
     return {
         "id": group.id,
@@ -144,6 +151,7 @@ def get_group_db(session: Session, id: int):
         "entries": [
             {
                 "id": e.id,
+                "language_name": e.language_name,
                 "content": e.content,
                 "translation": e.translation,
                 "note": e.note,
@@ -156,14 +164,15 @@ def get_group_db(session: Session, id: int):
 
 
 
-def get_groups_db(session: Session):
-    return session.exec(select(EntriesGroup).order_by(EntriesGroup.id.desc())).all()
+def get_groups_db(session: Session, language: str):
+    return session.exec(select(EntriesGroup).where(EntriesGroup.language_name == language).order_by(EntriesGroup.id.desc())).all()
 
 def create_group_db(
     session: Session,
     name: str,
+    language: str,
 ):
-    group = EntriesGroup(name=name)
+    group = EntriesGroup(language_name=language, name=name)
 
     if group is None:
         return None
@@ -176,9 +185,10 @@ def create_group_db(
 
 def delete_group_db(
     session: Session,
-    id: int
+    id: int,
+    language: str,
 ):
-    group = session.get(EntriesGroup, id)
+    group = session.exec(select(EntriesGroup).where(EntriesGroup.id == id and EntriesGroup.language_name == language)).first()
     if group is None:
         return None
 
@@ -190,12 +200,15 @@ def delete_group_db(
 def update_group_db(
     session: Session,
     id: int,
+    language: str,
     name: str | None = None
 ):
-    group = session.get(EntriesGroup, id)
+    group = session.exec(select(EntriesGroup).where(EntriesGroup.id == id and EntriesGroup.language_name == language)).first()
     if group is None:
         return None
 
+    if language:
+        group.language_name = language
     if name:
         group.name = name
 

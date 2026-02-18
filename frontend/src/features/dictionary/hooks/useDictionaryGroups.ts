@@ -4,7 +4,7 @@ import { fetchGroups } from "../services";
 
 const PATH = "/dictionary";
 
-export function useDictionaryGroups() {
+export function useDictionaryGroups(language: string) {
   const queryClient = useQueryClient();
 
   const {
@@ -12,13 +12,13 @@ export function useDictionaryGroups() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["groups"],
-    queryFn: () => fetchGroups(),
+    queryKey: ["groups", language],
+    queryFn: () => fetchGroups(language),
   });
 
   const addGroup = useMutation({
     mutationFn: ({ name }: { name: string }) =>
-      api.post(`${PATH}/groups`, null, {
+      api.post(`${PATH}/${language}/groups`, null, {
         params: { name: name },
       }),
     onSuccess: () => {
@@ -28,7 +28,7 @@ export function useDictionaryGroups() {
 
   const editGroup = useMutation({
     mutationFn: ({ id, name }: { id: number; name?: string }) =>
-      api.put(`${PATH}/groups/${id}`, null, {
+      api.put(`${PATH}/${language}/groups/${id}`, null, {
         params: { name: name },
       }),
     onSuccess: () => {
@@ -37,7 +37,7 @@ export function useDictionaryGroups() {
   });
 
   const deleteGroup = useMutation({
-    mutationFn: (id: number) => api.delete(`${PATH}/groups/${id}`),
+    mutationFn: (id: number) => api.delete(`${PATH}/${language}/groups/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["groups"] });
     },

@@ -22,9 +22,9 @@ router = APIRouter(
 
 # entries
 
-@router.get("/entries")
-async def get_entries_group(session = SessionDep):
-    entries = get_entries_db(session)
+@router.get("/{language}/entries")
+async def get_entries_group(language: str, session = SessionDep):
+    entries = get_entries_db(session, language=language)
     if entries is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -32,9 +32,9 @@ async def get_entries_group(session = SessionDep):
         )
     return entries
 
-@router.get("/groups/{group_id}/entries")
-async def get_entries_by_group(group_id: int, session = SessionDep):
-    entries = get_entries_by_group_db(session, group_id=group_id)
+@router.get("/{language}/groups/{group_id}/entries")
+async def get_entries_by_group( group_id: int, language: str, session = SessionDep):
+    entries = get_entries_by_group_db(session, group_id=group_id, language=language)
     if entries is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -42,15 +42,18 @@ async def get_entries_by_group(group_id: int, session = SessionDep):
         )
     return entries
 
-@router.post("/entries")
+@router.post("/{language}/entries")
 async def create_entry(
+    language: str,
     content: str,
     translation: str,
     group_id: int,
     note: str | None = None,
     session = SessionDep
     ):
-    entry = create_entry_db(session = session,
+    entry = create_entry_db(
+        session = session,
+        language=language,
         content=content,
         translation=translation,
         note=note,
@@ -65,9 +68,9 @@ async def create_entry(
     return entry
 
 
-@router.delete("/entries/{id}")
-async def delete_entry(id: int, session = SessionDep):
-    entry = delete_entry_db(session, id)
+@router.delete("/{language}/entries/{id}")
+async def delete_entry( id: int,language: str, session = SessionDep):
+    entry = delete_entry_db(session, id, language=language)
     if entry is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -75,9 +78,10 @@ async def delete_entry(id: int, session = SessionDep):
         )
     return entry
 
-@router.put("/entries/{id}")
+@router.put("/{language}/entries/{id}")
 async def update_entry(
     id: int,
+    language: str,
     content: str | None = None,
     translation: str | None = None,
     note: str | None = None,
@@ -88,6 +92,7 @@ async def update_entry(
     entry = update_entry_db(
         session = session,
         id=id,
+        language=language,
         content=content,
         translation=translation,
         note=note,
@@ -101,11 +106,12 @@ async def update_entry(
         )
     return entry
 
-@router.put("/entries/{id}/temperature")
-async def change_temperature(id: int, action: TemperatureActionEnum, step: int, session = SessionDep):
+@router.put("/{language}/entries/{id}/temperature")
+async def change_temperature(id: int, language: str, action: TemperatureActionEnum, step: int, session = SessionDep):
     entry = change_temperature_db(
         session = session,
         id=id,
+        language=language,
         action=action,
         step=step
     )
@@ -119,9 +125,9 @@ async def change_temperature(id: int, action: TemperatureActionEnum, step: int, 
 
 # groups
 
-@router.get("/groups/{id}")
-async def get_group(id: int | None = None, session = SessionDep):
-    group = get_group_db(session=session, id=id)
+@router.get("/{language}/groups/{id}")
+async def get_group(language: str, id: int | None = None, session = SessionDep):
+    group = get_group_db(session=session, id=id, language=language)
     if group is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -130,9 +136,9 @@ async def get_group(id: int | None = None, session = SessionDep):
 
     return group
 
-@router.get("/groups")
-async def get_groups(session = SessionDep):
-    groups = get_groups_db(session)
+@router.get("/{language}/groups")
+async def get_groups(language: str, session = SessionDep):
+    groups = get_groups_db(session, language=language)
     if groups is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -140,9 +146,10 @@ async def get_groups(session = SessionDep):
         )
     return groups
 
-@router.post("/groups")
-async def create_group(name: str, session = SessionDep):
+@router.post("/{language}/groups")
+async def create_group(language: str, name: str,  session = SessionDep):
     group = create_group_db(
+        language=language,
         name=name,
         session=session
     )
@@ -153,9 +160,9 @@ async def create_group(name: str, session = SessionDep):
         )
     return group
 
-@router.delete("/groups/{id}")
-async def delete_group(id: int, session = SessionDep):
-    group = delete_group_db(session, id)
+@router.delete("/{language}/groups/{id}")
+async def delete_group(id: int, language: str, session = SessionDep):
+    group = delete_group_db(session=session, id=id, language=language)
     if group is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -163,16 +170,18 @@ async def delete_group(id: int, session = SessionDep):
         )
     return group
 
-@router.put("/groups/{id}")
+@router.put("/{language}/groups/{id}")
 async def update_group(
     id: int,
+    language: str,
     name: str | None = None,
     session = SessionDep
 ):
     group = update_group_db(
-        session,
-        id,
-        name
+        session=session,
+        id=id,
+        language=language,
+        name=name,
     )
     if group is None:
         raise HTTPException(

@@ -8,14 +8,15 @@ const PATH = "/dictionary";
 
 // the code is quite trash i generated most of it with ai... but it works
 // TODO: fix the code 😭
-export default function useCardEntry(groupId?: number) {
+export default function useCardEntry(groupId: number | null, language: string) {
   const {
     data: group,
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["group", groupId && groupId],
-    queryFn: () => (groupId ? fetchGroupEntries(groupId) : fetchEntries()),
+    queryKey: ["group", groupId && groupId, language],
+    queryFn: () =>
+      groupId ? fetchGroupEntries(groupId, language) : fetchEntries(language),
   });
 
   const [currentEntry, setCurrentEntry] = useState<
@@ -63,9 +64,13 @@ export default function useCardEntry(groupId?: number) {
       action: "increase" | "decrease";
       step?: number;
     }) =>
-      api.put(`${PATH}/entries/${currentEntry?.id}/temperature`, null, {
-        params: { action: action, step: step },
-      }),
+      api.put(
+        `${PATH}/${language}/entries/${currentEntry?.id}/temperature`,
+        null,
+        {
+          params: { action: action, step: step },
+        },
+      ),
     onSuccess: (response) => {
       setCurrentEntry(response.data);
     },
