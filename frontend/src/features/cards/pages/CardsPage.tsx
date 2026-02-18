@@ -97,9 +97,7 @@ const CardsPage = () => {
       <ModalChangeGroup
         group={currentGroup}
         language={language!}
-        changeGroupId={async (id: number | "") =>
-          navigate(`/${language}/cards/${id}`)
-        }
+        changeGroupId={async (id: number | "") => navigate(`/cards/${id}`)}
         isOpen={isOpen}
         closeModal={closeModal}
       />
