@@ -6,6 +6,7 @@ export type DictionaryEntryType = {
   temperature: number;
   group_id: number;
   created_at: string;
+  position: number;
 };
 
 export type DictionaryGroupType = {
@@ -13,4 +14,5 @@ export type DictionaryGroupType = {
   name: string;
   entries: DictionaryEntryType[];
   created_at: string;
+  position: number;
 };

@@ -6,6 +6,7 @@ from .service import (
     delete_language_db,
     # remove_language_image_db,
     update_language_db,
+    reorder_languages_db,
 )
 
 router = APIRouter(
@@ -56,6 +57,13 @@ async def delete_language(id: int, session = SessionDep):
     
     return language
 
+@router.put("/reorder")
+async def reorder_languages(
+    ordered_ids: list[int], 
+    session = SessionDep
+):
+    return reorder_languages_db(session, ordered_ids)
+
 @router.put("/{id}")
 async def update_language(
     id: int,
@@ -77,6 +85,9 @@ async def update_language(
         )
     
     return language
+
+
+
 
 
 # @router.put("/{id}/remove-image")

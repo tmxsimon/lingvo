@@ -1,20 +1,23 @@
 import os
 import uuid
 from fastapi import UploadFile
-from sqlmodel import Session, select
+from sqlmodel import Session, select, func
 from .models import Language
 
 UPLOADS_URL = "uploads/user_uploads"
 DEFAULT_IMAGE_URL = "uploads/default.jpg"
 
 def get_languages_db(session: Session):
-    return session.exec(select(Language).order_by(Language.id.desc())).all()
+    return session.exec(select(Language).order_by(Language.position)).all()
 
 def create_language_db(
     session: Session,
     name: str,
     image: UploadFile | None = None
 ):  
+    max_position = session.exec(select(func.max(Language.position))).first()
+    position = (max_position or 0) + 1
+
     filepath = DEFAULT_IMAGE_URL
     if image:
         ext = image.filename.split(".")[-1]
@@ -24,7 +27,7 @@ def create_language_db(
         with open(filepath, "wb") as buffer:
             buffer.write(image.file.read())    
 
-    language = Language(name=name, image_url=filepath)
+    language = Language(name=name, image_url=filepath, position=position)
 
     if language is None:
         return None
@@ -84,6 +87,19 @@ def update_language_db(
     session.refresh(language)
 
     return language
+
+def reorder_languages_db(session: Session, ordered_ids: list[int]):
+    languages = session.exec(select(Language).where(Language.id.in_(ordered_ids))).all()
+    language_map = {language.id: language for language in languages}
+
+    for index, language_id in enumerate(ordered_ids, start=1):
+        if language_id in language_map:
+            language_map[language_id].position = index
+            session.add(language_map[language_id])
+
+    session.commit()
+
+    return list(language_map.values())
 
 # def remove_language_image_db(session: Session, id):
 #     language = session.get(Language, id)

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../../components/Button";
 import useModal from "../../../hooks/useModal";
 import { useDictionaryGroups } from "../hooks/useDictionaryGroups";
@@ -8,8 +8,8 @@ import ModalEditGroup from "../components/modals/ModalEditGroup";
 import type { DictionaryGroupType } from "../types";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
-import { useParams } from "react-router-dom";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
+import { Reorder } from "motion/react";
 
 const DictionaryGroupsPage = () => {
   const { t } = useTranslation();
@@ -31,8 +31,21 @@ const DictionaryGroupsPage = () => {
     closeModal: closeModalGroupsEdit,
   } = useModal();
 
-  const { groups, addGroup, editGroup, deleteGroup, isLoading, error } =
-    useDictionaryGroups(language!);
+  const {
+    groups: groupsFetched,
+    addGroup,
+    editGroup,
+    deleteGroup,
+    reorderGroups,
+    isLoading,
+    error,
+  } = useDictionaryGroups(language!);
+
+  const [groups, setGroups] = useState(groupsFetched || []);
+
+  useEffect(() => {
+    setGroups(groupsFetched || []);
+  }, [groupsFetched]);
 
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
@@ -45,19 +58,33 @@ const DictionaryGroupsPage = () => {
           size="large"
           onClick={openModalGroupsAdd}
         />
-        <div className="mt-base flex flex-col items-center gap-2">
-          {groups?.map((group) => (
+
+        <Reorder.Group
+          axis="y"
+          values={groups}
+          onReorder={(newGroups) => {
+            newGroups.forEach((group, index) => {
+              group.position = index + 1;
+            });
+            setGroups(newGroups);
+
+            const orderedIds = newGroups.map((g) => g.id);
+
+            reorderGroups.mutate(orderedIds);
+          }}
+          className="mt-base gap-base-sm flex flex-col items-center"
+        >
+          {groups.map((group) => (
             <DictionaryGroup
               key={group.id}
-              id={group.id}
-              name={group.name}
+              group={group}
               onClickSettings={() => {
                 setChosenGroup(group);
                 openModalGroupsEdit();
               }}
             />
           ))}
-        </div>
+        </Reorder.Group>
       </div>
 
       {/* modals */}

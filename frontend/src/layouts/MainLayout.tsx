@@ -6,7 +6,7 @@ const MainLayout = () => {
     <div className="bg-bg text-text relative flex min-h-screen flex-col">
       {/* bg-[url(assets/background.jpg)] */}
       <Navbar />
-      <main className="pt-after-navbar flex flex-1 flex-col items-center">
+      <main className="pt-after-navbar pb-base flex flex-1 flex-col items-center">
         <Outlet />
       </main>
     </div>

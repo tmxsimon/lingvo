@@ -1,5 +1,5 @@
 import api from "../../lib/api";
-import type { DictionaryGroupType, DictionaryEntryType } from "./types";
+import type { DictionaryGroupType } from "./types";
 
 const PATH = "/dictionary";
 
@@ -21,7 +21,14 @@ export const fetchGroupEntries = async (id: number, language: string) => {
   const result = await api.get<DictionaryGroupType>(
     `${PATH}/${language}/groups/${id}`,
   );
-  return result.data;
+
+  // Have to do it because of the retarted endpoint implementation
+  // TODO: Rewrite this
+  const sortedEntries = result.data.entries.sort(
+    (a, b) => a.position - b.position,
+  );
+
+  return { ...result.data, entries: sortedEntries };
 };
 
 export const fetchEntries = async (language: string) => {

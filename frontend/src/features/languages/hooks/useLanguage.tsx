@@ -73,6 +73,11 @@ export function useLanguages() {
     },
   });
 
+  const reorderLanguages = useMutation({
+    mutationFn: (orderedIds: number[]) =>
+      api.put(`${PATH}/reorder`, orderedIds),
+  });
+
   // const removeLanguageImage = useMutation({
   //   mutationFn: (id: number) => api.put(`${PATH}/${id}/remove-image`),
   //   onSuccess: () => {
@@ -87,6 +92,7 @@ export function useLanguages() {
     addLanguage,
     editLanguage,
     deleteLanguage,
+    reorderLanguages,
     // removeLanguageImage,
   };
 }

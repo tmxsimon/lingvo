@@ -1,9 +1,9 @@
 import api from "../../lib/api";
-import type { Language } from "./types";
+import type { LanguageType } from "./types";
 
 const PATH = "/languages";
 
 export const fetchLanguages = async () => {
-  const result = await api.get<Language[]>(`${PATH}`);
+  const result = await api.get<LanguageType[]>(`${PATH}`);
   return result.data;
 };

@@ -66,6 +66,11 @@ export function useDictionaryEntries(groupId: number, language: string) {
     },
   });
 
+  const reorderEntries = useMutation({
+    mutationFn: (orderedIds: number[]) =>
+      api.put(`${PATH}/entries/reorder`, orderedIds),
+  });
+
   return {
     group,
     isLoading,
@@ -73,5 +78,6 @@ export function useDictionaryEntries(groupId: number, language: string) {
     addEntry,
     editEntry,
     deleteEntry,
+    reorderEntries,
   };
 }

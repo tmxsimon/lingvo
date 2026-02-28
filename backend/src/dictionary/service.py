@@ -1,12 +1,14 @@
 from enum import Enum
 from datetime import datetime
-from sqlmodel import Session, select
+from sqlmodel import Session, func, select
 from dictionary.models import DictionaryEntry, EntriesGroup
 
 # entries
 
+# TODO: rewrite this mess
+
 def get_entries_db(session: Session, language: str):
-    entries = session.exec(select(DictionaryEntry).where(DictionaryEntry.language_name == language).order_by(DictionaryEntry.id.desc())).all() 
+    entries = session.exec(select(DictionaryEntry).where(DictionaryEntry.language_name == language).order_by(DictionaryEntry.position)).all() 
 
     group = EntriesGroup(id=0, name="", created_at=str(datetime.now()), entries=entries)
 
@@ -23,6 +25,7 @@ def get_entries_db(session: Session, language: str):
                 "note": e.note,
                 "temperature": e.temperature,
                 "created_at": e.created_at,
+                "position": e.position,
             }
             for e in group.entries
         ],
@@ -30,7 +33,7 @@ def get_entries_db(session: Session, language: str):
         
 
 def get_entries_by_group_db(session: Session, group_id: int, language: str):
-    return session.exec(select(DictionaryEntry).where(DictionaryEntry.group_id == group_id and DictionaryEntry.language_name == language).order_by(DictionaryEntry.id.desc())).all() 
+    return session.exec(select(DictionaryEntry).where(DictionaryEntry.group_id == group_id and DictionaryEntry.language_name == language).order_by(DictionaryEntry.position)).all() 
 
 def create_entry_db(
     session: Session,
@@ -45,6 +48,9 @@ def create_entry_db(
     group = session.exec(select(EntriesGroup).where(EntriesGroup.id == group_id and EntriesGroup.language_name == language)).first()
     if group is None:
         return None
+    
+    max_position = session.exec(select(func.max(DictionaryEntry.position))).first()
+    position = (max_position or 0) + 1
 
     entry = DictionaryEntry(
         language_name=group.language_name,
@@ -53,6 +59,7 @@ def create_entry_db(
         note=note,
         temperature=temperature,
         group_id=group_id,
+        position=position
     )
     if entry is None:
         return None
@@ -107,6 +114,19 @@ def update_entry_db(
 
     return entry
 
+def reorder_entries_db(session: Session, ordered_ids: list[int]):
+    entries = session.exec(select(DictionaryEntry).where(DictionaryEntry.id.in_(ordered_ids))).all()
+    entry_map = {entry.id: entry for entry in entries}
+
+    for index, entry_id in enumerate(ordered_ids, start=1):
+        if entry_id in entry_map:
+            entry_map[entry_id].position = index
+            session.add(entry_map[entry_id])
+
+    session.commit()
+
+    return list(entry_map.values())
+
 class TemperatureActionEnum(str, Enum):
     increase = "increase"
     decrease = "decrease"
@@ -141,6 +161,8 @@ def change_temperature_db(
 
 # groups
 
+# TODO: rewrite this mess
+
 def get_group_db(session: Session, id: int, language: str):
     group = session.exec(select(EntriesGroup).where(EntriesGroup.id == id and EntriesGroup.language_name == language)).first()
 
@@ -157,6 +179,7 @@ def get_group_db(session: Session, id: int, language: str):
                 "note": e.note,
                 "temperature": e.temperature,
                 "created_at": e.created_at,
+                "position": e.position,
             }
             for e in group.entries
         ],
@@ -165,14 +188,17 @@ def get_group_db(session: Session, id: int, language: str):
 
 
 def get_groups_db(session: Session, language: str):
-    return session.exec(select(EntriesGroup).where(EntriesGroup.language_name == language).order_by(EntriesGroup.id.desc())).all()
+    return session.exec(select(EntriesGroup).where(EntriesGroup.language_name == language).order_by(EntriesGroup.position)).all()
 
 def create_group_db(
     session: Session,
     name: str,
     language: str,
 ):
-    group = EntriesGroup(language_name=language, name=name)
+    max_position = session.exec(select(func.max(EntriesGroup.position))).first()
+    position = (max_position or 0) + 1
+    
+    group = EntriesGroup(language_name=language, name=name, position=position)
 
     if group is None:
         return None
@@ -217,3 +243,16 @@ def update_group_db(
     session.refresh(group)
 
     return group
+
+def reorder_groups_db(session: Session, ordered_ids: list[int]):
+    groups = session.exec(select(EntriesGroup).where(EntriesGroup.id.in_(ordered_ids))).all()
+    entry_map = {entry.id: entry for entry in groups}
+
+    for index, entry_id in enumerate(ordered_ids, start=1):
+        if entry_id in entry_map:
+            entry_map[entry_id].position = index
+            session.add(entry_map[entry_id])
+
+    session.commit()
+
+    return list(entry_map.values())

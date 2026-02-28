@@ -1,18 +1,19 @@
-from contextlib import asynccontextmanager
+# from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from db import init_db
+# from db import init_db
 from dictionary.router import router as dictionary_router
 from languages.router import router as languages_router
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    init_db()
-    yield
-    pass
+# @asynccontextmanager
+# async def lifespan(app: FastAPI):
+#     init_db()
+#     yield
+#     pass
 
-app = FastAPI(lifespan=lifespan)
+# app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 

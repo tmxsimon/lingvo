@@ -6,8 +6,9 @@ import ModalAddLanguage from "../components/modals/ModalAddLanguage";
 import { useLanguages } from "../hooks/useLanguage";
 import ModalEditLanguage from "../components/modals/ModalEditLanguage";
 import type { LanguageType } from "../types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Reorder } from "motion/react";
 
 const LanguagesPage = () => {
   const { t } = useTranslation();
@@ -28,13 +29,22 @@ const LanguagesPage = () => {
   );
 
   const {
-    languages,
+    languages: languagesFetched,
     addLanguage,
     editLanguage,
     deleteLanguage,
+    reorderLanguages,
     isLoading,
     error,
   } = useLanguages();
+
+  const [languages, setLanguages] = useState(languagesFetched || []);
+
+  useEffect(() => {
+    if (languagesFetched) {
+      setLanguages(languagesFetched);
+    }
+  }, [languagesFetched]);
 
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
@@ -48,11 +58,24 @@ const LanguagesPage = () => {
           onClick={openModalAdd}
         />
         <div className="space-y-base mt-base">
-          <div className="w text-center text-2xl">
+          <div className="text-center text-2xl">
             {t("languages.yourLanguages")}
           </div>
 
-          <div className="gap-base flex w-300 flex-wrap justify-center">
+          <Reorder.Group
+            axis="y"
+            values={languages}
+            onReorder={(newLanguages) => {
+              newLanguages.forEach((language, index) => {
+                language.position = index + 1;
+              });
+              setLanguages(newLanguages);
+              const orderedIds = newLanguages.map((l) => l.id);
+
+              reorderLanguages.mutate(orderedIds);
+            }}
+            className="gap-base flex h-full w-300 flex-col items-center"
+          >
             {languages?.map((language) => (
               <Language
                 key={language.id}
@@ -61,7 +84,7 @@ const LanguagesPage = () => {
                 onClickSettings={openModalEdit}
               />
             ))}
-          </div>
+          </Reorder.Group>
         </div>
       </div>
 

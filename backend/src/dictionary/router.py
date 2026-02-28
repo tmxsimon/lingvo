@@ -5,6 +5,8 @@ from .service import (
     get_entries_by_group_db,
     create_entry_db,
     delete_entry_db,
+    reorder_entries_db,
+    reorder_groups_db,
     update_entry_db,
     TemperatureActionEnum,
     change_temperature_db,
@@ -21,6 +23,8 @@ router = APIRouter(
 )
 
 # entries
+
+# TODO: remove language from path params
 
 @router.get("/{language}/entries")
 async def get_entries_group(language: str, session = SessionDep):
@@ -78,6 +82,13 @@ async def delete_entry( id: int,language: str, session = SessionDep):
         )
     return entry
 
+@router.put("/entries/reorder")
+async def reorder_entries(
+    ordered_ids: list[int],
+    session = SessionDep
+):
+    return reorder_entries_db(session, ordered_ids)
+
 @router.put("/{language}/entries/{id}")
 async def update_entry(
     id: int,
@@ -105,6 +116,7 @@ async def update_entry(
             detail="Entry not found"
         )
     return entry
+
 
 @router.put("/{language}/entries/{id}/temperature")
 async def change_temperature(id: int, language: str, action: TemperatureActionEnum, step: int, session = SessionDep):
@@ -170,6 +182,14 @@ async def delete_group(id: int, language: str, session = SessionDep):
         )
     return group
 
+@router.put("/groups/reorder")
+async def reorder_groupss(
+    ordered_ids: list[int], 
+    session = SessionDep
+):
+    return reorder_groups_db(session, ordered_ids)
+
+
 @router.put("/{language}/groups/{id}")
 async def update_group(
     id: int,
@@ -189,3 +209,4 @@ async def update_group(
             detail="Group not found"
         )
     return group
+

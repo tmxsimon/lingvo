@@ -13,6 +13,7 @@ class DictionaryEntry(SQLModel, table=True):
     language: Language = Relationship(back_populates="entries")
     group_id: int = Field(foreign_key="entries_group.id") # TODO: change group_id to group_name
     group: EntriesGroup = Relationship(back_populates="entries")
+    position: int
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
@@ -25,6 +26,7 @@ class EntriesGroup(SQLModel, table=True):
     language_name: str | None = Field(default=None, foreign_key="language.name")
     language: Language = Relationship(back_populates="groups")
     entries: list["DictionaryEntry"] = Relationship(back_populates="group", cascade_delete=True)
+    position: int
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )

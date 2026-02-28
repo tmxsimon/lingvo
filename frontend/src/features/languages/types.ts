@@ -7,4 +7,5 @@ export type LanguageType = {
   id: number;
   name: string;
   image_url: string;
+  position: number;
 };
