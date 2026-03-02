@@ -91,12 +91,10 @@ def update_entry_db(
     temperature: int | None = None,
     group_id: int | None = None
 ):
-    entry = session.exec(select(DictionaryEntry).where(DictionaryEntry.id == id and DictionaryEntry.language_name == language)).first()
+    entry = session.exec(select(DictionaryEntry).where(DictionaryEntry.id == id and DictionaryEntry.language_name.lower() == language.lower())).first()
     if entry is None:
         return None
 
-    if entry.language != language:
-        return None
     if content:
         entry.content = content
     if translation:
