@@ -25,7 +25,7 @@ export const fetchGroupEntries = async (id: number, language: string) => {
   // Have to do it because of the retarted endpoint implementation
   // TODO: Rewrite this
   const sortedEntries = result.data.entries.sort(
-    (a, b) => a.position - b.position,
+    (a, b) => b.position - a.position,
   );
 
   return { ...result.data, entries: sortedEntries };

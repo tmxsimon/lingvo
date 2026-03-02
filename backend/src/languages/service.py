@@ -8,7 +8,7 @@ UPLOADS_URL = "uploads/user_uploads"
 DEFAULT_IMAGE_URL = "uploads/default.jpg"
 
 def get_languages_db(session: Session):
-    return session.exec(select(Language).order_by(Language.position)).all()
+    return session.exec(select(Language).order_by(Language.position.desc())).all()
 
 def create_language_db(
     session: Session,
@@ -92,9 +92,9 @@ def reorder_languages_db(session: Session, ordered_ids: list[int]):
     languages = session.exec(select(Language).where(Language.id.in_(ordered_ids))).all()
     language_map = {language.id: language for language in languages}
 
-    for index, language_id in enumerate(ordered_ids, start=1):
+    for index, language_id in enumerate(ordered_ids):
         if language_id in language_map:
-            language_map[language_id].position = index
+            language_map[language_id].position = len(ordered_ids) - index
             session.add(language_map[language_id])
 
     session.commit()

@@ -83,7 +83,7 @@ const DictionaryWordsPage = () => {
             values={entries}
             onReorder={(newEntries) => {
               newEntries.forEach((entry, index) => {
-                entry.position = index + 1;
+                entry.position = newEntries.length - index;
               });
               setEntries(newEntries);
               const orderedIds = newEntries.map((e) => e.id);

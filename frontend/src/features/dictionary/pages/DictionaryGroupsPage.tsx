@@ -64,7 +64,7 @@ const DictionaryGroupsPage = () => {
           values={groups}
           onReorder={(newGroups) => {
             newGroups.forEach((group, index) => {
-              group.position = index + 1;
+              group.position = newGroups.length - index;
             });
             setGroups(newGroups);
 

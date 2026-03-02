@@ -67,7 +67,7 @@ const LanguagesPage = () => {
             values={languages}
             onReorder={(newLanguages) => {
               newLanguages.forEach((language, index) => {
-                language.position = index + 1;
+                language.position = newLanguages.length - index;
               });
               setLanguages(newLanguages);
               const orderedIds = newLanguages.map((l) => l.id);
