@@ -8,7 +8,7 @@ import ModalEditEntry from "../components/modals/ModalEditEntry";
 import { useDictionaryEntries } from "../hooks/useDictionaryEntries";
 import type { DictionaryEntryType } from "../types";
 import Icon from "../../../components/Icon";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
@@ -16,6 +16,7 @@ import { Reorder } from "motion/react";
 
 const DictionaryWordsPage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const {
     isOpen: isOpenEntriesAdd,
@@ -61,20 +62,20 @@ const DictionaryWordsPage = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="gap-base-sm flex flex-col items-center">
         <Button
           text={t("dictionary.addEntry")}
           size="large"
           onClick={openModalEntriesAdd}
         />
         {group && (
-          <Link
-            to={"/dictionary"}
-            className="my-base-sm mt-base text-gray-neutral-300 flex cursor-pointer items-center gap-1 text-xl"
-          >
-            {group.name}
-            <Icon name="close" className="size-5 stroke-2" />
-          </Link>
+          <Button
+            type="text"
+            size="large"
+            text={group.name}
+            iconBack={<Icon name="close" className="size-5 stroke-2" />}
+            onClick={() => navigate("/dictionary")}
+          />
         )}
 
         {group && (
@@ -90,7 +91,7 @@ const DictionaryWordsPage = () => {
 
               reorderEntries.mutate(orderedIds);
             }}
-            className="mt-base gap-base-sm flex flex-col items-center"
+            className="gap-base-sm flex flex-col items-center"
           >
             {entries?.map((entry) => (
               <DictionaryEntry

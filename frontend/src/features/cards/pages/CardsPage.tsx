@@ -37,13 +37,13 @@ const CardsPage = () => {
   return (
     <>
       <div className="pb-base-lg h-screen-no-navbar flex flex-col items-center">
-        <div
-          className="text-gray-neutral-300 gap-base-sm flex h-8 cursor-pointer items-center text-xl"
+        <Button
+          type="text"
+          size="large"
+          text={currentGroup?.name || t("cards.allEntries")}
+          iconBack={<Icon name="change" className="size-4" />}
           onClick={openModal}
-        >
-          {currentGroup?.name || t("cards.allEntries")}
-          <Icon name="change" className="size-5" />
-        </div>
+        />
         {currentEntry ? (
           <div
             className={`flex h-full flex-col items-center justify-between ${!isActive ? "cursor-pointer" : ""}`}

@@ -51,16 +51,16 @@ const LanguagesPage = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="gap-base flex flex-col items-center">
         <Button
           text={t("languages.addLanguage")}
           size="large"
           onClick={openModalAdd}
         />
-        <div className="space-y-base mt-base">
-          <div className="text-center text-2xl">
+        <div className="gap-base-sm flex flex-col">
+          {/* <div className="text-center text-2xl">
             {t("languages.yourLanguages")}
-          </div>
+          </div> */}
 
           <Reorder.Group
             axis="y"

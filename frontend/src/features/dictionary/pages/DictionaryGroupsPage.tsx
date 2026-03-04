@@ -52,7 +52,7 @@ const DictionaryGroupsPage = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="gap-base flex flex-col items-center">
         <Button
           text={t("dictionary.addGroup")}
           size="large"
@@ -72,7 +72,7 @@ const DictionaryGroupsPage = () => {
 
             reorderGroups.mutate(orderedIds);
           }}
-          className="mt-base gap-base-sm flex flex-col items-center"
+          className="gap-base-sm flex flex-col items-center"
         >
           {groups.map((group) => (
             <DictionaryGroup
