@@ -1,11 +1,13 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
 import { fetchLanguages } from "../services";
+import { useLanguageContext } from "../contexts/languageProvider";
 
 const PATH = "/languages";
 
 export function useLanguages() {
   const queryClient = useQueryClient();
+  const { changeLanguage } = useLanguageContext();
 
   const {
     data: groups,
@@ -70,6 +72,8 @@ export function useLanguages() {
     mutationFn: (id: number) => api.delete(`${PATH}/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["languages"] });
+      localStorage.removeItem("language");
+      changeLanguage("");
     },
   });
 
