@@ -106,6 +106,8 @@ def update_entry_db(
     if group_id is not None:
         entry.group_id = group_id
 
+    print("---------------- OLD GROUP ID: ", entry.group_id, "--------------------------- NEW GROUP ID: ", group_id)
+
     session.add(entry)
     session.commit()
     session.refresh(entry)

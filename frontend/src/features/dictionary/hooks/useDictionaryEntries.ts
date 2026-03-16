@@ -42,17 +42,24 @@ export function useDictionaryEntries(groupId: number, language: string) {
   const editEntry = useMutation({
     mutationFn: ({
       id,
+      groupId,
       content,
       translation,
       note,
     }: {
       id: number;
+      groupId?: number;
       content?: string;
       translation?: string;
       note?: string;
     }) =>
       api.put(`${PATH}/${language}/entries/${id}`, null, {
-        params: { content: content, translation: translation, note: note },
+        params: {
+          group_id: groupId,
+          content: content,
+          translation: translation,
+          note: note,
+        },
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["entries"] });

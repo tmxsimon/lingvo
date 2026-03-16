@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
+import { useDictionaryGroups } from "../hooks/useDictionaryGroups";
 
 const DictionaryWordsPage = () => {
   const { t } = useTranslation();
@@ -45,8 +46,8 @@ const DictionaryWordsPage = () => {
     editEntry,
     deleteEntry,
     reorderEntries,
-    isLoading,
-    error,
+    isLoading: isLoadingEntries,
+    error: errorEntries,
   } = useDictionaryEntries(Number.parseInt(groupId!), language!);
 
   const [entries, setEntries] = useState(group?.entries || []);
@@ -57,8 +58,15 @@ const DictionaryWordsPage = () => {
     }
   }, [group]);
 
-  if (isLoading) return <Loading />;
-  if (error) return <div>{error.message}</div>;
+  const {
+    groups,
+    isLoading: isLoadingGroups,
+    error: errorGroups,
+  } = useDictionaryGroups(language!);
+
+  if (isLoadingEntries || isLoadingGroups) return <Loading />;
+  if (errorEntries || errorGroups)
+    return <div>{errorEntries?.message || errorGroups?.message}</div>;
 
   return (
     <>
@@ -117,15 +125,18 @@ const DictionaryWordsPage = () => {
           }
         />
         <ModalEditEntry
+          groups={groups!}
+          group={group!}
           entry={chosenEntry!}
           isOpen={isOpenEntriesEdit}
           closeModal={closeModalEntriesEdit}
           editEntry={(
             id: number,
+            groupId: number,
             content: string,
             translation: string,
             note?: string,
-          ) => editEntry.mutate({ id, content, translation, note })}
+          ) => editEntry.mutate({ id, groupId, content, translation, note })}
           deleteEntry={() => deleteEntry.mutate(chosenEntry!.id)}
         />
       </div>

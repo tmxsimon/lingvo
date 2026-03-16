@@ -2,15 +2,20 @@ import { useEffect, useState } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
-import type { DictionaryEntryType } from "../../types";
+import type { DictionaryEntryType, DictionaryGroupType } from "../../types";
 import { useTranslation } from "react-i18next";
+import Select from "../../../../components/Select";
+import type { SelectOptionType } from "../../../../types";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
+  groups: DictionaryGroupType[];
+  group: DictionaryGroupType;
   isOpen: boolean;
   closeModal: () => void;
   editEntry: (
     id: number,
+    groupId: number,
     content: string,
     translation: string,
     note?: string,
@@ -20,6 +25,8 @@ type ModalEditEntryProps = {
 
 const ModalEditEntry = ({
   entry,
+  groups,
+  group,
   isOpen,
   closeModal,
   editEntry,
@@ -30,12 +37,20 @@ const ModalEditEntry = ({
   const [content, setContent] = useState(entry?.content || "");
   const [translation, setTranslation] = useState(entry?.translation || "");
   const [note, setNote] = useState(entry?.note || "");
+  const [currentGroupOption, setCurrentGroupOption] =
+    useState<SelectOptionType>({ value: group.id, text: group.name });
 
   useEffect(() => {
     setContent(entry?.content || "");
     setTranslation(entry?.translation || "");
     setNote(entry?.note || "");
   }, [entry]);
+
+  const options: SelectOptionType[] = [];
+
+  groups?.forEach((group) => {
+    options.push({ value: group.id, text: group.name });
+  });
 
   return (
     <Modal
@@ -77,6 +92,21 @@ const ModalEditEntry = ({
             maxLength={350}
           />
         </div>,
+        <div className="text-2xl">{t("group")}</div>,
+        <Select
+          value={
+            (typeof currentGroupOption !== "string" &&
+              currentGroupOption?.value) ||
+            ""
+          }
+          options={options}
+          onChange={(e) => {
+            setCurrentGroupOption({
+              value: e.target.value,
+              text: "",
+            });
+          }}
+        />,
       ]}
       buttons={[
         <Button
@@ -94,7 +124,13 @@ const ModalEditEntry = ({
           size="large"
           autoWidth
           onClick={() => {
-            editEntry(entry!.id, content || "", translation || "", note);
+            editEntry(
+              entry!.id,
+              currentGroupOption.value as number,
+              content || "",
+              translation || "",
+              note,
+            );
             closeModal();
           }}
         />,
