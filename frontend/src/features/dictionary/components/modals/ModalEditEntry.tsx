@@ -92,21 +92,23 @@ const ModalEditEntry = ({
             maxLength={350}
           />
         </div>,
-        <div className="text-2xl">{t("group")}</div>,
-        <Select
-          value={
-            (typeof currentGroupOption !== "string" &&
-              currentGroupOption?.value) ||
-            ""
-          }
-          options={options}
-          onChange={(e) => {
-            setCurrentGroupOption({
-              value: e.target.value,
-              text: "",
-            });
-          }}
-        />,
+        <div>
+          <div className="text-2xl">{t("group")}</div>
+          <Select
+            value={
+              (typeof currentGroupOption !== "string" &&
+                currentGroupOption?.value) ||
+              ""
+            }
+            options={options}
+            onChange={(e) => {
+              setCurrentGroupOption({
+                value: e.target.value,
+                text: "",
+              });
+            }}
+          />
+        </div>,
       ]}
       buttons={[
         <Button
