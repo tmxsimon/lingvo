@@ -56,7 +56,7 @@ const ModalEditEntry = ({
     <Modal
       open={isOpen}
       closeModal={closeModal}
-      title="Edit entry"
+      title={t("dictionary.editEntry")}
       content={[
         <div>
           <div className="text-2xl">{t("dictionary.content")}</div>{" "}
