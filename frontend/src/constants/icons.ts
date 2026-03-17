@@ -6,6 +6,7 @@ import Close from "../assets/icons/close.svg?react";
 import List from "../assets/icons/list.svg?react";
 import Books from "../assets/icons/books.svg?react";
 import Cards from "../assets/icons/cards.svg?react";
+import ArrowLeft from "../assets/icons/arrow-left.svg?react";
 import ArrowRight from "../assets/icons/arrow-right.svg?react";
 import Info from "../assets/icons/info.svg?react";
 import Sun from "../assets/icons/sun.svg?react";
@@ -31,6 +32,7 @@ const ICONS = {
   list: List,
   books: Books,
   cards: Cards,
+  arrowLeft: ArrowLeft,
   arrowRight: ArrowRight,
   info: Info,
   sun: Sun,

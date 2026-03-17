@@ -45,11 +45,9 @@ const CardsPage = () => {
           onClick={openModal}
         />
         {currentEntry ? (
-          <div
-            className={`flex h-full flex-col items-center justify-between ${!isActive ? "cursor-pointer" : ""}`}
-          >
+          <div className="flex h-full flex-col items-center justify-between">
             <div
-              className="h-full w-screen pt-40"
+              className={`h-full w-screen pt-40 ${!isActive ? "cursor-pointer" : ""}`}
               onClick={() => setIsActive(true)}
             >
               <Card
@@ -60,30 +58,21 @@ const CardsPage = () => {
               />
             </div>
 
-            <div className="gap-base-sm flex flex-col items-center">
-              <div className="gap-base flex">
-                <Button
-                  text={t("cards.decrease")}
-                  onClick={() =>
-                    changeTemperature.mutate({
-                      action: "decrease",
-                    })
-                  }
-                />
-
-                <Button
-                  text={t("cards.increase")}
-                  onClick={() =>
-                    changeTemperature.mutate({
-                      action: "increase",
-                    })
-                  }
-                />
-              </div>
-              <div className="gap-base flex items-center">
-                <Temperature value={currentEntry.temperature} />
-                <Button text={t("cards.next")} onClick={handleNext} />
-              </div>
+            <div className="gap-base flex items-center">
+              <Temperature
+                value={currentEntry.temperature}
+                buttonLeftOnClick={() =>
+                  changeTemperature.mutate({
+                    action: "decrease",
+                  })
+                }
+                buttonRightOnClick={() =>
+                  changeTemperature.mutate({
+                    action: "increase",
+                  })
+                }
+              />
+              <Button text={t("cards.next")} onClick={handleNext} />
             </div>
           </div>
         ) : (

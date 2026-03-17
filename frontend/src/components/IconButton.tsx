@@ -5,10 +5,11 @@ type IconButtonProps = Omit<
   "size" | "type"
 > & {
   icon: React.ReactNode;
-  type?: "primary" | "secondary" | "tertiary";
+  type?: "primary" | "secondary" | "tertiary" | "text";
   theme?: "brand" | "neutral" | "danger" | "warning";
   size?: "small" | "medium" | "large" | "auto";
   hoverEffect?: boolean;
+  activeEffect?: boolean;
 };
 
 const IconButton = ({
@@ -17,6 +18,7 @@ const IconButton = ({
   theme = "brand",
   size = "medium",
   hoverEffect = true,
+  activeEffect = true,
   className = "",
   ...buttonProps
 }: IconButtonProps) => {
@@ -24,7 +26,7 @@ const IconButton = ({
 
   return (
     <button
-      className={`rounded-base-sm flex cursor-pointer items-center justify-center p-2 ${hoverEffect ? "hover:brightness-103" : ""} active:brightness-97 ${className}`}
+      className={`rounded-base-sm flex cursor-pointer items-center justify-center p-2 ${hoverEffect ? "hover:brightness-103" : ""} ${activeEffect ? "active:brightness-97" : ""} ${className}`}
       {...buttonProps}
     >
       {icon}

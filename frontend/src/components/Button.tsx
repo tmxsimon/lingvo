@@ -8,12 +8,13 @@ type ButtonProps = Omit<
   icon?: React.ReactNode;
   iconFront?: React.ReactNode;
   iconBack?: React.ReactNode;
-  type?: "primary" | "secondary" | "tertiary";
+  type?: "primary" | "secondary" | "tertiary" | "text";
   theme?: "brand" | "neutral" | "danger" | "warning";
   size?: "small" | "medium" | "large" | "auto";
   autoWidth?: boolean;
   underline?: boolean;
   hoverEffect?: boolean;
+  activeEffect?: boolean;
 };
 
 const sizeMap: Record<string, string> = {
@@ -33,6 +34,7 @@ const Button = ({
   autoWidth = false,
   underline = false,
   hoverEffect = true,
+  activeEffect = true,
   className = "",
   ...buttonProps
 }: ButtonProps) => {
@@ -40,7 +42,7 @@ const Button = ({
 
   return (
     <button
-      className={`rounded-base-sm ${autoWidth ? "w-full" : ""} cursor-pointer ${underline ? "hover:underline" : ""} ${hoverEffect ? "hover:brightness-103" : ""} active:brightness-97 ${className}`}
+      className={`rounded-base-sm ${autoWidth ? "w-full" : ""} cursor-pointer ${underline ? "hover:underline" : ""} ${hoverEffect ? "hover:brightness-103" : ""} ${activeEffect ? "active:brightness-97" : ""} ${className}`}
       {...buttonProps}
     >
       <div className="flex h-full items-center justify-center">
