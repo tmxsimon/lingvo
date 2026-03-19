@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
+import { useEffect } from "react";
 
 const CardsPage = () => {
   const { t } = useTranslation();
@@ -30,6 +31,27 @@ const CardsPage = () => {
     isLoading,
     error,
   } = useCardEntry(groupId ? Number.parseInt(groupId!) : null, language!);
+
+  // keyboard controls
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!currentEntry) return;
+
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        changeTemperature.mutate({ action: "increase" });
+      } else if (event.key === "ArrowDown") {
+        event.preventDefault();
+        changeTemperature.mutate({ action: "decrease" });
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        handleNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentEntry, changeTemperature, handleNext]);
 
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
