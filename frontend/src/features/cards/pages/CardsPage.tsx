@@ -35,7 +35,7 @@ const CardsPage = () => {
   // keyboard controls
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (!currentEntry) return;
+      if (!currentEntry || isOpen) return;
 
       if (event.key === "ArrowUp") {
         event.preventDefault();
@@ -43,15 +43,21 @@ const CardsPage = () => {
       } else if (event.key === "ArrowDown") {
         event.preventDefault();
         changeTemperature.mutate({ action: "decrease" });
-      } else if (event.key === "ArrowRight") {
+      } else if (
+        event.key === "ArrowRight" ||
+        (event.key === " " && isActive) // press space when active to go to next card
+      ) {
         event.preventDefault();
         handleNext();
+      } else if (event.key === " ") {
+        event.preventDefault();
+        setIsActive(true);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentEntry, changeTemperature, handleNext]);
+  }, [currentEntry, changeTemperature, handleNext, isOpen, setIsActive]);
 
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
