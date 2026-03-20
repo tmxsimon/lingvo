@@ -6,9 +6,15 @@
   --spacing-base-lg: 1.5rem;
 
   --spacing-after-navbar: 8rem;
-  --spacing-screen-no-navbar: calc(
+
+  /* screen - navbar - bottom padding */
+  /* use if there are elements after the section */
+  --spacing-screen-no-navbar: calc(100vh - var(--spacing-after-navbar));
+
+  /* use if there are no other elements on the page */
+  --spacing-screen-no-navbar-page: calc(
     100vh - var(--spacing-after-navbar) - var(--spacing-base)
-  ); /* screen - navbar - bottom padding */
+  );
 
   --radius-base-xs: 16px;
   --radius-base-sm: 26px;

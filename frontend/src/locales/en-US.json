@@ -22,7 +22,15 @@
       "name": "Name",
       "content": "Content",
       "translation": "Translation",
-      "note": "Note"
+      "note": "Note",
+
+      "validation": {
+        "contentLength": "Content must be between 1 and 30 characters",
+        "translationLength": "Translation must be between 1 and 30 characters",
+        "noteLength": "Note must be less than 350 characters",
+
+        "nameLength": "Name must be between 1 and 30 characters"
+      }
     },
 
     "cards": {
@@ -40,7 +48,11 @@
       "addLanguage": "Add language",
       "editLanguage": "Edit language",
       "name": "Name",
-      "image": "Image"
+      "image": "Image",
+
+      "validation": {
+        "nameLength": "Name must be between 1 and 30 characters"
+      }
     },
 
     "home": {

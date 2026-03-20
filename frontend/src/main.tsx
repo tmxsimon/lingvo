@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "./contexts/themeProvider.tsx";
 import { LanguageProvider } from "./features/languages/contexts/languageProvider.tsx";
+import ToastNotifications from "./components/ToastNotifications.tsx";
 
 const queryClient = new QueryClient();
 
@@ -14,6 +15,7 @@ createRoot(document.getElementById("root")!).render(
       <ThemeProvider>
         <LanguageProvider>
           <App />
+          <ToastNotifications />
         </LanguageProvider>
       </ThemeProvider>
     </QueryClientProvider>

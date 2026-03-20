@@ -22,7 +22,15 @@
       "name": "Název",
       "content": "Obsah",
       "translation": "Překlad",
-      "note": "Poznámka"
+      "note": "Poznámka",
+
+      "validation": {
+        "contentLength": "Obsah musí mít 1 až 30 znaků",
+        "translationLength": "Překlad musí mít 1 až 30 znaků",
+        "noteLength": "Poznámka musí mít méně než 350 znaků",
+
+        "nameLength": "Název musí mít 1 až 30 znaků"
+      }
     },
 
     "cards": {
@@ -40,7 +48,11 @@
       "addLanguage": "Přidat jazyk",
       "editLanguage": "Upravit jazyk",
       "name": "Název",
-      "image": "Obrázek"
+      "image": "Obrázek",
+
+      "validation": {
+        "nameLength": "Název musí mít 1 až 30 znaků"
+      }
     },
 
     "home": {

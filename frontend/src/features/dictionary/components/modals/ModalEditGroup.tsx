@@ -4,6 +4,7 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import type { DictionaryGroupType } from "../../types";
 import { useTranslation } from "react-i18next";
+import useModalGroup from "../../hooks/useModalGroup";
 
 type ModalEditGroupProps = {
   group: DictionaryGroupType | null;
@@ -21,7 +22,8 @@ const ModalEditGroup = ({
   deleteGroup,
 }: ModalEditGroupProps) => {
   const { t } = useTranslation();
-  const [name, setName] = useState(group?.name || "");
+
+  const { name, setName, validate } = useModalGroup();
 
   useEffect(() => {
     setName(group?.name || "");
@@ -62,6 +64,7 @@ const ModalEditGroup = ({
           size="large"
           autoWidth
           onClick={() => {
+            if (!validate()) return;
             editGroup(group!.id, name || "");
             closeModal();
           }}

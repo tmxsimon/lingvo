@@ -4,6 +4,9 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
+import validator from "validator";
+import { toast } from "react-toastify";
+import useModalEntry from "../../hooks/useModalEntry";
 
 type ModalAddEntryProps = {
   isOpen: boolean;
@@ -18,14 +21,23 @@ const ModalAddEntry = ({
 }: ModalAddEntryProps) => {
   const { t } = useTranslation();
 
-  const [content, setContent] = useState<string>("");
-  const [translation, setTranslation] = useState<string>("");
-  const [note, setNote] = useState<string>("");
+  const {
+    content,
+    setContent,
+    translation,
+    setTranslation,
+    note,
+    setNote,
+    validate,
+  } = useModalEntry();
 
   return (
     <Modal
       open={isOpen}
-      closeModal={closeModal}
+      closeModal={() => {
+        resetStateValues([setContent, setTranslation, setNote]);
+        closeModal();
+      }}
       title={t("dictionary.addEntry")}
       content={[
         <div>
@@ -63,6 +75,7 @@ const ModalAddEntry = ({
           size="large"
           autoWidth
           onClick={() => {
+            if (!validate()) return;
             addEntry(content || "", translation || "", note);
             resetStateValues([setContent, setTranslation, setNote]);
             closeModal();

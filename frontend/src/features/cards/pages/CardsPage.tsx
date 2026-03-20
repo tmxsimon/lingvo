@@ -64,7 +64,7 @@ const CardsPage = () => {
 
   return (
     <>
-      <div className="pb-base-lg h-screen-no-navbar flex flex-col items-center">
+      <div className="pb-base-lg h-screen-no-navbar-page flex flex-col items-center">
         <Button
           type="text"
           size="large"

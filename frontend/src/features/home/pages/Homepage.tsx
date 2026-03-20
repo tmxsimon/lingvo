@@ -3,6 +3,7 @@ import Button from "../../../components/Button";
 import Shape from "../../../components/Shape";
 import CardText from "../components/CardText";
 import FaqItem from "../components/FaqItem";
+import { toast } from "react-toastify";
 
 const Homepage = () => {
   const { t } = useTranslation();
@@ -10,39 +11,39 @@ const Homepage = () => {
   return (
     <>
       {/* Main section*/}
-      <div className="relative">
-        <div className="gap-base h-screen-no-navbar flex flex-col items-center justify-center">
-          <div className="mb-after-navbar flex items-center justify-center gap-8">
-            <div className="w-3/7">
-              <h1 className="text-5xl font-bold">{t("home.title")}</h1>
-              <hr className="text-brand-300 mt-base-sm w-1/5 border-3" />
-              <p className="mt-base-lg w-6/7 text-2xl">{t("home.text")}</p>
-              <div className="gap-base mt-base-lg flex">
-                <Button
-                  text={t("home.getStarted")}
-                  type="primary"
-                  theme="brand"
-                  size="large"
-                  onClick={() => console.log("Get started clicked")}
-                />
-                <Button
-                  text={t("home.pricing")}
-                  type="secondary"
-                  theme="brand"
-                  size="large"
-                  onClick={() => console.log("Pricing clicked")}
-                />
-              </div>
+      {/* <div className=" relative"> */}
+      <div className="gap-base h-screen-no-navbar flex flex-col items-center justify-center">
+        <div className="mb-after-navbar flex items-center justify-center gap-8">
+          <div className="w-3/7">
+            <h1 className="text-5xl font-bold">{t("home.title")}</h1>
+            <hr className="text-brand-300 mt-base-sm w-1/5 border-3" />
+            <p className="mt-base-lg w-6/7 text-2xl">{t("home.text")}</p>
+            <div className="gap-base mt-base-lg flex">
+              <Button
+                text={t("home.getStarted")}
+                type="primary"
+                theme="brand"
+                size="large"
+                onClick={() => toast.success("Get started clicked")}
+              />
+              <Button
+                text={t("home.pricing")}
+                type="secondary"
+                theme="brand"
+                size="large"
+                onClick={() => toast.info("Pricing clicked")}
+              />
             </div>
-            <div className="bg-brand-300 size-108 shrink-0 rounded-full"></div>
-            {/* <img
+          </div>
+          <div className="bg-brand-300 size-108 shrink-0 rounded-full"></div>
+          {/* <img
               className="size-108"
               src="src/assets/images/globe.png"
               alt="globe"
             /> */}
-          </div>
         </div>
-        <Shape
+      </div>
+      {/* <Shape
           type="square"
           className="bg-brand-100 absolute top-25 left-100 -rotate-20"
         />
@@ -68,8 +69,8 @@ const Homepage = () => {
         <Shape
           type="square"
           className="bg-brand-200 absolute top-180 right-60 rotate-20"
-        />
-      </div>
+        /> */}
+      {/* </div> */}
 
       <div className="bg-brand-100 flex w-full justify-center px-6">
         <CardText />

@@ -4,6 +4,7 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
+import useModalGroup from "../../hooks/useModalGroup";
 
 type ModalAddGroupProps = {
   isOpen: boolean;
@@ -17,12 +18,16 @@ const ModalAddGroup = ({
   addGroup,
 }: ModalAddGroupProps) => {
   const { t } = useTranslation();
-  const [name, setName] = useState<string>("");
+
+  const { name, setName, validate } = useModalGroup();
 
   return (
     <Modal
       open={isOpen}
-      closeModal={closeModal}
+      closeModal={() => {
+        resetStateValues([setName]);
+        closeModal();
+      }}
       title={t("dictionary.addGroup")}
       content={[
         <div>
@@ -42,6 +47,7 @@ const ModalAddGroup = ({
           size="large"
           autoWidth
           onClick={() => {
+            if (!validate()) return;
             addGroup(name || "");
             resetStateValues([setName]);
             closeModal();

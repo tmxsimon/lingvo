@@ -4,6 +4,7 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import type { LanguageType } from "../../types";
 import { useTranslation } from "react-i18next";
+import useModalLanguage from "../../hooks/useModalLanguage";
 
 type ModalEditLanguageProps = {
   language: LanguageType | null;
@@ -22,8 +23,7 @@ const ModalEditLanguage = ({
 }: ModalEditLanguageProps) => {
   const { t } = useTranslation();
 
-  const [name, setName] = useState(language?.name || "");
-  const [image, setImage] = useState<File | null>(null);
+  const { name, setName, image, setImage, validate } = useModalLanguage();
 
   useEffect(() => {
     setName(language?.name || "");
@@ -78,6 +78,7 @@ const ModalEditLanguage = ({
           size="large"
           autoWidth
           onClick={() => {
+            if (!validate()) return;
             editLanguage(language!.id, name || "", image!);
             setImage(null);
             closeModal();

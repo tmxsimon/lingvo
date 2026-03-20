@@ -6,6 +6,7 @@ import type { DictionaryEntryType, DictionaryGroupType } from "../../types";
 import { useTranslation } from "react-i18next";
 import Select from "../../../../components/Select";
 import type { SelectOptionType } from "../../../../types";
+import useModalEntry from "../../hooks/useModalEntry";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
@@ -34,9 +35,15 @@ const ModalEditEntry = ({
 }: ModalEditEntryProps) => {
   const { t } = useTranslation();
 
-  const [content, setContent] = useState(entry?.content || "");
-  const [translation, setTranslation] = useState(entry?.translation || "");
-  const [note, setNote] = useState(entry?.note || "");
+  const {
+    content,
+    setContent,
+    translation,
+    setTranslation,
+    note,
+    setNote,
+    validate,
+  } = useModalEntry();
   const [currentGroupOption, setCurrentGroupOption] =
     useState<SelectOptionType>({ value: group.id, text: group.name });
 
@@ -126,6 +133,7 @@ const ModalEditEntry = ({
           size="large"
           autoWidth
           onClick={() => {
+            if (!validate()) return;
             editEntry(
               entry!.id,
               currentGroupOption.value as number,

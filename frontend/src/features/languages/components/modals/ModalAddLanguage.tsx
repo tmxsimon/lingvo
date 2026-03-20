@@ -1,8 +1,8 @@
-import { useState } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { useTranslation } from "react-i18next";
+import useModalLanguage from "../../hooks/useModalLanguage";
 
 type ModalAddLanguageProps = {
   isOpen: boolean;
@@ -17,13 +17,16 @@ const ModalAddLanguage = ({
 }: ModalAddLanguageProps) => {
   const { t } = useTranslation();
 
-  const [name, setName] = useState<string>("");
-  const [image, setImage] = useState<File | null>(null);
+  const { name, setName, image, setImage, validate } = useModalLanguage();
 
   return (
     <Modal
       open={isOpen}
-      closeModal={closeModal}
+      closeModal={() => {
+        setName("");
+        setImage(null);
+        closeModal();
+      }}
       title={t("languages.addLanguage")}
       content={[
         <div>
@@ -56,6 +59,7 @@ const ModalAddLanguage = ({
           size="large"
           autoWidth
           onClick={() => {
+            if (!validate()) return;
             addLanguage(name, image!);
             setName("");
             setImage(null);
