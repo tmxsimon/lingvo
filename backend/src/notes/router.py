@@ -1,15 +1,13 @@
 from fastapi import APIRouter, HTTPException, status
 from dependencies import SessionDep
 from .service import (
-    get_entries_db,
-    get_entries_by_group_db,
-    create_entry_db,
-    delete_entry_db,
-    reorder_entries_db,
+    get_note_db,
+    get_notes_by_group_db,
+    create_note_db,
+    delete_note_db,
+    reorder_notes_db,
     reorder_groups_db,
-    update_entry_db,
-    TemperatureActionEnum,
-    change_temperature_db,
+    update_note_db,
     get_group_db,
     get_groups_db,
     create_group_db,
@@ -18,122 +16,89 @@ from .service import (
 )
 
 router = APIRouter(
-    prefix="/dictionary",
-    tags=["Dictionary"],
+    prefix="/notes",
+    tags=["Notes"],
 )
 
-# entries
+# notes
 
-@router.get("/cards-entries")
-async def get_cards_entries(language: int, group_id: int | None = None, session = SessionDep):
-    group = None
-    if group_id:
-        entries = get_entries_by_group_db(session, group_id=group_id)
-        group = entries[0].group if entries else None
-    else:
-        entries = get_entries_db(session, language=language)
-
-    if entries is None:
+@router.get("/groups/{group_id}/notes/{note_id}")
+async def get_note(group_id: int, note_id: int, session = SessionDep):
+    note = get_note_db(session, group_id=group_id, note_id=note_id)
+    if note is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="No entries found"
+            detail="Note not found"
         )
-    return { "entries": entries, "group": group }
+    return note
 
-
-@router.get("/groups/{group_id}/entries")
-async def get_entries_by_group(group_id: int, language: int, session = SessionDep):
-    entries = get_entries_by_group_db(session, group_id=group_id, language=language)
-    if entries is None:
+@router.get("/groups/{group_id}/notes")
+async def get_notes_by_group(group_id: int, language: int, session = SessionDep):
+    notes = get_notes_by_group_db(session, group_id=group_id, language=language)
+    if notes is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="No entries found"
+            detail="No notes found"
         )
-    return entries
+    return notes
 
-@router.post("/entries")
-async def create_entry(
-    content: str,
-    translation: str,
+@router.post("/notes")
+async def create_note(
+    name: str,
     group_id: int,
-    note: str | None = None,
     session = SessionDep
     ):
-    entry = create_entry_db(
+    note = create_note_db(
         session = session,
-        content=content,
-        translation=translation,
-        note=note,
-        temperature=100,
+        name=name,
         group_id=group_id
     )
-    if entry is None:
+    if note is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Failed to create entry"
+            detail="Failed to create note"
         )
-    return entry
+    return note
 
 
-@router.delete("/entries/{id}")
-async def delete_entry( id: int, session = SessionDep):
-    entry = delete_entry_db(session, id)
-    if entry is None:
+@router.delete("/notes/{id}")
+async def delete_note( id: int, session = SessionDep):
+    note = delete_note_db(session, id)
+    if note is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Entry not found"
+            detail="note not found"
         )
-    return entry
+    return note
 
-@router.put("/entries/reorder")
-async def reorder_entries(
+@router.put("/notes/reorder")
+async def reorder_notes(
     ordered_ids: list[int],
     session = SessionDep
 ):
-    return reorder_entries_db(session, ordered_ids)
+    return reorder_notes_db(session, ordered_ids)
 
-@router.put("/entries/{id}")
-async def update_entry(
+@router.put("/notes/{id}")
+async def update_note(
     id: int,
     content: str | None = None,
-    translation: str | None = None,
-    note: str | None = None,
-    temperature: int | None = None,
+    name: str | None = None,
     group_id: int | None = None,
     session = SessionDep
 ):
-    entry = update_entry_db(
+    note = update_note_db(
         session = session,
         id=id,
+        name=name,
         content=content,
-        translation=translation,
-        note=note,
-        temperature=temperature,
         group_id=group_id
     )
-    if entry is None:
+    if note is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Entry not found"
+            detail="note not found"
         )
-    return entry
-
-
-@router.put("/entries/{id}/temperature")
-async def change_temperature(id: int, action: TemperatureActionEnum, step: int, session = SessionDep):
-    entry = change_temperature_db(
-        session = session,
-        id=id,
-        action=action,
-        step=step
-    )
-    if entry is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Entry not found"
-        )
-    return entry
-    
+    return note
 
 # groups
 
@@ -148,7 +113,7 @@ async def get_groups(language: int, session = SessionDep):
     return groups
 
 @router.get("/groups/{id}")
-async def get_group_and_entries(id: int | None = None, session = SessionDep):
+async def get_group_and_notes(id: int | None = None, session = SessionDep):
     group = get_group_db(session=session, id=id)
     if group is None:
         raise HTTPException(
@@ -156,9 +121,9 @@ async def get_group_and_entries(id: int | None = None, session = SessionDep):
             detail="Group not found"
         )
     
-    entires = sorted(group.entries, key=lambda x: x.position, reverse=True)
+    entires = sorted(group.notes, key=lambda x: x.position, reverse=True)
     
-    return {"group": group, "entries": entires}
+    return {"group": group, "notes": entires}
 
 
 @router.post("/groups")
@@ -196,7 +161,7 @@ async def reorder_groupss(
 @router.put("/groups/{id}")
 async def update_group(
     id: int,
-    language: int | None = None,
+    language: int | None = None ,
     name: str | None = None,
     session = SessionDep
 ):
@@ -212,4 +177,3 @@ async def update_group(
             detail="Group not found"
         )
     return group
-

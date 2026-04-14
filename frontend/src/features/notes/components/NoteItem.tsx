@@ -1,18 +1,19 @@
 import { Reorder, useDragControls } from "motion/react";
 import Icon from "../../../components/Icon";
-import type { DictionaryEntryType } from "../types";
+import type { NoteType } from "../types";
+import { Link } from "react-router-dom";
 
-type DictionaryEntryProps = {
-  entry: DictionaryEntryType;
+type NoteItemProps = {
+  note: NoteType;
   onClickSettings: () => void;
 };
 
-const DictionaryEntry = ({ entry, onClickSettings }: DictionaryEntryProps) => {
+const NoteItem = ({ note, onClickSettings }: NoteItemProps) => {
   const controls = useDragControls();
 
   return (
     <Reorder.Item
-      value={entry}
+      value={note}
       dragListener={false}
       dragControls={controls}
       className="rounded-base px-base py-base-sm bg-brand-neutral-100 border-brand-neutral-200 flex h-14 w-168 items-center justify-between border"
@@ -23,26 +24,19 @@ const DictionaryEntry = ({ entry, onClickSettings }: DictionaryEntryProps) => {
         onPointerDown={(e) => controls.start(e)}
       />
       <div className="flex w-full">
-        <div className="flex-1 truncate">{entry.content}</div>
-        <div className="flex-1 truncate">{entry.translation}</div>
+        <div className="flex-1 truncate">{note.name}</div>
       </div>
 
       <div className="flex">
-        {entry.note && (
-          <div
-            className="cursor-pointer"
-            data-tooltip-id="note-tooltip"
-            data-tooltip-content={entry.note}
-          >
-            <Icon name="info" className="size-8" />
-          </div>
-        )}
         <div className="cursor-pointer" onClick={onClickSettings}>
           <Icon name="settings" className="size-8" />
         </div>
+        <Link to={`${note.id}`} className="cursor-pointer">
+          <Icon name="arrowRight" className="size-8" />
+        </Link>
       </div>
     </Reorder.Item>
   );
 };
 
-export default DictionaryEntry;
+export default NoteItem;

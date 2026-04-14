@@ -43,6 +43,19 @@
       "entriesNotFound": "Записи не найдены"
     },
 
+    "notes": {
+      "notes": "Заметки",
+      "addGroup": "Добавить группу",
+      "editGroup": "Редактировать группу",
+      "addNote": "Добавить заметку",
+      "editNote": "Редактировать заметку",
+      "name": "Название",
+
+      "validation": {
+        "nameLength": "Название должно содержать от 1 до 30 символов"
+      }
+    },
+
     "languages": {
       "yourLanguages": "Ваши языки",
       "addLanguage": "Добавить язык",

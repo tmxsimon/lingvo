@@ -3,22 +3,18 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
-import useModalGroup from "../../hooks/useModalGroup";
+import useModalNote from "../../hooks/useModalNote";
 
-type ModalAddGroupProps = {
+type ModalAddEntryProps = {
   isOpen: boolean;
   closeModal: () => void;
-  addGroup: (name: string) => void;
+  addNote: (name: string) => void;
 };
 
-const ModalAddGroup = ({
-  isOpen,
-  closeModal,
-  addGroup,
-}: ModalAddGroupProps) => {
+const ModalAddEntry = ({ isOpen, closeModal, addNote }: ModalAddEntryProps) => {
   const { t } = useTranslation();
 
-  const { name, setName, validate } = useModalGroup();
+  const { name, setName, validate } = useModalNote();
 
   return (
     <Modal
@@ -27,10 +23,10 @@ const ModalAddGroup = ({
         resetStateValues([setName]);
         closeModal();
       }}
-      title={t("dictionary.addGroup")}
+      title={t("notes.addNote")}
       content={[
         <div>
-          <div className="text-2xl">{t("dictionary.name")}</div>
+          <div className="text-2xl">{t("notes.name")}</div>
           <Input
             minLength={1}
             maxLength={30}
@@ -47,7 +43,7 @@ const ModalAddGroup = ({
           autoWidth
           onClick={() => {
             if (!validate()) return;
-            addGroup(name || "");
+            addNote(name || "");
             resetStateValues([setName]);
             closeModal();
           }}
@@ -57,4 +53,4 @@ const ModalAddGroup = ({
   );
 };
 
-export default ModalAddGroup;
+export default ModalAddEntry;

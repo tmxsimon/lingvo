@@ -15,9 +15,10 @@ import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
 import { useDictionaryGroups } from "../hooks/useDictionaryGroups";
 
-const DictionaryWordsPage = () => {
+const DictionaryEntriesPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { groupId } = useParams();
 
   const {
     isOpen: isOpenEntriesAdd,
@@ -30,10 +31,6 @@ const DictionaryWordsPage = () => {
     closeModal: closeModalEntriesEdit,
   } = useModal();
 
-  const { groupId } = useParams<{
-    groupId: string;
-  }>();
-
   const { language } = useLanguageContext();
 
   const [chosenEntry, setChosenEntry] = useState<DictionaryEntryType | null>(
@@ -42,27 +39,26 @@ const DictionaryWordsPage = () => {
 
   const {
     group,
+    entries: entriesFetched,
     addEntry,
     editEntry,
     deleteEntry,
     reorderEntries,
     isLoading: isLoadingEntries,
     error: errorEntries,
-  } = useDictionaryEntries(Number.parseInt(groupId!), language!);
-
-  const [entries, setEntries] = useState(group?.entries || []);
-
-  useEffect(() => {
-    if (group) {
-      setEntries(group.entries);
-    }
-  }, [group]);
+  } = useDictionaryEntries(parseInt(groupId!));
 
   const {
     groups,
     isLoading: isLoadingGroups,
     error: errorGroups,
-  } = useDictionaryGroups(language!);
+  } = useDictionaryGroups(parseInt(language));
+
+  const [entries, setEntries] = useState(entriesFetched || []);
+
+  useEffect(() => {
+    setEntries(entriesFetched || []);
+  }, [entriesFetched]);
 
   if (isLoadingEntries || isLoadingGroups) return <Loading />;
   if (errorEntries || errorGroups)
@@ -76,43 +72,40 @@ const DictionaryWordsPage = () => {
           size="large"
           onClick={openModalEntriesAdd}
         />
-        {group && (
-          <Button
-            type="text"
-            size="large"
-            text={group.name}
-            iconBack={<Icon name="close" className="size-5 stroke-2" />}
-            onClick={() => navigate("/dictionary")}
-          />
-        )}
 
-        {group && (
-          <Reorder.Group
-            axis="y"
-            values={entries}
-            onReorder={(newEntries) => {
-              newEntries.forEach((entry, index) => {
-                entry.position = newEntries.length - index;
-              });
-              setEntries(newEntries);
-              const orderedIds = newEntries.map((e) => e.id);
+        <Button
+          type="text"
+          size="large"
+          text={group!.name}
+          iconBack={<Icon name="close" className="size-5 stroke-2" />}
+          onClick={() => navigate("/dictionary")}
+        />
 
-              reorderEntries.mutate(orderedIds);
-            }}
-            className="gap-base-sm flex flex-col items-center"
-          >
-            {entries?.map((entry) => (
-              <DictionaryEntry
-                key={entry.id}
-                entry={entry}
-                onClickSettings={() => {
-                  setChosenEntry(entry);
-                  openModalEntriesEdit();
-                }}
-              />
-            ))}
-          </Reorder.Group>
-        )}
+        <Reorder.Group
+          axis="y"
+          values={entries}
+          onReorder={(newEntries) => {
+            newEntries.forEach((entry, index) => {
+              entry.position = newEntries.length - index;
+            });
+            const orderedIds = newEntries.map((e) => e.id);
+            setEntries(newEntries);
+
+            reorderEntries.mutate(orderedIds);
+          }}
+          className="gap-base-sm flex flex-col items-center"
+        >
+          {entries?.map((entry) => (
+            <DictionaryEntry
+              key={entry.id}
+              entry={entry}
+              onClickSettings={() => {
+                setChosenEntry(entry);
+                openModalEntriesEdit();
+              }}
+            />
+          ))}
+        </Reorder.Group>
 
         <Tooltip id="note-tooltip" className="z-50 max-w-92 break-all" />
 
@@ -144,4 +137,4 @@ const DictionaryWordsPage = () => {
   );
 };
 
-export default DictionaryWordsPage;
+export default DictionaryEntriesPage;

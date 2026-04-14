@@ -1,47 +1,51 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { DictionaryEntryType } from "../../dictionary/types";
-import { fetchEntries, fetchGroupEntries } from "../../dictionary/services";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { fetchCardsEntries } from "../../dictionary/services";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
 
 const PATH = "/dictionary";
 
 // the code is quite trash i generated most of it with ai... but it works
 // TODO: fix the code 😭
-export default function useCardEntry(groupId: number | null, language: string) {
+export default function useCardEntry(
+  groupId: number | null,
+  language: number,
+  isOpen: boolean = false,
+) {
+  const queryClient = useQueryClient();
+
   const {
-    data: group,
+    data: { entries, group } = { entries: [], group: null },
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["group", groupId && groupId, language],
-    queryFn: () =>
-      groupId ? fetchGroupEntries(groupId, language) : fetchEntries(language),
+    queryKey: [groupId, language, "cardEntries"],
+    queryFn: () => fetchCardsEntries(groupId, language),
   });
 
-  const [currentEntry, setCurrentEntry] = useState<
-    DictionaryEntryType | undefined
-  >(undefined);
+  const [currentEntry, setCurrentEntry] = useState<DictionaryEntryType | null>(
+    null,
+  );
 
   const [isActive, setIsActive] = useState<boolean>(false);
 
-  const sortedEntries = group?.entries
-    ?.slice()
-    .sort((a, b) => b.temperature - a.temperature);
+  const sortedEntries = useMemo(() => {
+    return entries?.slice().sort((a, b) => b.temperature - a.temperature);
+  }, [entries]);
 
   useEffect(() => {
     if (!sortedEntries?.length) {
-      setCurrentEntry(undefined);
+      setCurrentEntry(null);
       return;
     }
-    setIsActive(false);
     setCurrentEntry((prev) => {
       if (prev && sortedEntries.some((e) => e.id === prev.id)) {
         return prev;
       }
       return sortedEntries[0];
     });
-  }, [group]);
+  }, [sortedEntries]);
 
   const handleNext = () => {
     if (!sortedEntries) return;
@@ -64,17 +68,59 @@ export default function useCardEntry(groupId: number | null, language: string) {
       action: "increase" | "decrease";
       step?: number;
     }) =>
-      api.put(
-        `${PATH}/${language}/entries/${currentEntry?.id}/temperature`,
-        null,
-        {
-          params: { action: action, step: step },
-        },
-      ),
+      api.put(`${PATH}/entries/${currentEntry!.id}/temperature`, null, {
+        params: { action: action, step: step },
+      }),
     onSuccess: (response) => {
       setCurrentEntry(response.data);
+      queryClient.setQueryData(
+        [groupId, language, "cardEntries"],
+        (oldData: any) => {
+          if (!oldData) return oldData;
+          return {
+            ...oldData,
+            entries: oldData.entries.map((entry: DictionaryEntryType) =>
+              entry.id === response.data.id ? response.data : entry,
+            ),
+          };
+        },
+      );
     },
   });
+
+  // Keyboard controls
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!currentEntry || isOpen) return;
+
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        changeTemperature.mutate({ action: "increase" });
+      } else if (event.key === "ArrowDown") {
+        event.preventDefault();
+        changeTemperature.mutate({ action: "decrease" });
+      } else if (
+        event.key === "ArrowRight" ||
+        (event.key === " " && isActive)
+      ) {
+        event.preventDefault();
+        handleNext();
+      } else if (event.key === " ") {
+        event.preventDefault();
+        setIsActive(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [
+    currentEntry,
+    changeTemperature,
+    handleNext,
+    isOpen,
+    isActive,
+    setIsActive,
+  ]);
 
   return {
     group,
@@ -82,7 +128,6 @@ export default function useCardEntry(groupId: number | null, language: string) {
     setIsActive,
     currentEntry,
     setCurrentEntry,
-    sortedEntries,
     handleNext,
     changeTemperature,
     isLoading,

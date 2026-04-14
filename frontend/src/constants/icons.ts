@@ -13,6 +13,7 @@ import Sun from "../assets/icons/sun.svg?react";
 import Moon from "../assets/icons/moon.svg?react";
 import Languages from "../assets/icons/languages.svg?react";
 import Grip from "../assets/icons/grip.svg?react";
+import Notes from "../assets/icons/notes.svg?react";
 
 import OpenBook from "../assets/icons/open-book.svg?react";
 import Volume from "../assets/icons/volume.svg?react";
@@ -39,6 +40,7 @@ const ICONS = {
   moon: Moon,
   languages: Languages,
   grip: Grip,
+  notes: Notes,
 
   // CardText icons
   openBook: OpenBook,

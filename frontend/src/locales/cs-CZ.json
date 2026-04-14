@@ -43,6 +43,19 @@
       "entriesNotFound": "Záznamy nebyly nalezeny"
     },
 
+    "notes": {
+      "notes": "Poznámky",
+      "addGroup": "Přidat skupinu",
+      "editGroup": "Upravit skupinu",
+      "addNote": "Přidat poznámku",
+      "editNote": "Upravit poznámku",
+      "name": "Název",
+
+      "validation": {
+        "nameLength": "Název musí mít 1 až 30 znaků"
+      }
+    },
+
     "languages": {
       "yourLanguages": "Vaše jazyky",
       "addLanguage": "Přidat jazyk",

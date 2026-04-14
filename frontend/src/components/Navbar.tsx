@@ -42,6 +42,9 @@ const Navbar = () => {
                   name="dictionary"
                 />
               </Link>
+              <Link to="/notes">
+                <Icon className="hover:text-brand-300 size-8" name="notes" />
+              </Link>
             </>
           )}
           <Link to="/languages">

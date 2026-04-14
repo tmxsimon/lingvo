@@ -2,25 +2,25 @@ import { useEffect } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
-import type { DictionaryGroupType } from "../../types";
+import type { NotesGroupType } from "../../types";
 import { useTranslation } from "react-i18next";
-import useModalGroup from "../../hooks/useModalGroup";
+import useModalGroup from "../../hooks/useModalNotesGroup";
 
-type ModalEditGroupProps = {
-  group: DictionaryGroupType | null;
+type ModalEditNotesGroupProps = {
+  group: NotesGroupType | null;
   isOpen: boolean;
   closeModal: () => void;
   editGroup: (id: number, name: string) => void;
   deleteGroup: (id: number) => void;
 };
 
-const ModalEditGroup = ({
+const ModalEditNotesGroup = ({
   group,
   isOpen,
   closeModal,
   editGroup,
   deleteGroup,
-}: ModalEditGroupProps) => {
+}: ModalEditNotesGroupProps) => {
   const { t } = useTranslation();
 
   const { name, setName, validate } = useModalGroup();
@@ -33,10 +33,10 @@ const ModalEditGroup = ({
     <Modal
       open={isOpen}
       closeModal={closeModal}
-      title={t("dictionary.editGroup")}
+      title={t("notes.editGroup")}
       content={[
         <div>
-          <div className="text-2xl">{t("dictionary.content")}</div>
+          <div className="text-2xl">{t("notes.name")}</div>
           <Input
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -74,4 +74,4 @@ const ModalEditGroup = ({
   );
 };
 
-export default ModalEditGroup;
+export default ModalEditNotesGroup;

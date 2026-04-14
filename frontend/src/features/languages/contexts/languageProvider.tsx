@@ -8,7 +8,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 export const useLanguageContext = () => {
   const context = useContext(LanguageContext);
   if (!context) {
-    throw new Error("useTheme must be used within ThemeProvider");
+    throw new Error("useLanguageContext must be used within LanguageProvider");
   }
   return context;
 };
@@ -17,12 +17,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [language, setLanguage] = useState(
-    () => localStorage.getItem("language") || "",
+    () => localStorage.getItem("languageId") || "",
   );
 
   const changeLanguage = (language: string) => {
-    setLanguage(language);
-    localStorage.setItem("language", language);
+    setLanguage(language.toString());
+    localStorage.setItem("languageId", language.toString());
   };
 
   return (

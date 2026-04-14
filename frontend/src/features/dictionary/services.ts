@@ -1,39 +1,33 @@
 import api from "../../lib/api";
-import type { DictionaryGroupType } from "./types";
+import type { DictionaryEntryType, DictionaryGroupType } from "./types";
 
 const PATH = "/dictionary";
 
-export const fetchGroup = async (id: number, language: string) => {
-  const result = await api.get<DictionaryGroupType>(
-    `${PATH}/${language}/groups/${id}`,
-  );
+export const fetchGroups = async (language: number) => {
+  const result = await api.get<DictionaryGroupType[]>(`${PATH}/groups`, {
+    params: { language },
+  });
   return result.data;
 };
 
-export const fetchGroups = async (language: string) => {
-  const result = await api.get<DictionaryGroupType[]>(
-    `${PATH}/${language}/groups`,
-  );
+export const fetchGroupAndEntries = async (id: number) => {
+  const result = await api.get<{
+    group: DictionaryGroupType;
+    entries: DictionaryEntryType[];
+  }>(`${PATH}/groups/${id}`);
+
   return result.data;
 };
 
-export const fetchGroupEntries = async (id: number, language: string) => {
-  const result = await api.get<DictionaryGroupType>(
-    `${PATH}/${language}/groups/${id}`,
-  );
-
-  // Have to do it because of the retarted endpoint implementation
-  // TODO: Rewrite this
-  const sortedEntries = result.data.entries.sort(
-    (a, b) => b.position - a.position,
-  );
-
-  return { ...result.data, entries: sortedEntries };
-};
-
-export const fetchEntries = async (language: string) => {
-  const result = await api.get<DictionaryGroupType>(
-    `${PATH}/${language}/entries`,
-  );
+export const fetchCardsEntries = async (
+  groupId: number | null,
+  language: number,
+) => {
+  const result = await api.get<{
+    entries: DictionaryEntryType[];
+    group: DictionaryGroupType | null;
+  }>(`${PATH}/cards-entries`, {
+    params: { group_id: groupId, language },
+  });
   return result.data;
 };

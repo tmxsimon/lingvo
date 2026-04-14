@@ -9,7 +9,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
-import { useEffect } from "react";
 
 const CardsPage = () => {
   const { t } = useTranslation();
@@ -22,7 +21,7 @@ const CardsPage = () => {
   const { isOpen, openModal, closeModal } = useModal();
 
   const {
-    group: currentGroup,
+    group,
     isActive,
     setIsActive,
     currentEntry,
@@ -30,34 +29,11 @@ const CardsPage = () => {
     changeTemperature,
     isLoading,
     error,
-  } = useCardEntry(groupId ? Number.parseInt(groupId!) : null, language!);
-
-  // keyboard controls
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (!currentEntry || isOpen) return;
-
-      if (event.key === "ArrowUp") {
-        event.preventDefault();
-        changeTemperature.mutate({ action: "increase" });
-      } else if (event.key === "ArrowDown") {
-        event.preventDefault();
-        changeTemperature.mutate({ action: "decrease" });
-      } else if (
-        event.key === "ArrowRight" ||
-        (event.key === " " && isActive) // press space when active to go to next card
-      ) {
-        event.preventDefault();
-        handleNext();
-      } else if (event.key === " ") {
-        event.preventDefault();
-        setIsActive(true);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentEntry, changeTemperature, handleNext, isOpen, setIsActive]);
+  } = useCardEntry(
+    groupId ? parseInt(groupId) : null,
+    parseInt(language),
+    isOpen,
+  );
 
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
@@ -68,7 +44,7 @@ const CardsPage = () => {
         <Button
           type="text"
           size="large"
-          text={currentGroup?.name || t("cards.allEntries")}
+          text={group?.name || t("cards.allEntries")}
           iconBack={<Icon name="change" className="size-4" />}
           onClick={openModal}
         />
@@ -80,8 +56,8 @@ const CardsPage = () => {
             >
               <Card
                 isActive={isActive}
-                content={currentEntry?.content || ""}
-                translation={currentEntry?.translation || ""}
+                content={currentEntry.content}
+                translation={currentEntry.translation}
                 note={currentEntry.note}
               />
             </div>
@@ -112,8 +88,8 @@ const CardsPage = () => {
 
       {/* modals */}
       <ModalChangeGroup
-        group={currentGroup}
-        language={language!}
+        group={group}
+        language={parseInt(language)}
         changeGroupId={async (id: number | "") => navigate(`/cards/${id}`)}
         isOpen={isOpen}
         closeModal={closeModal}

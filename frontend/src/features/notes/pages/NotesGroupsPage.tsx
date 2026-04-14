@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import Button from "../../../components/Button";
 import useModal from "../../../hooks/useModal";
-import { useDictionaryGroups } from "../hooks/useDictionaryGroups";
-import DictionaryGroup from "../components/DictionaryGroup";
-import ModalAddGroup from "../components/modals/ModalAddGroup";
-import ModalEditGroup from "../components/modals/ModalEditGroup";
-import type { DictionaryGroupType } from "../types";
+import { useNotesGroups } from "../hooks/useNotesGroups";
+import NotesGroup from "../components/NotesGroup";
+import ModalAddNotesGroup from "../components/modals/ModalAddNotesGroup";
+import ModalEditNotesGroup from "../components/modals/ModalEditNotesGroup";
+import type { NotesGroupType } from "../types";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
@@ -13,12 +13,8 @@ import { Reorder } from "motion/react";
 
 const DictionaryGroupsPage = () => {
   const { t } = useTranslation();
-
   const { language } = useLanguageContext();
-
-  const [chosenGroup, setChosenGroup] = useState<DictionaryGroupType | null>(
-    null,
-  );
+  const [chosenGroup, setChosenGroup] = useState<NotesGroupType | null>(null);
 
   const {
     isOpen: isOpenGroupsAdd,
@@ -39,7 +35,7 @@ const DictionaryGroupsPage = () => {
     reorderGroups,
     isLoading,
     error,
-  } = useDictionaryGroups(parseInt(language));
+  } = useNotesGroups(parseInt(language));
 
   const [groups, setGroups] = useState(groupsFetched || []);
 
@@ -54,7 +50,7 @@ const DictionaryGroupsPage = () => {
     <>
       <div className="gap-base flex flex-col items-center">
         <Button
-          text={t("dictionary.addGroup")}
+          text={t("notes.addGroup")}
           size="large"
           onClick={openModalGroupsAdd}
         />
@@ -75,7 +71,7 @@ const DictionaryGroupsPage = () => {
           className="gap-base-sm flex flex-col items-center"
         >
           {groups.map((group) => (
-            <DictionaryGroup
+            <NotesGroup
               key={group.id}
               group={group}
               onClickSettings={() => {
@@ -88,7 +84,7 @@ const DictionaryGroupsPage = () => {
       </div>
 
       {/* modals */}
-      <ModalAddGroup
+      <ModalAddNotesGroup
         isOpen={isOpenGroupsAdd}
         closeModal={closeModalGroupsAdd}
         addGroup={(name: string) => {
@@ -96,7 +92,7 @@ const DictionaryGroupsPage = () => {
           closeModalGroupsAdd();
         }}
       />
-      <ModalEditGroup
+      <ModalEditNotesGroup
         group={chosenGroup!}
         isOpen={isOpenGroupsEdit}
         closeModal={closeModalGroupsEdit}

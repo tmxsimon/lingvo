@@ -2,9 +2,9 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
 import { fetchGroups } from "../services";
 
-const PATH = "/dictionary";
+const PATH = "/notes";
 
-export function useDictionaryGroups(language: number) {
+export function useNotesGroups(language: number) {
   const queryClient = useQueryClient();
 
   const {

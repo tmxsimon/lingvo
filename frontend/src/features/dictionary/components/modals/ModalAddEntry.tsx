@@ -1,11 +1,8 @@
-import { useState } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
-import validator from "validator";
-import { toast } from "react-toastify";
 import useModalEntry from "../../hooks/useModalEntry";
 
 type ModalAddEntryProps = {

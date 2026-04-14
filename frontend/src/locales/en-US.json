@@ -43,6 +43,19 @@
       "entriesNotFound": "Entries not found"
     },
 
+    "notes": {
+      "notes": "Notes",
+      "addGroup": "Add group",
+      "editGroup": "Edit group",
+      "addNote": "Add note",
+      "editNote": "Edit note",
+      "name": "Name",
+
+      "validation": {
+        "nameLength": "Name must be between 1 and 30 characters"
+      }
+    },
+
     "languages": {
       "yourLanguages": "Your languages",
       "addLanguage": "Add language",

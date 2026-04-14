@@ -9,6 +9,7 @@ import type { LanguageType } from "../types";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Reorder } from "motion/react";
+import { useLanguageContext } from "../contexts/languageProvider";
 
 const LanguagesPage = () => {
   const { t } = useTranslation();
@@ -24,6 +25,7 @@ const LanguagesPage = () => {
     closeModal: closeModalEdit,
   } = useModal();
 
+  const { changeLanguage } = useLanguageContext();
   const [chosenLanguage, setChosenLanguage] = useState<LanguageType | null>(
     null,
   );
@@ -80,7 +82,10 @@ const LanguagesPage = () => {
               <Language
                 key={language.id}
                 language={language}
-                onClick={() => setChosenLanguage(language)}
+                onClick={() => {
+                  setChosenLanguage(language);
+                  changeLanguage(language.id.toString());
+                }}
                 onClickSettings={openModalEdit}
               />
             ))}

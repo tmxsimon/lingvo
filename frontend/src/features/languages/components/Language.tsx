@@ -1,5 +1,4 @@
 import type { LanguageType } from "../types";
-import { useLanguageContext } from "../contexts/languageProvider";
 import Icon from "../../../components/Icon";
 import { Reorder, useDragControls } from "framer-motion";
 
@@ -11,19 +10,13 @@ type LanguageProps = {
 
 const Language = ({ language, onClick, onClickSettings }: LanguageProps) => {
   const controls = useDragControls();
-  const { changeLanguage } = useLanguageContext();
-
-  const languageName = language.name.toLowerCase();
 
   return (
     <Reorder.Item
       value={language}
       dragListener={false}
       dragControls={controls}
-      onClick={() => {
-        changeLanguage(languageName);
-        onClick();
-      }}
+      onClick={onClick}
       className="bg-brand-neutral-100 px-base py-base border-brand-neutral-200 rounded-base-sm gap-base flex size-80 cursor-pointer flex-col justify-between border"
     >
       <img

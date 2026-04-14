@@ -1,19 +1,19 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
-import { fetchGroupEntries } from "../services";
+import { fetchGroupAndEntries } from "../services";
 
 const PATH = "/dictionary";
 
-export function useDictionaryEntries(groupId: number, language: string) {
+export function useDictionaryEntries(groupId: number) {
   const queryClient = useQueryClient();
 
   const {
-    data: group,
+    data: { group, entries } = { group: null, entries: [] },
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["entries", groupId, language],
-    queryFn: () => fetchGroupEntries(groupId, language),
+    queryKey: ["entries", groupId],
+    queryFn: () => fetchGroupAndEntries(groupId),
   });
 
   const addEntry = useMutation({
@@ -26,7 +26,7 @@ export function useDictionaryEntries(groupId: number, language: string) {
       translation: string;
       note?: string;
     }) =>
-      api.post(`${PATH}/${language}/entries`, null, {
+      api.post(`${PATH}/entries`, null, {
         params: {
           content: content,
           translation: translation,
@@ -53,7 +53,7 @@ export function useDictionaryEntries(groupId: number, language: string) {
       translation?: string;
       note?: string;
     }) =>
-      api.put(`${PATH}/${language}/entries/${id}`, null, {
+      api.put(`${PATH}/entries/${id}`, null, {
         params: {
           group_id: groupId,
           content: content,
@@ -67,7 +67,7 @@ export function useDictionaryEntries(groupId: number, language: string) {
   });
 
   const deleteEntry = useMutation({
-    mutationFn: (id: number) => api.delete(`${PATH}/${language}/entries/${id}`),
+    mutationFn: (id: number) => api.delete(`${PATH}/entries/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["entries"] });
     },
@@ -80,6 +80,7 @@ export function useDictionaryEntries(groupId: number, language: string) {
 
   return {
     group,
+    entries,
     isLoading,
     error,
     addEntry,

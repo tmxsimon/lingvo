@@ -3,29 +3,25 @@ from sqlmodel import Field, SQLModel, Relationship
 
 # TODO: create read models
 
-class DictionaryEntry(SQLModel, table=True):
-    __tablename__ = "dictionary_entry"
-
+class Note(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
+    name: str
     content: str
-    translation: str
-    note: str | None = None
-    temperature: int # 0 - 100 (%)
-    group_id: int = Field(foreign_key="entries_group.id")
-    group: EntriesGroup = Relationship(back_populates="entries")
+    group_id: int = Field(foreign_key="notes_group.id")
+    group: NotesGroup = Relationship(back_populates="notes")
     position: int
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
 
-class EntriesGroup(SQLModel, table=True):
-    __tablename__ = "entries_group"
+class NotesGroup(SQLModel, table=True):
+    __tablename__ = "notes_group"
 
     id: int | None = Field(default=None, primary_key=True)
     name: str
     language_id: int | None = Field(default=None, foreign_key="language.id")
-    language: Language = Relationship(back_populates="entries_groups")
-    entries: list["DictionaryEntry"] = Relationship(back_populates="group", cascade_delete=True)
+    language: Language = Relationship(back_populates="notes_groups")
+    notes: list["Note"] = Relationship(back_populates="group", cascade_delete=True)
     position: int
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)

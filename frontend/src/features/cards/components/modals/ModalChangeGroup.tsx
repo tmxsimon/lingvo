@@ -9,8 +9,8 @@ import { useTranslation } from "react-i18next";
 import Loading from "../../../../components/Loading";
 
 type ModalChangeGroupProps = {
-  group?: DictionaryGroupType;
-  language: string;
+  group: DictionaryGroupType | null;
+  language: number;
   changeGroupId: (id: number | "") => void;
   isOpen: boolean;
   closeModal: () => void;
