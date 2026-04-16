@@ -78,6 +78,14 @@
     height: 100%;
   }
 
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
   .light {
     --color-bg: #ffffff;
     --color-text: #171717;
