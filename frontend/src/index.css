@@ -80,11 +80,11 @@
   .md-editor-footer,
   .md-editor-catalog,
   .md-editor-custom-scrollbar__track {
-    background-color: var(--color-gray-neutral-100) !important;
+    background-color: var(--color-brand-neutral-100) !important;
   }
 
   .md-editor-resize-operate {
-    background-color: var(--color-gray-neutral-200) !important;
+    background-color: var(--color-brand-neutral-200) !important;
   }
 
   .md-editor-catalog-active > span,
