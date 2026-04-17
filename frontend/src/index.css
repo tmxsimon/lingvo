@@ -70,9 +70,24 @@
   --color-green-300: var(--color-green-300);
   --color-orange-100: var(--color-orange-100);
   --color-orange-300: var(--color-orange-300);
+
+  --md-border-color: var(--color-green-100) !important;
 }
 
 @layer base {
+  /* Markdown Editor */
+  .md-editor-toolbar-wrapper,
+  .md-editor-preview-wrapper,
+  .cm-scroller,
+  .md-editor-footer,
+  .md-editor-custom-scrollbar__track {
+    background-color: var(--color-gray-neutral-100) !important;
+  }
+
+  .md-editor-resize-operate {
+    background-color: var(--color-gray-neutral-200) !important;
+  }
+
   svg {
     width: 100%;
     height: 100%;
