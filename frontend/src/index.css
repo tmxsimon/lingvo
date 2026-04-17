@@ -70,22 +70,31 @@
   --color-green-300: var(--color-green-300);
   --color-orange-100: var(--color-orange-100);
   --color-orange-300: var(--color-orange-300);
-
-  --md-border-color: var(--color-green-100) !important;
 }
 
 @layer base {
-  /* Markdown Editor */
+  /* Markdown Editor (probably doesn't belong here) */
   .md-editor-toolbar-wrapper,
   .md-editor-preview-wrapper,
   .cm-scroller,
   .md-editor-footer,
+  .md-editor-catalog,
   .md-editor-custom-scrollbar__track {
     background-color: var(--color-gray-neutral-100) !important;
   }
 
   .md-editor-resize-operate {
     background-color: var(--color-gray-neutral-200) !important;
+  }
+
+  .md-editor-catalog-active > span,
+  .md-editor-catalog-link:hover > span,
+  .md-editor-content a:hover {
+    color: var(--color-brand-300) !important;
+  }
+
+  .md-editor-catalog-indicator {
+    background-color: var(--color-brand-300) !important;
   }
 
   svg {
