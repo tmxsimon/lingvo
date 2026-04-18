@@ -4,10 +4,11 @@ import { useTheme } from "../contexts/themeProvider";
 
 type MarkdownEditorProps = {
   value: string;
+  onSave?: () => void;
   onChange: (value: string) => void;
 };
 
-const MarkdownEditor = ({ value, onChange }: MarkdownEditorProps) => {
+const MarkdownEditor = ({ value, onSave, onChange }: MarkdownEditorProps) => {
   const { theme } = useTheme();
 
   const toolbar: ToolbarNames[] = [
@@ -26,6 +27,7 @@ const MarkdownEditor = ({ value, onChange }: MarkdownEditorProps) => {
     "mermaid",
     "-",
     "prettier",
+    "save",
     "revoke",
     "next",
     "=",
@@ -38,6 +40,7 @@ const MarkdownEditor = ({ value, onChange }: MarkdownEditorProps) => {
   return (
     <MdEditor
       value={value}
+      onSave={onSave}
       onChange={onChange}
       toolbars={toolbar}
       language="en-US"
