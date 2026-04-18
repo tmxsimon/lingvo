@@ -79,7 +79,8 @@
   .cm-scroller,
   .md-editor-footer,
   .md-editor-catalog,
-  .md-editor-custom-scrollbar__track {
+  .md-editor-custom-scrollbar__track,
+  .md-editor-dropdown {
     background-color: var(--color-brand-neutral-100) !important;
   }
 
