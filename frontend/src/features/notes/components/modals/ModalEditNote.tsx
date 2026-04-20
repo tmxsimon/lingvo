@@ -35,6 +35,10 @@ const ModalEditnote = ({
 
   useEffect(() => {
     setName(note?.name || "");
+    setCurrentGroupOption({
+      value: note?.group_id || group.id,
+      text: groups.find((g) => g.id === note?.group_id)?.name || "",
+    });
   }, [note]);
 
   const options: SelectOptionType[] = [];

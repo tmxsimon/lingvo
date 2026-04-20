@@ -51,6 +51,10 @@ const ModalEditEntry = ({
     setContent(entry?.content || "");
     setTranslation(entry?.translation || "");
     setNote(entry?.note || "");
+    setCurrentGroupOption({
+      value: entry?.group_id || group.id,
+      text: groups.find((g) => g.id === entry?.group_id)?.name || "",
+    });
   }, [entry]);
 
   const options: SelectOptionType[] = [];
