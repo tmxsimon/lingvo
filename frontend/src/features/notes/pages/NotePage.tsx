@@ -42,6 +42,7 @@ const NotePage = () => {
     <div className="gap-base h-screen-no-navbar-page flex w-320 flex-col">
       <Button
         type="text"
+        theme="neutral"
         size="large"
         text={note!.name}
         iconBack={<Icon name="close" className="size-5 stroke-2" />}

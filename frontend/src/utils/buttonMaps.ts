@@ -3,7 +3,7 @@ export const buttonColorMap: Record<string, Record<string, string>> = {
     primary: "bg-brand-300 text-white",
     secondary: "bg-brand-100 text-brand-300",
     tertiary: "border border-brand-300 text-brand-300",
-    text: "text-gray-neutral-300",
+    text: "text-brand-300",
   },
   neutral: {
     primary: "bg-neutral-400 text-white",
@@ -15,13 +15,13 @@ export const buttonColorMap: Record<string, Record<string, string>> = {
     primary: "bg-warning-300 text-white",
     secondary: "bg-warning-100 text-warning-300",
     tertiary: "border border-warning-300 text-warning-300",
-    text: "text-gray-neutral-300",
+    text: "text-warning-300",
   },
   danger: {
     primary: "bg-danger-300 text-white",
     secondary: "bg-danger-100 text-danger-300",
     tertiary: "border border-danger-300 text-danger-300",
-    text: "text-gray-neutral-300",
+    text: "text-danger-300",
   },
 };
 

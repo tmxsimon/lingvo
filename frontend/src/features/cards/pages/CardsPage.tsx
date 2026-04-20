@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
+import IconButton from "../../../components/IconButton";
 
 const CardsPage = () => {
   const { t } = useTranslation();
@@ -22,9 +23,11 @@ const CardsPage = () => {
 
   const {
     group,
+    currentEntry,
     isActive,
     setIsActive,
-    currentEntry,
+    isReversed,
+    setIsReversed,
     handleNext,
     changeTemperature,
     isLoading,
@@ -43,6 +46,7 @@ const CardsPage = () => {
       <div className="pb-base-lg h-screen-no-navbar-page flex flex-col items-center">
         <Button
           type="text"
+          theme="neutral"
           size="large"
           text={group?.name || t("cards.allEntries")}
           iconBack={<Icon name="change" className="size-4" />}
@@ -59,10 +63,22 @@ const CardsPage = () => {
                 content={currentEntry.content}
                 translation={currentEntry.translation}
                 note={currentEntry.note}
+                reversed={isReversed}
               />
             </div>
 
             <div className="gap-base flex items-center">
+              <IconButton
+                icon={
+                  <Icon
+                    name={isReversed ? "arrowUpDown" : "arrowDownUp"}
+                    className="size-8"
+                  />
+                }
+                type="text"
+                padding={false}
+                onClick={() => setIsReversed(!isReversed)}
+              />
               <Temperature
                 value={currentEntry.temperature}
                 buttonLeftOnClick={() =>

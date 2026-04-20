@@ -10,6 +10,7 @@ type IconButtonProps = Omit<
   size?: "small" | "medium" | "large" | "auto";
   hoverEffect?: boolean;
   activeEffect?: boolean;
+  padding?: boolean;
 };
 
 const IconButton = ({
@@ -19,6 +20,7 @@ const IconButton = ({
   size = "medium",
   hoverEffect = true,
   activeEffect = true,
+  padding = true,
   className = "",
   ...buttonProps
 }: IconButtonProps) => {
@@ -26,7 +28,7 @@ const IconButton = ({
 
   return (
     <button
-      className={`rounded-base-sm flex cursor-pointer items-center justify-center p-2 ${hoverEffect ? "hover:brightness-103" : ""} ${activeEffect ? "active:brightness-97" : ""} ${className}`}
+      className={`rounded-base-sm ${padding ? "p-base-sm" : ""} flex cursor-pointer items-center justify-center ${hoverEffect ? "hover:brightness-103" : ""} ${activeEffect ? "active:brightness-97" : ""} ${className}`}
       {...buttonProps}
     >
       {icon}

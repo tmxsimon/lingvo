@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 import type { DictionaryEntryType } from "../../dictionary/types";
 import { fetchCardsEntries } from "../../dictionary/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -29,6 +29,13 @@ export default function useCardEntry(
   );
 
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [isReversed, setIsReversed] = useState<boolean>(
+    localStorage.getItem("isReversed") === "true",
+  );
+
+  useEffect(() => {
+    localStorage.setItem("isReversed", JSON.stringify(isReversed));
+  }, [isReversed]);
 
   const sortedEntries = useMemo(() => {
     return entries?.slice().sort((a, b) => b.temperature - a.temperature);
@@ -124,10 +131,12 @@ export default function useCardEntry(
 
   return {
     group,
-    isActive,
-    setIsActive,
     currentEntry,
     setCurrentEntry,
+    isActive,
+    setIsActive,
+    isReversed,
+    setIsReversed,
     handleNext,
     changeTemperature,
     isLoading,

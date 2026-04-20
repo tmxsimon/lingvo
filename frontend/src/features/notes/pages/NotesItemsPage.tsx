@@ -75,6 +75,7 @@ const NotesItemsPage = () => {
         {group && (
           <Button
             type="text"
+            theme="neutral"
             size="large"
             text={group.name}
             iconBack={<Icon name="close" className="size-5 stroke-2" />}
