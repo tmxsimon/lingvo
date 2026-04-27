@@ -29,4 +29,5 @@ export const buttonHeightMap: Record<string, string> = {
   small: "h-8",
   medium: "h-10",
   large: "h-12",
+  auto: "h-auto",
 };

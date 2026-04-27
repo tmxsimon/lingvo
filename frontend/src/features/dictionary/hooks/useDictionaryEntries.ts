@@ -1,11 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
 import { fetchGroupAndEntries } from "../services";
+import { useState } from "react";
 
 const PATH = "/dictionary";
 
 export function useDictionaryEntries(groupId: number) {
   const queryClient = useQueryClient();
+
+  const [searchValue, setSearchValue] = useState<string>("");
 
   const {
     data: { group, entries } = { group: null, entries: [] },
@@ -15,6 +18,16 @@ export function useDictionaryEntries(groupId: number) {
     queryKey: ["entries", groupId],
     queryFn: () => fetchGroupAndEntries(groupId),
   });
+
+  const searchEntries = searchValue
+    ? entries?.filter(
+        (entry) =>
+          entry.content.toLowerCase().includes(searchValue.toLowerCase()) ||
+          entry.translation.toLowerCase().includes(searchValue.toLowerCase()) ||
+          (entry.note &&
+            entry.note.toLowerCase().includes(searchValue.toLowerCase())),
+      )
+    : entries;
 
   const addEntry = useMutation({
     mutationFn: ({
@@ -80,7 +93,8 @@ export function useDictionaryEntries(groupId: number) {
 
   return {
     group,
-    entries,
+    entries: searchEntries,
+    setSearchValue,
     isLoading,
     error,
     addEntry,

@@ -2,6 +2,7 @@ import Globe from "../assets/icons/globe.svg?react";
 import Settings from "../assets/icons/settings.svg?react";
 import Change from "../assets/icons/change.svg?react";
 import Dictionary from "../assets/icons/dictionary.svg?react";
+import Plus from "../assets/icons/plus.svg?react";
 import Close from "../assets/icons/close.svg?react";
 import List from "../assets/icons/list.svg?react";
 import Books from "../assets/icons/books.svg?react";
@@ -27,6 +28,7 @@ import Russian from "../assets/icons/flags/ru-RU.svg?react";
 
 const ICONS = {
   // Common
+  plus: Plus,
   close: Close,
   globe: Globe,
   settings: Settings,

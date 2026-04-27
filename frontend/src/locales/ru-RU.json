@@ -6,15 +6,12 @@
     "delete": "Удалить",
 
     "group": "Группа",
-    "entry": "Запись",
-
-    "homepage": {
-      "welcome": "Добро пожаловать в Organizer",
-      "organizerDesription": "Персональный органайзер для ваших ежедневных задач"
-    },
+    "groups": "Группы",
+    "search": "Поиск",
 
     "dictionary": {
       "dictionary": "Словарь",
+      "entries": "Записи",
       "addGroup": "Добавить группу",
       "editGroup": "Редактировать группу",
       "addEntry": "Добавить запись",

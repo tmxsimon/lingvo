@@ -28,7 +28,7 @@ const IconButton = ({
 
   return (
     <button
-      className={`rounded-base-sm ${padding ? "p-base-sm" : ""} flex cursor-pointer items-center justify-center ${hoverEffect ? "hover:brightness-103" : ""} ${activeEffect ? "active:brightness-97" : ""} ${className}`}
+      className={`rounded-full ${padding ? "p-base-sm" : ""} flex aspect-square cursor-pointer items-center justify-center ${hoverEffect ? "hover:brightness-103" : ""} ${activeEffect ? "active:brightness-97" : ""} ${className}`}
       {...buttonProps}
     >
       {icon}

@@ -14,6 +14,9 @@ import { useNotes } from "../hooks/useNotes";
 import ModalAddNote from "../components/modals/ModalAddNote";
 import ModalEditNote from "../components/modals/ModalEditNote";
 import { useNotesGroups } from "../hooks/useNotesGroups";
+import Input from "../../../components/Input";
+import IconButton from "../../../components/IconButton";
+import AddSearchPanel from "../../../components/other/AddSearchPanel";
 
 const NotesItemsPage = () => {
   const { t } = useTranslation();
@@ -21,14 +24,14 @@ const NotesItemsPage = () => {
   const { groupId } = useParams();
 
   const {
-    isOpen: isOpennotesAdd,
-    openModal: openModalnotesAdd,
-    closeModal: closeModalnotesAdd,
+    isOpen: isOpenNotesAdd,
+    openModal: openModalNotesAdd,
+    closeModal: closeModalNotesAdd,
   } = useModal();
   const {
-    isOpen: isOpennotesEdit,
-    openModal: openModalnotesEdit,
-    closeModal: closeModalnotesEdit,
+    isOpen: isOpenNotesEdit,
+    openModal: openModalNotesEdit,
+    closeModal: closeModalNotesEdit,
   } = useModal();
 
   const { language } = useLanguageContext();
@@ -38,6 +41,7 @@ const NotesItemsPage = () => {
   const {
     group,
     notes: notesFetched,
+    setSearchValue,
     addNote,
     editNote,
     deleteNote,
@@ -66,65 +70,52 @@ const NotesItemsPage = () => {
 
   return (
     <>
-      <div className="gap-base-sm flex flex-col items-center">
-        <Button
-          text={t("notes.addNote")}
-          size="large"
-          onClick={openModalnotesAdd}
+      <div className="flex flex-col items-center">
+        <AddSearchPanel
+          title={t("notes.notes")}
+          groupName={group!.name}
+          navigateToUrl="/notes"
+          onAddClick={openModalNotesAdd}
+          onSearchChange={setSearchValue}
         />
-        {group && (
-          <Button
-            type="text"
-            theme="neutral"
-            size="large"
-            text={group.name}
-            iconBack={<Icon name="close" className="size-5 stroke-2" />}
-            onClick={() => navigate("/notes")}
-          />
-        )}
+        <Reorder.Group
+          axis="y"
+          values={notes}
+          onReorder={(newNotes) => {
+            newNotes.forEach((note, index) => {
+              note.position = newNotes.length - index;
+            });
+            setNotes(newNotes);
+            const orderedIds = newNotes.map((e) => e.id);
 
-        {group && (
-          <Reorder.Group
-            axis="y"
-            values={notes}
-            onReorder={(newNotes) => {
-              newNotes.forEach((note, index) => {
-                note.position = newNotes.length - index;
-              });
-              setNotes(newNotes);
-              const orderedIds = newNotes.map((e) => e.id);
-
-              reorderNotes.mutate(orderedIds);
-            }}
-            className="gap-base-sm flex flex-col items-center"
-          >
-            {notes?.map((note) => (
-              <NoteItem
-                key={note.id}
-                note={note}
-                onClickSettings={() => {
-                  setChosenNote(note);
-                  openModalnotesEdit();
-                }}
-              />
-            ))}
-          </Reorder.Group>
-        )}
-
+            reorderNotes.mutate(orderedIds);
+          }}
+          className="gap-base-sm mt-base flex flex-col items-center"
+        >
+          {notes?.map((note) => (
+            <NoteItem
+              key={note.id}
+              note={note}
+              onClickSettings={() => {
+                setChosenNote(note);
+                openModalNotesEdit();
+              }}
+            />
+          ))}
+        </Reorder.Group>
         <Tooltip id="note-tooltip" className="z-50 max-w-92 break-all" />
-
         {/* modals */}
         <ModalAddNote
-          isOpen={isOpennotesAdd}
-          closeModal={closeModalnotesAdd}
+          isOpen={isOpenNotesAdd}
+          closeModal={closeModalNotesAdd}
           addNote={(name: string) => addNote.mutate({ name })}
         />
         <ModalEditNote
           groups={groups!}
           group={group!}
           note={chosenNote!}
-          isOpen={isOpennotesEdit}
-          closeModal={closeModalnotesEdit}
+          isOpen={isOpenNotesEdit}
+          closeModal={closeModalNotesEdit}
           editNote={(id: number, name: string, groupId: number) =>
             editNote.mutate({ id, name, groupId })
           }

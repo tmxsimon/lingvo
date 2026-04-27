@@ -1,6 +1,6 @@
 import { MdEditor, type ToolbarNames } from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
-import { useTheme } from "../contexts/themeProvider";
+import { useTheme } from "../../../contexts/themeProvider";
 
 type MarkdownEditorProps = {
   value: string;

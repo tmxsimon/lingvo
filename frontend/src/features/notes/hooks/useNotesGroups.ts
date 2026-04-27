@@ -1,11 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
 import { fetchGroups } from "../services";
+import { useState } from "react";
 
 const PATH = "/notes";
 
 export function useNotesGroups(language: number) {
   const queryClient = useQueryClient();
+
+  const [searchValue, setSearchValue] = useState<string>("");
 
   const {
     data: groups,
@@ -15,6 +18,12 @@ export function useNotesGroups(language: number) {
     queryKey: ["groups", language],
     queryFn: () => fetchGroups(language),
   });
+
+  const searchGroups = searchValue
+    ? groups?.filter((group) =>
+        group.name.toLowerCase().includes(searchValue.toLowerCase()),
+      )
+    : groups;
 
   const addGroup = useMutation({
     mutationFn: ({ name }: { name: string }) =>
@@ -49,7 +58,8 @@ export function useNotesGroups(language: number) {
   });
 
   return {
-    groups,
+    groups: searchGroups,
+    setSearchValue,
     isLoading,
     error,
     addGroup,

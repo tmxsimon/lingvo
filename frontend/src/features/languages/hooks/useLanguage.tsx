@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
 import { fetchLanguages } from "../services";
 import { useLanguageContext } from "../contexts/languageProvider";
+import { useState } from "react";
 
 const PATH = "/languages";
 
@@ -9,14 +10,22 @@ export function useLanguages() {
   const queryClient = useQueryClient();
   const { changeLanguage } = useLanguageContext();
 
+  const [searchValue, setSearchValue] = useState<string>("");
+
   const {
-    data: groups,
+    data: languages,
     isLoading,
     error,
   } = useQuery({
     queryKey: ["languages"],
     queryFn: () => fetchLanguages(),
   });
+
+  const searchLanguages = searchValue
+    ? languages?.filter((language) =>
+        language.name.toLowerCase().includes(searchValue.toLowerCase()),
+      )
+    : languages;
 
   const addLanguage = useMutation({
     mutationFn: ({
@@ -90,7 +99,8 @@ export function useLanguages() {
   // });
 
   return {
-    languages: groups,
+    languages: searchLanguages,
+    setSearchValue,
     isLoading,
     error,
     addLanguage,

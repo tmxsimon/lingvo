@@ -14,6 +14,9 @@ import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
 import { useDictionaryGroups } from "../hooks/useDictionaryGroups";
+import Input from "../../../components/Input";
+import IconButton from "../../../components/IconButton";
+import AddSearchPanel from "../../../components/other/AddSearchPanel";
 
 const DictionaryEntriesPage = () => {
   const { t } = useTranslation();
@@ -40,6 +43,7 @@ const DictionaryEntriesPage = () => {
   const {
     group,
     entries: entriesFetched,
+    setSearchValue,
     addEntry,
     editEntry,
     deleteEntry,
@@ -66,22 +70,14 @@ const DictionaryEntriesPage = () => {
 
   return (
     <>
-      <div className="gap-base-sm flex flex-col items-center">
-        <Button
-          text={t("dictionary.addEntry")}
-          size="large"
-          onClick={openModalEntriesAdd}
+      <div className="flex flex-col items-center">
+        <AddSearchPanel
+          title={t("dictionary.entries")}
+          groupName={group!.name}
+          navigateToUrl="/dictionary"
+          onAddClick={openModalEntriesAdd}
+          onSearchChange={setSearchValue}
         />
-
-        <Button
-          type="text"
-          theme="neutral"
-          size="large"
-          text={group!.name}
-          iconBack={<Icon name="close" className="size-5 stroke-2" />}
-          onClick={() => navigate("/dictionary")}
-        />
-
         <Reorder.Group
           axis="y"
           values={entries}
@@ -94,7 +90,7 @@ const DictionaryEntriesPage = () => {
 
             reorderEntries.mutate(orderedIds);
           }}
-          className="gap-base-sm flex flex-col items-center"
+          className="gap-base-sm mt-base flex flex-col items-center"
         >
           {entries?.map((entry) => (
             <DictionaryEntry
@@ -107,9 +103,7 @@ const DictionaryEntriesPage = () => {
             />
           ))}
         </Reorder.Group>
-
         <Tooltip id="note-tooltip" className="z-50 max-w-92 break-all" />
-
         {/* modals */}
         <ModalAddEntry
           isOpen={isOpenEntriesAdd}

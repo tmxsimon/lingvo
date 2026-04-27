@@ -18,9 +18,10 @@ type ButtonProps = Omit<
 };
 
 const sizeMap: Record<string, string> = {
-  small: `px-base-sm py-2 text-sm ${buttonHeightMap["small"]}`,
-  medium: `px-base py-2 text-md ${buttonHeightMap["medium"]}`,
-  large: `px-base-lg py-2 text-lg ${buttonHeightMap["large"]}`,
+  small: `px-base-sm text-sm ${buttonHeightMap["small"]}`,
+  medium: `px-base text-md ${buttonHeightMap["medium"]}`,
+  large: `px-base-lg text-lg ${buttonHeightMap["large"]}`,
+  auto: `px-base ${buttonHeightMap["auto"]}`,
 };
 
 const Button = ({

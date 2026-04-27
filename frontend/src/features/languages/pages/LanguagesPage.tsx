@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Reorder } from "motion/react";
 import { useLanguageContext } from "../contexts/languageProvider";
+import AddSearchPanel from "../../../components/other/AddSearchPanel";
 
 const LanguagesPage = () => {
   const { t } = useTranslation();
@@ -32,6 +33,7 @@ const LanguagesPage = () => {
 
   const {
     languages: languagesFetched,
+    setSearchValue,
     addLanguage,
     editLanguage,
     deleteLanguage,
@@ -53,44 +55,39 @@ const LanguagesPage = () => {
 
   return (
     <>
-      <div className="gap-base flex flex-col items-center">
-        <Button
-          text={t("languages.addLanguage")}
-          size="large"
-          onClick={openModalAdd}
+      <div className="flex flex-col items-center">
+        <AddSearchPanel
+          title={t("languages.yourLanguages")}
+          onAddClick={openModalAdd}
+          onSearchChange={setSearchValue}
         />
-        <div className="gap-base-sm flex flex-col">
-          {/* <div className="text-center text-2xl">
-            {t("languages.yourLanguages")}
-          </div> */}
 
-          <Reorder.Group
-            axis="y"
-            values={languages}
-            onReorder={(newLanguages) => {
-              newLanguages.forEach((language, index) => {
-                language.position = newLanguages.length - index;
-              });
-              setLanguages(newLanguages);
-              const orderedIds = newLanguages.map((l) => l.id);
+        <Reorder.Group
+          axis="y"
+          values={languages}
+          onReorder={(newLanguages) => {
+            newLanguages.forEach((language, index) => {
+              language.position = newLanguages.length - index;
+            });
+            setLanguages(newLanguages);
+            const orderedIds = newLanguages.map((l) => l.id);
 
-              reorderLanguages.mutate(orderedIds);
-            }}
-            className="gap-base flex h-full w-300 flex-col items-center"
-          >
-            {languages?.map((language) => (
-              <Language
-                key={language.id}
-                language={language}
-                onClick={() => {
-                  setChosenLanguage(language);
-                  changeLanguage(language.id.toString());
-                }}
-                onClickSettings={openModalEdit}
-              />
-            ))}
-          </Reorder.Group>
-        </div>
+            reorderLanguages.mutate(orderedIds);
+          }}
+          className="gap-base mt-base flex h-full w-300 flex-col items-center"
+        >
+          {languages?.map((language) => (
+            <Language
+              key={language.id}
+              language={language}
+              onClick={() => {
+                setChosenLanguage(language);
+                changeLanguage(language.id.toString());
+              }}
+              onClickSettings={openModalEdit}
+            />
+          ))}
+        </Reorder.Group>
       </div>
 
       {/* modals */}

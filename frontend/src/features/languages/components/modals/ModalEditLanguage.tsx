@@ -58,6 +58,7 @@ const ModalEditLanguage = ({
               const file = e.target.files?.[0] || null;
               setImage(file);
             }}
+            className="cursor-pointer"
           />
         </div>,
       ]}

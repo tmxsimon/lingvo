@@ -10,6 +10,10 @@ import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
+import Input from "../../../components/Input";
+import Icon from "../../../components/Icon";
+import IconButton from "../../../components/IconButton";
+import AddSearchPanel from "../../../components/other/AddSearchPanel";
 
 const DictionaryGroupsPage = () => {
   const { t } = useTranslation();
@@ -33,6 +37,7 @@ const DictionaryGroupsPage = () => {
 
   const {
     groups: groupsFetched,
+    setSearchValue,
     addGroup,
     editGroup,
     deleteGroup,
@@ -52,13 +57,12 @@ const DictionaryGroupsPage = () => {
 
   return (
     <>
-      <div className="gap-base flex flex-col items-center">
-        <Button
-          text={t("dictionary.addGroup")}
-          size="large"
-          onClick={openModalGroupsAdd}
+      <div className="flex flex-col items-center">
+        <AddSearchPanel
+          title={t("groups")}
+          onAddClick={openModalGroupsAdd}
+          onSearchChange={setSearchValue}
         />
-
         <Reorder.Group
           axis="y"
           values={groups}
@@ -72,7 +76,7 @@ const DictionaryGroupsPage = () => {
 
             reorderGroups.mutate(orderedIds);
           }}
-          className="gap-base-sm flex flex-col items-center"
+          className="gap-base-sm mt-base flex flex-col items-center"
         >
           {groups.map((group) => (
             <DictionaryGroup

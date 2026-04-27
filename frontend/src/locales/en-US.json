@@ -6,15 +6,12 @@
     "delete": "Delete",
 
     "group": "Group",
-    "entry": "Entry",
-
-    "homepage": {
-      "welcome": "Welcome to Organizer",
-      "organizerDesription": "A personal organizer for your daily tasks"
-    },
+    "groups": "Groups",
+    "search": "Search",
 
     "dictionary": {
       "dictionary": "Dictionary",
+      "entries": "Entries",
       "addGroup": "Add group",
       "editGroup": "Edit group",
       "addEntry": "Add entry",

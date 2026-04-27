@@ -6,15 +6,12 @@
     "delete": "Smazat",
 
     "group": "Skupina",
-    "entry": "Záznam",
-
-    "homepage": {
-      "welcome": "Vítejte v Organizeru",
-      "organizerDesription": "Osobní organizér pro vaše každodenní úkoly"
-    },
+    "groups": "Skupiny",
+    "search": "Vyhledávání",
 
     "dictionary": {
       "dictionary": "Slovník",
+      "entries": "Záznamy",
       "addGroup": "Přidat skupinu",
       "editGroup": "Upravit skupinu",
       "addEntry": "Přidat záznam",

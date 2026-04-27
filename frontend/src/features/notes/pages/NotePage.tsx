@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Loading from "../../../components/Loading";
 import Button from "../../../components/Button";
 import Icon from "../../../components/Icon";
-import MarkdownEditor from "../../../components/MarkdownEditor";
+import MarkdownEditor from "../components/MarkdownEditor";
 
 const DEBOUNCE_DELAY = 2 * 1000;
 
