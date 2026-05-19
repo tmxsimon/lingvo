@@ -4,12 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from dictionary.router import router as dictionary_router
 from notes.router import router as notes_router
 from languages.router import router as languages_router
+from flippers.router import router as flippers_router
 
 app = FastAPI()
 
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
-routers = [dictionary_router, notes_router, languages_router]
+routers = [dictionary_router, notes_router, languages_router, flippers_router]
 for router in routers:
     app.include_router(router)
 

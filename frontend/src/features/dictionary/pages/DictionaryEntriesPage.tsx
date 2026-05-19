@@ -1,26 +1,21 @@
 import { useEffect, useState } from "react";
 import { Tooltip } from "react-tooltip";
-import Button from "../../../components/Button";
 import useModal from "../../../hooks/useModal";
 import DictionaryEntry from "../components/DictionaryEntry";
 import ModalAddEntry from "../components/modals/ModalAddEntry";
 import ModalEditEntry from "../components/modals/ModalEditEntry";
 import { useDictionaryEntries } from "../hooks/useDictionaryEntries";
 import type { DictionaryEntryType } from "../types";
-import Icon from "../../../components/Icon";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
 import { useDictionaryGroups } from "../hooks/useDictionaryGroups";
-import Input from "../../../components/Input";
-import IconButton from "../../../components/IconButton";
 import AddSearchPanel from "../../../components/other/AddSearchPanel";
 
 const DictionaryEntriesPage = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { groupId } = useParams();
 
   const {
@@ -103,7 +98,9 @@ const DictionaryEntriesPage = () => {
             />
           ))}
         </Reorder.Group>
+
         <Tooltip id="note-tooltip" className="z-50 max-w-92 break-all" />
+
         {/* modals */}
         <ModalAddEntry
           isOpen={isOpenEntriesAdd}

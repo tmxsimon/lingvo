@@ -1,3 +1,4 @@
+from random import shuffle
 from fastapi import APIRouter, HTTPException, status
 from dependencies import SessionDep
 from .service import (
@@ -24,6 +25,16 @@ router = APIRouter(
 
 # entries
 
+@router.get("/entries")
+async def get_entries(language: int, session = SessionDep):
+    entries = get_entries_db(session, language=language)
+    if entries is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No entries found"
+        )
+    return entries
+
 @router.get("/cards-entries")
 async def get_cards_entries(language: int, group_id: int | None = None, session = SessionDep):
     group = None
@@ -38,6 +49,8 @@ async def get_cards_entries(language: int, group_id: int | None = None, session 
             status_code=status.HTTP_404_NOT_FOUND,
             detail="No entries found"
         )
+    
+    shuffle(entries)
     return { "entries": entries, "group": group }
 
 

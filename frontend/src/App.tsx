@@ -9,6 +9,7 @@ import LanguagesPage from "./features/languages/pages/LanguagesPage";
 import NotesGroupsPage from "./features/notes/pages/NotesGroupsPage";
 import NotesItemsPage from "./features/notes/pages/NotesItemsPage";
 import NotePage from "./features/notes/pages/NotePage";
+import FlippersPage from "./features/flippers/pages/FlippersPage";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
             </Route>
           </Route>
           <Route path="/cards/:groupId?" element={<CardsPage />} />
+          <Route path="/flippers/:groupId?" element={<FlippersPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -33,6 +33,9 @@ const Navbar = () => {
           ></Icon>
           {language && (
             <>
+              <Link to="/flippers">
+                <Icon className="hover:text-brand-300 size-8" name="flippers" />
+              </Link>
               <Link to="/cards">
                 <Icon className="hover:text-brand-300 size-8" name="cards" />
               </Link>
