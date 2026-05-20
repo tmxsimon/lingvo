@@ -66,7 +66,7 @@
     },
 
     "home": {
-      "title": "Learn with Lingvo",
+      "title": "Learn with lingvo",
       "text": "Your daily assistant for language learning. Make your study more comfortable and effective with everything you need. Start for free.",
       "getStarted": "Get Started",
       "pricing": "Pricing",
@@ -101,8 +101,8 @@
         "text": "Answers to frequently asked questions that will help you better understand how the app works.",
 
         "faq1": {
-          "question": "What is Lingvo?",
-          "answer": "Lingvo is a modern language-learning app that combines a digital dictionary, audio pronunciation, and advanced progress tracking."
+          "question": "What is lingvo?",
+          "answer": "lingvo is a modern language-learning app that combines a digital dictionary, audio pronunciation, and advanced progress tracking."
         },
         "faq2": {
           "question": "Is the app free?",

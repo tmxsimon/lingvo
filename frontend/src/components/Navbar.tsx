@@ -17,7 +17,7 @@ const Navbar = () => {
     <div className="fixed top-8 z-10 flex w-screen justify-center">
       <nav className="bg-brand-neutral-100 px-base-lg flex h-16 w-168 items-center justify-between rounded-4xl">
         <Link className="text-brand-300 text-2xl font-bold" to="/">
-          Lingvo
+          lingvo
         </Link>
         <div className="gap-base-sm flex items-center">
           <div
