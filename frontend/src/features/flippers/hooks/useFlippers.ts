@@ -44,7 +44,7 @@ export default function useFlippers(flippersPages: [FlipperType[]]) {
   };
 
   const handleNextFlippersPage = () => {
-    if (currentPage >= currentFlippersPage.length - 1) {
+    if (currentPage >= flippersPages.length - 1) {
       setCurrentPage(0);
     } else {
       setCurrentPage((prev) => prev + 1);
