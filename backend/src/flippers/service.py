@@ -1,5 +1,5 @@
 from random import randint, shuffle
-from dictionary.models import DictionaryEntry
+from src.dictionary.models import DictionaryEntry
 
 class Flipper:
     def __init__(self, value: str, entry_id: int, note: str = None):

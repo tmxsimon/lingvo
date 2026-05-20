@@ -1,6 +1,6 @@
 from random import shuffle
 from fastapi import APIRouter, HTTPException, status
-from dependencies import SessionDep
+from src.dependencies import SessionDep
 from .service import (
     get_entries_db,
     get_entries_by_group_db,

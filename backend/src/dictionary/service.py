@@ -1,6 +1,6 @@
 from enum import Enum
 from sqlmodel import Session, func, select
-from dictionary.models import DictionaryEntry, EntriesGroup
+from .models import DictionaryEntry, EntriesGroup
 
 # entries
 

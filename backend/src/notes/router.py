@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from dependencies import SessionDep
+from src.dependencies import SessionDep
 from .service import (
     get_note_db,
     get_notes_by_group_db,

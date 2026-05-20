@@ -1,9 +1,9 @@
 from sqlmodel import SQLModel, Session, create_engine
-from dictionary.models import *
-from languages.models import *
+from src.dictionary.models import *
+from src.languages.models import *
 
 db_file_name = "main.db"
-db_url = f"sqlite:///../db/{db_file_name}"
+db_url = f"sqlite:///db/{db_file_name}"
 
 engine = create_engine(db_url, echo=True)
 

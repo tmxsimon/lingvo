@@ -1,6 +1,6 @@
-from dictionary.service import get_entries_by_group_db, get_entries_db
 from fastapi import APIRouter, HTTPException, status
-from dependencies import SessionDep
+from src.dictionary.service import get_entries_by_group_db, get_entries_db
+from src.dependencies import SessionDep
 from .service import make_flippers_pages
 
 router = APIRouter(

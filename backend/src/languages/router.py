@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Form, HTTPException, status, UploadFile
-from dependencies import SessionDep
+from src.dependencies import SessionDep
 from .service import (
     get_languages_db,
     create_language_db,

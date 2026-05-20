@@ -14,9 +14,5 @@ class Language(SQLModel, table=True):
         default_factory=lambda: datetime.now(timezone.utc)
     )
     
-from dictionary.models import EntriesGroup
-from notes.models import NotesGroup
-
-# alembic paths
-# from src.dictionary.models import EntriesGroup
-# from src.notes.models import NotesGroup
+from src.dictionary.models import EntriesGroup
+from src.notes.models import NotesGroup

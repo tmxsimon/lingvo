@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from dictionary.router import router as dictionary_router
-from notes.router import router as notes_router
-from languages.router import router as languages_router
-from flippers.router import router as flippers_router
+from src.dictionary.router import router as dictionary_router
+from src.notes.router import router as notes_router
+from src.languages.router import router as languages_router
+from src.flippers.router import router as flippers_router
 
 app = FastAPI()
 
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+app.mount("/uploads", StaticFiles(directory="src/uploads"), name="uploads")
 
 routers = [dictionary_router, notes_router, languages_router, flippers_router]
 for router in routers:
