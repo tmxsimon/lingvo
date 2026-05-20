@@ -1,6 +1,6 @@
 # lingvo
 
-lingvo — a platform for self-studying languages
+lingvo — a platform for language self-study
 
 # Setup Instructions
 
