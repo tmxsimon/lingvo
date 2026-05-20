@@ -1,6 +1,6 @@
 # lingvo
 
-Lingvo — an all-in-one language learning platform
+lingvo — a platform for self-studying languages
 
 # Setup Instructions
 
@@ -20,13 +20,13 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 
-### Go to src
+### Create database
 
-cd src
+alembic upgrade head
 
 ### Run the backend server
 
-uvicorn main:app --reload
+uvicorn src.main:app --reload
 
 ## Frontend
 
