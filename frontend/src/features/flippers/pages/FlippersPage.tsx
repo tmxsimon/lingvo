@@ -13,12 +13,10 @@ import useFetchFlippers from "../hooks/useFetchFlippers";
 const FlippersPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const { language } = useLanguageContext();
   const { groupId } = useParams();
 
   const { isOpen, openModal, closeModal } = useModal();
-
   const { flippersPages, group, isLoading, error } = useFetchFlippers(
     groupId ? parseInt(groupId) : null,
     parseInt(language),

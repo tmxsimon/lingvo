@@ -2,7 +2,7 @@ import type { FlipperType } from "../types";
 import Flipper from "./Flipper";
 import useFlippers from "../hooks/useFlippers";
 
-const Flippers = ({ flippersPages }: { flippersPages: [FlipperType[]] }) => {
+const Flippers = ({ flippersPages }: { flippersPages: FlipperType[][] }) => {
   const { flippersPage, flipped, matched, disabled, handleClick } =
     useFlippers(flippersPages);
 

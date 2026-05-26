@@ -12,6 +12,7 @@ export default function useFetchFlippers(
   } = useQuery({
     queryKey: [groupId, language, "flippersEntries"],
     queryFn: () => fetchFlippersEntries(groupId, language),
+    refetchOnWindowFocus: false,
   });
 
   return {

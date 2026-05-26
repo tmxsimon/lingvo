@@ -6,8 +6,8 @@ import api from "../../../lib/api";
 
 const PATH = "/dictionary";
 
-// the code is quite trash i generated most of it with ai... but it works
-// TODO: fix the code 😭
+// the code is trash but it works
+// TODO: fix the code
 export default function useCardEntry(
   groupId: number | null,
   language: number,
@@ -22,6 +22,7 @@ export default function useCardEntry(
   } = useQuery({
     queryKey: [groupId, language, "cardEntries"],
     queryFn: () => fetchCardsEntries(groupId, language),
+    refetchOnWindowFocus: false,
   });
 
   const [currentEntry, setCurrentEntry] = useState<DictionaryEntryType | null>(
@@ -46,12 +47,7 @@ export default function useCardEntry(
       setCurrentEntry(null);
       return;
     }
-    setCurrentEntry((prev) => {
-      if (prev && sortedEntries.some((e) => e.id === prev.id)) {
-        return prev;
-      }
-      return sortedEntries[0];
-    });
+    setCurrentEntry(sortedEntries[0]);
   }, [sortedEntries]);
 
   const handleNext = () => {

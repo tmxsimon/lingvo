@@ -9,7 +9,7 @@ export const fetchFlippersEntries = async (
   language: number,
 ) => {
   const result = await api.get<{
-    flippers_pages: [FlipperType[]];
+    flippers_pages: FlipperType[][];
     group: DictionaryGroupType | null;
   }>(`${PATH}`, {
     params: { group_id: groupId, language },

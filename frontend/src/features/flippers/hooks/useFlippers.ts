@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { FlipperType } from "../types";
 
-export default function useFlippers(flippersPages: [FlipperType[]]) {
+export default function useFlippers(flippersPages: FlipperType[][]) {
   const [flipped, setFlipped] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
   const [disabled, setDisabled] = useState(false);
@@ -57,16 +57,17 @@ export default function useFlippers(flippersPages: [FlipperType[]]) {
   //   setDisabled(false);
   // };
 
-  if (matched.length === currentFlippersPage.length) {
-    setTimeout(() => {
-      if (flippersPages.length > 1) {
-        handleNextFlippersPage();
-      }
-      // else {
-      //   resetFlippers();
-      // }
-    }, 1000);
-  }
+  useEffect(() => {
+    if (matched.length > 0 && matched.length === currentFlippersPage.length) {
+      const timeout = setTimeout(() => {
+        if (flippersPages.length > 1) {
+          handleNextFlippersPage();
+        }
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [matched, currentFlippersPage, flippersPages.length]);
 
   return {
     flippersPage: currentFlippersPage,
