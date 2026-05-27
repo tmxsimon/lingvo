@@ -47,6 +47,7 @@ const Flipper = ({
         {/* front */}
         <motion.div
           className="absolute inset-0 flex h-full w-full flex-col items-center justify-center backface-hidden"
+          initial={{ rotateY: 180 }}
           animate={{ rotateY: isFlipped ? 0 : 180 }}
           transition={{ duration: flipDuration }}
         >
