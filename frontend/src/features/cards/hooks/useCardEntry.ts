@@ -48,7 +48,7 @@ export default function useCardEntry(
       return;
     }
     setCurrentEntry(sortedEntries[0]);
-  }, [sortedEntries]);
+  }, [groupId]);
 
   const handleNext = () => {
     if (!sortedEntries) return;
