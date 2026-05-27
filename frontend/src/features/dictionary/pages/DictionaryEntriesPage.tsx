@@ -6,16 +6,18 @@ import ModalAddEntry from "../components/modals/ModalAddEntry";
 import ModalEditEntry from "../components/modals/ModalEditEntry";
 import { useDictionaryEntries } from "../hooks/useDictionaryEntries";
 import type { DictionaryEntryType } from "../types";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
 import { useDictionaryGroups } from "../hooks/useDictionaryGroups";
 import AddSearchPanel from "../../../components/other/AddSearchPanel";
+import Button from "../../../components/Button";
 
 const DictionaryEntriesPage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { groupId } = useParams();
 
   const {
@@ -73,6 +75,20 @@ const DictionaryEntriesPage = () => {
           onAddClick={openModalEntriesAdd}
           onSearchChange={setSearchValue}
         />
+        <div className="mt-base space-x-base">
+          <Button
+            text="Flippers"
+            type="tertiary"
+            size="small"
+            onClick={() => navigate(`/flippers/${groupId}`)}
+          />
+          <Button
+            text="Cards"
+            type="tertiary"
+            size="small"
+            onClick={() => navigate(`/cards/${groupId}`)}
+          />
+        </div>
         <Reorder.Group
           axis="y"
           values={entries}
