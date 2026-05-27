@@ -15,15 +15,15 @@ export default function useCardEntry(
 ) {
   const queryClient = useQueryClient();
 
-  const {
-    data: { entries, group } = { entries: [], group: null },
-    isLoading,
-    error,
-  } = useQuery({
+  const query = useQuery({
     queryKey: [groupId, language, "cardEntries"],
     queryFn: () => fetchCardsEntries(groupId, language),
     refetchOnWindowFocus: false,
   });
+
+  const entries: DictionaryEntryType[] = query.data?.entries ?? [];
+  const group = query.data?.group ?? null;
+  const { isLoading, error } = query;
 
   const [currentEntry, setCurrentEntry] = useState<DictionaryEntryType | null>(
     null,
@@ -47,8 +47,20 @@ export default function useCardEntry(
       setCurrentEntry(null);
       return;
     }
-    setCurrentEntry(sortedEntries[0]);
-  }, [group]);
+
+    if (!currentEntry) {
+      setCurrentEntry(sortedEntries[0]);
+      return;
+    }
+
+    const updated = sortedEntries.find((e) => e.id === currentEntry.id);
+    if (updated) {
+      if (updated !== currentEntry) {
+        setCurrentEntry(updated);
+      }
+      return;
+    }
+  }, [sortedEntries]);
 
   const handleNext = () => {
     if (!sortedEntries) return;
