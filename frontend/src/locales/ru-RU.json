@@ -53,6 +53,10 @@
       }
     },
 
+    "flippers": {
+      "flippers": "Флипперы"
+    },
+
     "languages": {
       "yourLanguages": "Ваши языки",
       "addLanguage": "Добавить язык",

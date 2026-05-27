@@ -53,6 +53,10 @@
       }
     },
 
+    "flippers": {
+      "flippers": "Flippers"
+    },
+
     "languages": {
       "yourLanguages": "Your languages",
       "addLanguage": "Add language",
