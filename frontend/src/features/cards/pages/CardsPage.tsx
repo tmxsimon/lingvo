@@ -44,6 +44,7 @@ const CardsPage = () => {
   return (
     <>
       <div className="pb-base-lg h-screen-no-navbar-page flex flex-col items-center">
+        <div className="text-xl">{t("cards.cards")}</div>
         <Button
           type="text"
           theme="neutral"

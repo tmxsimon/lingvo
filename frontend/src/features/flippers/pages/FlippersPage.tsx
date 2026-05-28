@@ -28,6 +28,7 @@ const FlippersPage = () => {
   return (
     <>
       <div className="pb-base-lg h-screen-no-navbar-page flex flex-col items-center">
+        <div className="text-xl">{t("flippers.flippers")}</div>
         <Button
           type="text"
           theme="neutral"
