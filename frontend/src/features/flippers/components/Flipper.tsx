@@ -58,7 +58,7 @@ const Flipper = ({
               data-tooltip-id="note-tooltip"
               data-tooltip-content={note}
             >
-              <Icon name="info" className="size-6" />
+              <Icon name="info" className="text-adaptive-white size-6" />
             </div>
           )}
         </motion.div>
