@@ -5,12 +5,13 @@ from src.dictionary.router import router as dictionary_router
 from src.notes.router import router as notes_router
 from src.languages.router import router as languages_router
 from src.flippers.router import router as flippers_router
+from src.users.router import router as users_router
 
 app = FastAPI()
 
 app.mount("/uploads", StaticFiles(directory="src/uploads"), name="uploads")
 
-routers = [dictionary_router, notes_router, languages_router, flippers_router]
+routers = [dictionary_router, notes_router, languages_router, flippers_router, users_router]
 for router in routers:
     app.include_router(router)
 

@@ -30,7 +30,7 @@ const FlippersPage = () => {
       <div className="pb-base-lg h-screen-no-navbar-page flex flex-col items-center">
         <div className="text-xl">{t("flippers.flippers")}</div>
         <Button
-          type="text"
+          style="text"
           theme="neutral"
           size="large"
           text={group?.name || t("cards.allEntries")}

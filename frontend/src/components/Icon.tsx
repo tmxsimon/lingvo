@@ -1,14 +1,20 @@
 import type { SVGProps } from "react";
-import ICONS from "../constants/icons";
+import icons from "../constants/icons";
 
 type IconProps = SVGProps<SVGSVGElement> & {
-  name: keyof typeof ICONS;
+  name: keyof typeof icons;
+  autoSize?: boolean;
   className?: string;
 };
 
-const Icon = ({ name, className = "size-full", ...iconProps }: IconProps) => {
-  className += " stroke-current";
-  const IconElement = ICONS[name];
+const Icon = ({
+  name,
+  autoSize = false,
+  className = "size-8",
+  ...iconProps
+}: IconProps) => {
+  className += ` ${autoSize ? "stroke-current" : ""}`;
+  const IconElement = icons[name];
   return <IconElement className={className} {...iconProps} />;
 };
 

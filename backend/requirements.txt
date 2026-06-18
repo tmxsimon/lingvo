@@ -3,3 +3,6 @@ uvicorn
 sqlmodel
 alembic
 python-multipart
+passlib[bcrypt]
+pwdlib[argon2]
+pyjwt

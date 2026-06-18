@@ -9,7 +9,7 @@ type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
 const Select = ({ options, className, ...selectProps }: SelectProps) => {
   return (
     <select
-      className={`p-base-sm rounded-base-xs border-brand-neutral-200 bg-bg w-full border ${className}`}
+      className={`p-base-sm rounded-base backdrop-blur-base border-brand-neutral-200 w-full border backdrop-brightness-95 ${className}`}
       {...selectProps}
     >
       {options.map((option, i) => (

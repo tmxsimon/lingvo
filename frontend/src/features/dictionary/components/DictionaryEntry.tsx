@@ -15,7 +15,7 @@ const DictionaryEntry = ({ entry, onClickSettings }: DictionaryEntryProps) => {
       value={entry}
       dragListener={false}
       dragControls={controls}
-      className="rounded-base px-base py-base-sm bg-brand-neutral-100 border-brand-neutral-200 flex h-14 w-168 items-center justify-between border"
+      className="rounded-base px-base py-base-sm border-brand-neutral-200 backdrop-blur-base flex h-14 w-168 items-center justify-between border backdrop-brightness-95"
     >
       <Icon
         name="grip"

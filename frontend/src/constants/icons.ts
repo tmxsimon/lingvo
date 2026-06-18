@@ -18,6 +18,10 @@ import Grip from "../assets/icons/grip.svg?react";
 import Notes from "../assets/icons/notes.svg?react";
 import ArrowUpDown from "../assets/icons/arrow-up-down.svg?react";
 import ArrowDownUp from "../assets/icons/arrow-down-up.svg?react";
+import User from "../assets/icons/user.svg?react";
+import SignIn from "../assets/icons/sign-in.svg?react";
+import SignUp from "../assets/icons/sign-up.svg?react";
+import SignOut from "../assets/icons/sign-out.svg?react";
 
 import OpenBook from "../assets/icons/open-book.svg?react";
 import Volume from "../assets/icons/volume.svg?react";
@@ -49,6 +53,10 @@ const ICONS = {
   notes: Notes,
   arrowUpDown: ArrowUpDown,
   arrowDownUp: ArrowDownUp,
+  user: User,
+  signIn: SignIn,
+  signUp: SignUp,
+  signOut: SignOut,
 
   // CardText icons
   openBook: OpenBook,

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Button from "../../../components/Button";
 import useModal from "../../../hooks/useModal";
 import { useNotesGroups } from "../hooks/useNotesGroups";
 import NotesGroup from "../components/NotesGroup";
@@ -10,9 +9,6 @@ import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
-import Input from "../../../components/Input";
-import IconButton from "../../../components/IconButton";
-import Icon from "../../../components/Icon";
 import AddSearchPanel from "../../../components/other/AddSearchPanel";
 
 const DictionaryGroupsPage = () => {

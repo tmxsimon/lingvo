@@ -9,6 +9,16 @@
     "groups": "Группы",
     "search": "Поиск",
 
+    "users": {
+      "signInTitle": "Вход",
+      "signIn": "Войти",
+      "signUpTitle": "Регистрация",
+      "signUp": "Регистрация",
+      "signOut": "Выйти",
+      "username": "Имя",
+      "password": "Пароль"
+    },
+
     "dictionary": {
       "dictionary": "Словарь",
       "entries": "Записи",

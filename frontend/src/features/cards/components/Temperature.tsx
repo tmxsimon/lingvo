@@ -31,16 +31,18 @@ const Temperature = ({
       }}
     >
       <IconButton
-        type="text"
-        icon={<Icon name="arrowLeft" className="text-adaptive-white h-6 w-8" />}
+        style="text"
+        icon={
+          <Icon name="arrowLeft" className="text-brand-neutral-500 h-6 w-8" />
+        }
         hoverEffect={false}
         activeEffect={false}
         onClick={buttonLeftOnClick}
       />
       <IconButton
-        type="text"
+        style="text"
         icon={
-          <Icon name="arrowRight" className="text-adaptive-white h-6 w-8" />
+          <Icon name="arrowRight" className="text-brand-neutral-500 h-6 w-8" />
         }
         hoverEffect={false}
         activeEffect={false}

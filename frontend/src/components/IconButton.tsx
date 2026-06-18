@@ -5,7 +5,7 @@ type IconButtonProps = Omit<
   "size" | "type"
 > & {
   icon: React.ReactNode;
-  type?: "primary" | "secondary" | "tertiary" | "text";
+  style?: "primary" | "secondary" | "tertiary" | "text";
   theme?: "brand" | "neutral" | "danger" | "warning";
   size?: "small" | "medium" | "large" | "auto";
   hoverEffect?: boolean;
@@ -15,7 +15,7 @@ type IconButtonProps = Omit<
 
 const IconButton = ({
   icon,
-  type = "primary",
+  style = "primary",
   theme = "brand",
   size = "medium",
   hoverEffect = true,
@@ -24,7 +24,7 @@ const IconButton = ({
   className = "",
   ...buttonProps
 }: IconButtonProps) => {
-  className += ` ${buttonColorMap[theme][type]} ${buttonHeightMap[size]}`;
+  className += ` ${buttonColorMap[theme][style]} ${buttonHeightMap[size]}`;
 
   return (
     <button

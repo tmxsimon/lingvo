@@ -25,8 +25,15 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.setItem("languageId", language.toString());
   };
 
+  const clearLanguage = () => {
+    localStorage.removeItem("languageId");
+    setLanguage("");
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, changeLanguage }}>
+    <LanguageContext.Provider
+      value={{ language, changeLanguage, clearLanguage }}
+    >
       {children}
     </LanguageContext.Provider>
   );

@@ -8,6 +8,7 @@ from alembic import context
 
 from src.languages.models import *
 from src.dictionary.models import *
+from src.users.models import *
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

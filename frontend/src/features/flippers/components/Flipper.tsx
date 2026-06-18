@@ -28,7 +28,7 @@ const Flipper = ({
 
   return (
     <motion.div
-      className="rounded-base-sm p-base bg-brand-300 flex h-46 w-72 cursor-pointer flex-col items-center justify-center text-center"
+      className="rounded-base-sm p-base backdrop-blur-base border-brand-neutral-200 flex h-46 w-72 cursor-pointer flex-col items-center justify-center border text-center backdrop-brightness-95"
       {...animationProps}
       onClick={() => {
         if (disabled || isMatched) return;
@@ -41,7 +41,7 @@ const Flipper = ({
           className="absolute inset-0 flex h-full w-full flex-col items-center justify-center backface-hidden"
           {...animationProps}
         >
-          <div className="text-adaptive-white text-2xl">?</div>
+          <div className="text-2xl">?</div>
         </motion.div>
 
         {/* front */}
@@ -51,14 +51,14 @@ const Flipper = ({
           animate={{ rotateY: isFlipped ? 0 : 180 }}
           transition={{ duration: flipDuration }}
         >
-          <div className="text-adaptive-white text-lg">{value}</div>
+          <div className="text-lg">{value}</div>
           {note && isMatched && (
             <div
               className="absolute right-0 bottom-0 cursor-pointer"
               data-tooltip-id="note-tooltip"
               data-tooltip-content={note}
             >
-              <Icon name="info" className="text-adaptive-white size-6" />
+              <Icon name="info" className="size-6" />
             </div>
           )}
         </motion.div>

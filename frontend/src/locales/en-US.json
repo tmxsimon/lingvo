@@ -9,6 +9,21 @@
     "groups": "Groups",
     "search": "Search",
 
+    "users": {
+      "signInTitle": "Sign In",
+      "signIn": "Sign In",
+      "signUpTitle": "Sign Up",
+      "signUp": "Sign Up",
+      "signOut": "Sign Out",
+      "username": "Username",
+      "password": "Password",
+
+      "validation": {
+        "signInIncorrect": "Incorrect username or password",
+        "usernameLength": "Username must be between 1 and 16 characters"
+      }
+    },
+
     "dictionary": {
       "dictionary": "Dictionary",
       "entries": "Entries",

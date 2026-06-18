@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Form, HTTPException, status, UploadFile
-from src.dependencies import SessionDep
+from src.dependencies import SessionDep, UserDep
 from .service import (
     get_languages_db,
     create_language_db,
@@ -15,8 +15,8 @@ router = APIRouter(
 )
 
 @router.get("/")
-async def get_languages(session = SessionDep):
-    languages = get_languages_db(session)
+async def get_languages(user = UserDep, session = SessionDep):
+    languages = get_languages_db(user=user, session=session)
 
     if languages is None:
         raise HTTPException(
@@ -29,9 +29,11 @@ async def get_languages(session = SessionDep):
 async def create_language(
     name: str = Form(...),
     image: UploadFile | None = None,
+    user = UserDep,
     session = SessionDep
 ):
     language = create_language_db(
+        user=user,
         session=session,
         name=name,
         image=image
@@ -46,8 +48,8 @@ async def create_language(
     return language
 
 @router.delete("/{id}")
-async def delete_language(id: int, session = SessionDep):
-    language = delete_language_db(session, id)
+async def delete_language(id: int, user = UserDep, session = SessionDep):
+    language = delete_language_db(user, session, id)
 
     if language is None:
         raise HTTPException(
@@ -69,9 +71,11 @@ async def update_language(
     id: int,
     name: str = Form(...),
     image: UploadFile | None = None,
+    user = UserDep,
     session = SessionDep
 ):
     language = update_language_db(
+        user=user,
         session=session,
         id=id,
         name=name,

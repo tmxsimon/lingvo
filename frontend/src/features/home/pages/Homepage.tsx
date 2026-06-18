@@ -40,7 +40,7 @@ const Homepage = () => {
             >
               <Button
                 text={t("home.getStarted")}
-                type="primary"
+                style="primary"
                 theme="brand"
                 size="large"
                 onClick={() => navigate("/languages")}

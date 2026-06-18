@@ -78,13 +78,13 @@ const DictionaryEntriesPage = () => {
         <div className="mt-base space-x-base">
           <Button
             text={t("flippers.flippers")}
-            type="tertiary"
+            style="tertiary"
             size="small"
             onClick={() => navigate(`/flippers/${groupId}`)}
           />
           <Button
             text={t("cards.cards")}
-            type="tertiary"
+            style="tertiary"
             size="small"
             onClick={() => navigate(`/cards/${groupId}`)}
           />

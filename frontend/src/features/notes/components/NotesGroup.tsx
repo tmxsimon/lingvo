@@ -16,7 +16,7 @@ const NotesGroup = ({ group, onClickSettings }: NotesGroupProps) => {
       value={group}
       dragListener={false}
       dragControls={controls}
-      className="rounded-base px-base py-base-sm bg-brand-neutral-100 border-brand-neutral-200 flex h-14 w-168 items-center justify-between border"
+      className="rounded-base px-base py-base-sm backdrop-blur-base border-brand-neutral-200 flex h-14 w-168 items-center justify-between border backdrop-brightness-95"
     >
       <Icon
         name="grip"

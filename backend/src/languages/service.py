@@ -1,16 +1,19 @@
 import os
+from pathlib import Path
 import uuid
 from fastapi import UploadFile
 from sqlmodel import Session, select, func
+from src.users.models import User
 from .models import Language
 
-UPLOADS_URL = "uploads/user_uploads"
-DEFAULT_IMAGE_URL = "uploads/default.jpg"
+UPLOADS_URL = "uploads/user_uploads/language_images"
+DEFAULT_IMAGE_URL = "uploads/user_uploads/language_images/default.jpg"
 
-def get_languages_db(session: Session):
-    return session.exec(select(Language).order_by(Language.position.desc())).all()
+def get_languages_db(user: User, session: Session):
+    return session.exec(select(Language).where(Language.user_id == user.id).order_by(Language.position.desc())).all()
 
 def create_language_db(
+    user: User,
     session: Session,
     name: str,
     image: UploadFile | None = None
@@ -24,10 +27,10 @@ def create_language_db(
         filename = f"{uuid.uuid4()}.{ext}"
         filepath = os.path.join(UPLOADS_URL, filename)
 
-        with open(filepath, "wb") as buffer:
+        with open("src/" + filepath, "wb") as buffer:
             buffer.write(image.file.read())    
 
-    language = Language(name=name, image_url=filepath, position=position)
+    language = Language(name=name, image_url=filepath, position=position, user_id=user.id)
 
     if language is None:
         return None
@@ -39,10 +42,11 @@ def create_language_db(
     return language
 
 def delete_language_db(
+    user: User,
     session: Session,
     id: int
 ):
-    language = session.get(Language, id)
+    language = session.exec(select(Language).where(Language.id == id and Language.user_id == user.id)).first()
     if language is None:
         return None
     
@@ -56,25 +60,26 @@ def delete_language_db(
     return language
 
 def update_language_db(
+    user: User,
     session: Session,
     id: int,
     name: str | None = None,
     image: UploadFile | None = None
 ):
-    language = session.get(Language, id)
+    language = session.exec(select(Language).where(Language.id == id and Language.user_id == user.id)).first()
     if language is None:
         return None
     
     filepath = language.image_url if language.image_url else DEFAULT_IMAGE_URL
     if image:
-        image_to_replace_url = language.image_url if language.image_url else None
-        if image_to_replace_url and image_to_replace_url != DEFAULT_IMAGE_URL:
-            os.remove(image_to_replace_url)
+        path_exists = Path("src/" + language.image_url).exists()
+        if path_exists and language.image_url != DEFAULT_IMAGE_URL:
+            os.remove("src/" + language.image_url)
         ext = image.filename.split(".")[-1]
         filename = f"{uuid.uuid4()}.{ext}"
         filepath = os.path.join(UPLOADS_URL, filename)
 
-        with open(filepath, "wb") as buffer:
+        with open("src/" + filepath, "wb") as buffer:
             buffer.write(image.file.read())
 
     language.image_url = filepath

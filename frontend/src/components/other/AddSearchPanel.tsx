@@ -28,7 +28,7 @@ const AddSearchPanel = ({
       <div className="text-xl">{title}</div>
       {groupName && navigateToUrl && (
         <Button
-          type="text"
+          style="text"
           theme="neutral"
           size="auto"
           text={groupName}
@@ -45,7 +45,7 @@ const AddSearchPanel = ({
         <Input
           placeholder={t("search")}
           autoWidth={false}
-          className="bg-brand-neutral-100 w-92"
+          className="w-92"
           onChange={(e) => onSearchChange(e.target.value)}
         />
       </div>

@@ -19,6 +19,7 @@ export function useLanguages() {
   } = useQuery({
     queryKey: ["languages"],
     queryFn: () => fetchLanguages(),
+    retry: false,
   });
 
   const searchLanguages = searchValue

@@ -2,13 +2,13 @@ import { buttonColorMap, buttonHeightMap } from "../utils/buttonMaps";
 
 type ButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "size" | "type"
+  "size"
 > & {
   text?: string;
   icon?: React.ReactNode;
   iconFront?: React.ReactNode;
   iconBack?: React.ReactNode;
-  type?: "primary" | "secondary" | "tertiary" | "text";
+  style?: "primary" | "secondary" | "tertiary" | "text";
   theme?: "brand" | "neutral" | "danger" | "warning";
   size?: "small" | "medium" | "large" | "auto";
   autoWidth?: boolean;
@@ -29,7 +29,7 @@ const Button = ({
   icon,
   iconFront,
   iconBack,
-  type = "primary",
+  style = "primary",
   theme = "brand",
   size = "medium",
   autoWidth = false,
@@ -39,7 +39,7 @@ const Button = ({
   className = "",
   ...buttonProps
 }: ButtonProps) => {
-  className += ` ${buttonColorMap[theme][type]} ${sizeMap[size]}`;
+  className += ` ${buttonColorMap[theme][style]} ${sizeMap[size]}`;
 
   return (
     <button

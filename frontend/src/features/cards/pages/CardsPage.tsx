@@ -46,7 +46,7 @@ const CardsPage = () => {
       <div className="pb-base-lg h-screen-no-navbar-page flex flex-col items-center">
         <div className="text-xl">{t("cards.cards")}</div>
         <Button
-          type="text"
+          style="text"
           theme="neutral"
           size="large"
           text={group?.name || t("cards.allEntries")}
@@ -76,7 +76,7 @@ const CardsPage = () => {
                     className="size-8"
                   />
                 }
-                type="text"
+                style="text"
                 padding={false}
                 onClick={() => setIsReversed(!isReversed)}
               />

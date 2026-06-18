@@ -9,6 +9,16 @@
     "groups": "Skupiny",
     "search": "Vyhledávání",
 
+    "users": {
+      "signInTitle": "Přihlášení",
+      "signIn": "Přihlásit se",
+      "signUpTitle": "Registrace",
+      "signUp": "Registrovat se",
+      "signOut": "Odhlásit se",
+      "username": "Jméno",
+      "password": "Heslo"
+    },
+
     "dictionary": {
       "dictionary": "Slovník",
       "entries": "Záznamy",
