@@ -2,10 +2,12 @@ import { useTranslation } from "react-i18next";
 import { motion } from "motion/react";
 import Button from "../../../components/Button";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../users/contexts/authProvider";
 
 const Homepage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   return (
     <>
@@ -43,7 +45,7 @@ const Homepage = () => {
                 style="primary"
                 theme="brand"
                 size="large"
-                onClick={() => navigate("/languages")}
+                onClick={() => navigate(`${user ? "/languages" : "/sign-up"}`)}
               />
             </motion.div>
           </motion.div>
