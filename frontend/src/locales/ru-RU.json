@@ -16,7 +16,12 @@
       "signUp": "Регистрация",
       "signOut": "Выйти",
       "username": "Имя",
-      "password": "Пароль"
+      "password": "Пароль",
+
+      "validation": {
+        "signInIncorrect": "Неверное имя или пароль",
+        "usernameLength": "Имя должно содержать от 1 до 16 символов"
+      }
     },
 
     "dictionary": {

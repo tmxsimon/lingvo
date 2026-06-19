@@ -16,7 +16,12 @@
       "signUp": "Registrovat se",
       "signOut": "Odhlásit se",
       "username": "Jméno",
-      "password": "Heslo"
+      "password": "Heslo",
+
+      "validation": {
+        "signInIncorrect": "Nesprávné jméno nebo heslo",
+        "usernameLength": "Jméno musí mít 1 až 16 znaků"
+      }
     },
 
     "dictionary": {
