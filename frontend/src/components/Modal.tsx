@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Icon from "./Icon";
 
 type ModalProps = {
@@ -22,6 +23,19 @@ const Modal = ({
       closeModal?.();
     }
   };
+
+  useEffect(() => {
+    if (!open || !closeModal) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open, closeModal]);
 
   return (
     <>

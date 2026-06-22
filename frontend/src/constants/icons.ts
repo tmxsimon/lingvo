@@ -5,7 +5,6 @@ import Dictionary from "../assets/icons/dictionary.svg?react";
 import Plus from "../assets/icons/plus.svg?react";
 import Close from "../assets/icons/close.svg?react";
 import List from "../assets/icons/list.svg?react";
-import Books from "../assets/icons/books.svg?react";
 import Cards from "../assets/icons/cards.svg?react";
 import Flippers from "../assets/icons/flippers.svg?react";
 import ArrowLeft from "../assets/icons/arrow-left.svg?react";
@@ -23,10 +22,6 @@ import SignIn from "../assets/icons/sign-in.svg?react";
 import SignUp from "../assets/icons/sign-up.svg?react";
 import SignOut from "../assets/icons/sign-out.svg?react";
 
-import OpenBook from "../assets/icons/open-book.svg?react";
-import Volume from "../assets/icons/volume.svg?react";
-import Flame from "../assets/icons/flame.svg?react";
-
 import English from "../assets/icons/flags/en-US.svg?react";
 import Czech from "../assets/icons/flags/cs-CZ.svg?react";
 import Russian from "../assets/icons/flags/ru-RU.svg?react";
@@ -40,7 +35,6 @@ const ICONS = {
   change: Change,
   dictionary: Dictionary,
   list: List,
-  books: Books,
   cards: Cards,
   flippers: Flippers,
   arrowLeft: ArrowLeft,
@@ -57,12 +51,6 @@ const ICONS = {
   signIn: SignIn,
   signUp: SignUp,
   signOut: SignOut,
-
-  // CardText icons
-  openBook: OpenBook,
-  volume: Volume,
-  flame: Flame,
-  fileText: Dictionary,
 
   // Languages
   "en-US": English,
