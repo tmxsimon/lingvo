@@ -8,6 +8,38 @@ import { useState } from "react";
 import { useLanguageContext } from "../features/languages/contexts/languageProvider";
 import { useAuth } from "../features/users/contexts/authProvider";
 
+const NavbarButton = ({
+  children,
+  onClick,
+  className,
+}: {
+  children: React.ReactNode;
+  onClick: () => void;
+  className?: string;
+}) => {
+  return (
+    <button onClick={onClick} className={`${className || ""} cursor-pointer`}>
+      {children}
+    </button>
+  );
+};
+
+const NavbarLink = ({
+  children,
+  to,
+  className,
+}: {
+  children: React.ReactNode;
+  to: string;
+  className?: string;
+}) => {
+  return (
+    <Link to={to} className={className || ""}>
+      {children}
+    </Link>
+  );
+};
+
 const Navbar = () => {
   const navigate = useNavigate();
 
@@ -20,52 +52,49 @@ const Navbar = () => {
     <div className="fixed top-8 z-50 flex w-screen justify-center">
       <div className="relative flex">
         <nav className="px-base border-brand-neutral-200 backdrop-blur-base flex h-16 w-168 items-center justify-between rounded-4xl border backdrop-brightness-95">
-          <Link className="text-brand-300 text-2xl font-bold" to="/">
+          <NavbarLink to="/" className="text-brand-300 text-2xl font-bold">
             lingvo
-          </Link>
+          </NavbarLink>
           <div className="gap-base-sm flex items-center">
-            <button
-              onClick={() => switchLanguage(setLng)}
-              className="cursor-pointer"
-            >
+            <NavbarButton onClick={() => switchLanguage(setLng)}>
               <Icon name={lng as keyof typeof ICONS} className="size-8" />
-            </button>
-            <button onClick={toggleTheme} className="cursor-pointer">
+            </NavbarButton>
+            <NavbarButton onClick={toggleTheme}>
               <Icon
                 className="hover:text-brand-300 size-8"
                 name={theme === "dark" ? "moon" : "sun"}
               />
-            </button>
+            </NavbarButton>
 
             {language && (
               <>
-                <Link to="/flippers">
+                <NavbarLink to="/flippers">
                   <Icon
                     className="hover:text-brand-300 size-8"
                     name="flippers"
                   />
-                </Link>
-                <Link to="/cards">
+                </NavbarLink>
+                <NavbarLink to="/cards">
                   <Icon className="hover:text-brand-300 size-8" name="cards" />
-                </Link>
-                <Link to="/dictionary">
+                </NavbarLink>
+                <NavbarLink to="/dictionary">
                   <Icon
                     className="hover:text-brand-300 size-8"
                     name="dictionary"
                   />
-                </Link>
-                <Link to="/notes">
+                </NavbarLink>
+                <NavbarLink to="/notes">
                   <Icon className="hover:text-brand-300 size-8" name="notes" />
-                </Link>
+                </NavbarLink>
               </>
             )}
             {user && (
-              <Link to="/languages">
+              <NavbarLink to="/languages">
                 <Icon
                   className="hover:text-brand-300 size-8"
                   name="languages"
                 />
-              </Link>
+              </NavbarLink>
             )}
           </div>
         </nav>
@@ -73,19 +102,18 @@ const Navbar = () => {
           {user ? (
             <>
               <div className="gap-base-sm flex">
-                <button
+                <NavbarButton
                   onClick={() => {
                     clearLanguage();
                     signOut();
                     navigate("/");
                   }}
-                  className="cursor-pointer"
                 >
                   <Icon
                     name="signOut"
                     className="hover:text-brand-300 size-8 rotate-180"
                   />
-                </button>
+                </NavbarButton>
                 {/* <Link to={`/users/${user.id}`} className="cursor-pointer">
                   <Icon name="user" className="hover:text-brand-300 size-8" />
                 </Link> */}
@@ -94,18 +122,18 @@ const Navbar = () => {
           ) : (
             <>
               <div className="gap-base-sm flex">
-                <Link
+                <NavbarLink
                   className="text-text-secondary hover:text-brand-300 cursor-pointer text-sm"
                   to="/sign-in"
                 >
                   <Icon name="signIn" className="hover:text-brand-300 size-8" />
-                </Link>
-                <Link
+                </NavbarLink>
+                <NavbarLink
                   className="text-text-secondary hover:text-brand-300 cursor-pointer text-sm"
                   to="/sign-up"
                 >
                   <Icon name="signUp" className="hover:text-brand-300 size-8" />
-                </Link>
+                </NavbarLink>
               </div>
             </>
           )}
