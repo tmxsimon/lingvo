@@ -17,6 +17,8 @@
       "signOut": "Odhlásit se",
       "username": "Jméno",
       "password": "Heslo",
+      "profilePicture": "Profile picture",
+      "profile": "Profil",
 
       "validation": {
         "signInIncorrect": "Nesprávné jméno nebo heslo",

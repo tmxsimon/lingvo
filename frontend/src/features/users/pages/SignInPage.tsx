@@ -4,7 +4,7 @@ import Button from "../../../components/Button";
 import SignBox from "../components/SignBox";
 import { useTranslation } from "react-i18next";
 import useSignIn from "../hooks/useSignIn";
-import ContentTitle from "../components/ContentTitle";
+import Title from "../../../components/Title";
 
 const SignInPage = () => {
   const { t } = useTranslation();
@@ -14,7 +14,7 @@ const SignInPage = () => {
 
   const content = [
     <div>
-      <ContentTitle text={t("users.username")} />
+      <Title text={t("users.username")} />
       <Input
         size="large"
         value={username}
@@ -23,7 +23,7 @@ const SignInPage = () => {
       />
     </div>,
     <div>
-      <ContentTitle text={t("users.password")} />
+      <Title text={t("users.password")} />
       <Input
         size="large"
         value={password}

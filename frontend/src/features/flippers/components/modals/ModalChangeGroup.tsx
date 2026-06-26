@@ -7,6 +7,7 @@ import { useDictionaryGroups } from "../../../dictionary/hooks/useDictionaryGrou
 import type { SelectOptionType } from "../../../../types";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../../components/Loading";
+import Title from "../../../../components/Title";
 
 type ModalChangeGroupProps = {
   group: DictionaryGroupType | null;
@@ -48,7 +49,7 @@ const ModalChangeGroup = ({
       title={t("cards.changeGroup")}
       content={[
         <div>
-          <div className="text-2xl">{t("group")}</div>
+          <Title text={t("group")} />
           <Select
             value={
               (typeof currentGroupOption !== "string" &&

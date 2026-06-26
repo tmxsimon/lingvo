@@ -4,7 +4,7 @@ type ButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   "size"
 > & {
-  text?: string;
+  text: string;
   icon?: React.ReactNode;
   iconFront?: React.ReactNode;
   iconBack?: React.ReactNode;

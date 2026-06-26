@@ -2,46 +2,59 @@ import { useEffect } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
-import type { LanguageType } from "../../types";
 import { useTranslation } from "react-i18next";
-import useModalLanguage from "../../hooks/useModalLanguage";
 import Title from "../../../../components/Title";
+import type { UserType } from "../../types";
+import useModalUser from "../../hooks/useModalUser";
 
-type ModalEditLanguageProps = {
-  language: LanguageType | null;
+type ModalEditUserProps = {
+  user: UserType | null;
   isOpen: boolean;
   closeModal: () => void;
-  editLanguage: (id: number, name: string, image: File) => void;
-  deleteLanguage: (id: number) => void;
+  editUser: (
+    id: number,
+    username: string,
+    password: string,
+    image: File,
+  ) => void;
+  deleteUser: (id: number) => void;
 };
 
-const ModalEditLanguage = ({
-  language,
+const ModalEditUser = ({
+  user,
   isOpen,
   closeModal,
-  editLanguage,
-  deleteLanguage,
-}: ModalEditLanguageProps) => {
+  editUser,
+  deleteUser,
+}: ModalEditUserProps) => {
   const { t } = useTranslation();
 
-  const { name, setName, image, setImage, validate } = useModalLanguage();
+  const {
+    username,
+    setUsername,
+    password,
+    setPassword,
+    image,
+    setImage,
+    validate,
+  } = useModalUser();
 
   useEffect(() => {
-    setName(language?.name || "");
-  }, [language]);
+    setUsername(user?.username || "");
+  }, [user]);
 
   return (
     <Modal
       open={isOpen}
       closeModal={closeModal}
-      title={t("languages.editLanguage")}
+      title={t("dictionary.editEntry")}
       content={[
         <div>
-          <Title text={t("languages.name")} />
+          <Title text={t("users.username")} />
           <Input
-            value={name}
+            value={username}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setName(e.target.value)
+              setUsername(e.target.value)
             }
             minLength={1}
             maxLength={30}
@@ -49,7 +62,20 @@ const ModalEditLanguage = ({
           />
         </div>,
         <div>
-          <Title text={t("languages.image")} />
+          <Title text={t("users.password")} />
+          <Input
+            type="password"
+            value={password}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(e.target.value)
+            }
+            minLength={1}
+            maxLength={30}
+            required
+          />
+        </div>,
+        <div>
+          <Title text={t("users.profilePicture")} />
           <Input
             minLength={1}
             type="file"
@@ -70,8 +96,7 @@ const ModalEditLanguage = ({
           size="large"
           autoWidth
           onClick={() => {
-            deleteLanguage(language!.id);
-            setImage(null);
+            deleteUser(user!.id);
             closeModal();
           }}
         />,
@@ -81,8 +106,7 @@ const ModalEditLanguage = ({
           autoWidth
           onClick={() => {
             if (!validate()) return;
-            editLanguage(language!.id, name || "", image!);
-            setImage(null);
+            editUser(user!.id, username || "", password || "", image!);
             closeModal();
           }}
         />,
@@ -91,4 +115,4 @@ const ModalEditLanguage = ({
   );
 };
 
-export default ModalEditLanguage;
+export default ModalEditUser;

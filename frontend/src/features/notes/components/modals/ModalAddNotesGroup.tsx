@@ -4,6 +4,7 @@ import Button from "../../../../components/Button";
 import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
 import useModalGroup from "../../hooks/useModalNotesGroup";
+import Title from "../../../../components/Title";
 
 type ModalAddGroupProps = {
   isOpen: boolean;
@@ -30,7 +31,7 @@ const ModalAddGroup = ({
       title={t("notes.addGroup")}
       content={[
         <div>
-          <div className="text-2xl">{t("notes.name")}</div>
+          <Title text={t("notes.name")} />
           <Input
             minLength={1}
             maxLength={30}

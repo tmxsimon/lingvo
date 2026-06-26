@@ -4,6 +4,7 @@ import Button from "../../../../components/Button";
 import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
 import useModalEntry from "../../hooks/useModalEntry";
+import Title from "../../../../components/Title";
 
 type ModalAddEntryProps = {
   isOpen: boolean;
@@ -38,7 +39,7 @@ const ModalAddEntry = ({
       title={t("dictionary.addEntry")}
       content={[
         <div>
-          <div className="text-2xl">{t("dictionary.content")}</div>
+          <Title text={t("dictionary.content")} />
           <Input
             minLength={1}
             maxLength={30}
@@ -48,7 +49,7 @@ const ModalAddEntry = ({
           />
         </div>,
         <div>
-          <div className="text-2xl">{t("dictionary.translation")}</div>
+          <Title text={t("dictionary.translation")} />
           <Input
             minLength={1}
             maxLength={30}
@@ -58,7 +59,7 @@ const ModalAddEntry = ({
           />
         </div>,
         <div>
-          <div className="text-2xl">{t("dictionary.note")}</div>
+          <Title text={t("dictionary.note")} />
           <Input
             value={note}
             onChange={(e) => setNote(e.target.value)}

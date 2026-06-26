@@ -17,6 +17,8 @@
       "signOut": "Sign Out",
       "username": "Username",
       "password": "Password",
+      "profilePicture": "Profile picture",
+      "profile": "Profile",
 
       "validation": {
         "signInIncorrect": "Incorrect username or password",

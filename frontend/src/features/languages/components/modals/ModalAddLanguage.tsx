@@ -3,6 +3,7 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { useTranslation } from "react-i18next";
 import useModalLanguage from "../../hooks/useModalLanguage";
+import Title from "../../../../components/Title";
 
 type ModalAddLanguageProps = {
   isOpen: boolean;
@@ -30,7 +31,7 @@ const ModalAddLanguage = ({
       title={t("languages.addLanguage")}
       content={[
         <div>
-          <div className="text-2xl">{t("languages.name")}</div>
+          <Title text={t("languages.name")} />
           <Input
             minLength={1}
             maxLength={30}
@@ -40,7 +41,7 @@ const ModalAddLanguage = ({
           />
         </div>,
         <div>
-          <div className="text-2xl">{t("languages.image")}</div>
+          <Title text={t("languages.image")} />
           <Input
             minLength={1}
             type="file"

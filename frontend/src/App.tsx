@@ -12,7 +12,7 @@ import NotePage from "./features/notes/pages/NotePage";
 import FlippersPage from "./features/flippers/pages/FlippersPage";
 import SignUpPage from "./features/users/pages/SignUpPage";
 import SignInPage from "./features/users/pages/SignInPage";
-// import ProfilePage from "./features/users/pages/ProfilePage";
+import ProfilePage from "./features/users/pages/ProfilePage";
 
 const App = () => {
   return (
@@ -22,9 +22,9 @@ const App = () => {
           <Route path="/" element={<Homepage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/sign-in" element={<SignInPage />} />
-          {/* <Route path="/users">
+          <Route path="/users">
             <Route path=":userId" element={<ProfilePage />} />
-          </Route> */}
+          </Route>
           <Route path="/languages" element={<LanguagesPage />} />
           <Route path="/dictionary">
             <Route index element={<DictionaryGroupsPage />} />

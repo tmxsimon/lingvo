@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import uuid
 from datetime import datetime, timedelta, timezone
 import jwt
@@ -10,7 +11,7 @@ from src.db import get_session
 from .models import User, Settings
 
 UPLOADS_URL = "uploads/user_uploads/profile_pictures"
-DEFAULT_IMAGE_URL = "uploads/profile_pictures/default.jpg"
+DEFAULT_IMAGE_URL = "uploads/user_uploads/profile_pictures/default.jpg"
 
 SECRET_KEY = ":/"  # very secret
 ALGORITHM = "HS256"
@@ -38,15 +39,15 @@ def authenticate_user(session: Session, username: str, password: str):
 def verify_token(token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str | None = payload.get("sub")
-        if username is None:
+        user_id = payload.get("sub")
+        if user_id is None:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Could not validate credentials",
                 headers={"WWW-Authenticate": "Bearer"},
             )
-        return username
-    except jwt.PyJWTError:
+        return int(user_id)
+    except (jwt.PyJWTError, ValueError):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
@@ -58,8 +59,8 @@ def get_current_user(
     token: str = Depends(oauth2_scheme),
     session: Session = Depends(get_session),
 ):
-    username = verify_token(token)
-    user = session.exec(select(User).where(User.username == username)).first()
+    user_id = verify_token(token)
+    user = session.get(User, user_id)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -79,13 +80,14 @@ def create_user_db(
     password: str,
     image: UploadFile | None = None
 ):  
+    
     filepath = DEFAULT_IMAGE_URL
     if image:
         ext = image.filename.split(".")[-1]
         filename = f"{uuid.uuid4()}.{ext}"
         filepath = os.path.join(UPLOADS_URL, filename)
 
-        with open(filepath, "wb") as buffer:
+        with open("src/" + filepath, "wb") as buffer:
             buffer.write(image.file.read())    
 
     user = User(username=username, hashed_password=password_hash.hash(password), image_url=filepath)
@@ -113,7 +115,10 @@ def delete_user_db(
     
     if user.image_url and user.image_url != DEFAULT_IMAGE_URL:
         image_to_delete_url = user.image_url
-        os.remove(image_to_delete_url)
+        try:
+            os.remove(image_to_delete_url)
+        except:
+            pass
 
     session.delete(user)
     session.commit()
@@ -124,6 +129,7 @@ def update_user_db(
     session: Session,
     id: int,
     username: str | None = None,
+    password: str | None = None,
     image: UploadFile | None = None
 ):
     user = session.get(User, id)
@@ -132,21 +138,23 @@ def update_user_db(
     
     filepath = user.image_url if user.image_url else DEFAULT_IMAGE_URL
     if image:
-        image_to_replace_url = user.image_url if user.image_url else None
-        if image_to_replace_url and image_to_replace_url != DEFAULT_IMAGE_URL:
-            os.remove(image_to_replace_url)
+        path_exists = Path("src/" + user.image_url).exists()
+        if path_exists and user.image_url != DEFAULT_IMAGE_URL:
+            os.remove("src/" + user.image_url)
         ext = image.filename.split(".")[-1]
         filename = f"{uuid.uuid4()}.{ext}"
         filepath = os.path.join(UPLOADS_URL, filename)
 
-        with open(filepath, "wb") as buffer:
+        with open("src/" + filepath, "wb") as buffer:
             buffer.write(image.file.read())
 
     user.image_url = filepath
 
     if username:
         user.username = username
-        
+    if len(password) > 0:
+        user.hashed_password = password_hash.hash(password)
+
     session.add(user)
     session.commit()
     session.refresh(user)

@@ -4,6 +4,7 @@ import Button from "../../../../components/Button";
 import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
 import useModalNote from "../../hooks/useModalNote";
+import Title from "../../../../components/Title";
 
 type ModalAddEntryProps = {
   isOpen: boolean;
@@ -26,7 +27,7 @@ const ModalAddEntry = ({ isOpen, closeModal, addNote }: ModalAddEntryProps) => {
       title={t("notes.addNote")}
       content={[
         <div>
-          <div className="text-2xl">{t("notes.name")}</div>
+          <Title text={t("notes.name")} />
           <Input
             minLength={1}
             maxLength={30}

@@ -17,6 +17,8 @@
       "signOut": "Выйти",
       "username": "Имя",
       "password": "Пароль",
+      "profilePicture": "Profile picture",
+      "profile": "Профиль",
 
       "validation": {
         "signInIncorrect": "Неверное имя или пароль",

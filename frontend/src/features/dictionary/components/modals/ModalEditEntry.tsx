@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import Select from "../../../../components/Select";
 import type { SelectOptionType } from "../../../../types";
 import useModalEntry from "../../hooks/useModalEntry";
+import Title from "../../../../components/Title";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
@@ -70,7 +71,7 @@ const ModalEditEntry = ({
       title={t("dictionary.editEntry")}
       content={[
         <div>
-          <div className="text-2xl">{t("dictionary.content")}</div>{" "}
+          <Title text={t("dictionary.content")} />
           <Input
             value={content}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -82,7 +83,7 @@ const ModalEditEntry = ({
           />
         </div>,
         <div>
-          <div className="text-2xl">{t("dictionary.translation")}</div>
+          <Title text={t("dictionary.translation")} />
           <Input
             value={translation}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -94,7 +95,7 @@ const ModalEditEntry = ({
           />
         </div>,
         <div>
-          <div className="text-2xl">{t("dictionary.note")}</div>
+          <Title text={t("dictionary.note")} />
           <Input
             value={note}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -104,7 +105,7 @@ const ModalEditEntry = ({
           />
         </div>,
         <div>
-          <div className="text-2xl">{t("group")}</div>
+          <Title text={t("group")} />
           <Select
             value={
               (typeof currentGroupOption !== "string" &&
