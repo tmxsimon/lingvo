@@ -11,7 +11,7 @@ export const lngResources = {
   "cs-CZ": cz,
 };
 
-const lng = localStorage.getItem("lang") || "cs-CZ";
+const lng = localStorage.getItem("lang") || "en-US";
 
 i18n.use(initReactI18next).init({
   resources: lngResources,
