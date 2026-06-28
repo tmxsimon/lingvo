@@ -95,6 +95,10 @@
     background-color: var(--color-brand-300) !important;
   }
 
+  body {
+    overflow-y: scroll;
+  }
+
   svg {
     width: 100%;
     height: 100%;

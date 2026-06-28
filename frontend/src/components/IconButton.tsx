@@ -20,7 +20,7 @@ const IconButton = ({
   size = "medium",
   hoverEffect = true,
   activeEffect = true,
-  padding = true,
+  padding = false,
   className = "",
   ...buttonProps
 }: IconButtonProps) => {

@@ -25,7 +25,7 @@ const Input = ({
 
   return (
     <input
-      className={`p-base-sm rounded-base backdrop-blur-base border-brand-neutral-200 border backdrop-brightness-95 ${autoWidth && "w-full"} ${className}`}
+      className={`p-base-sm rounded-base border-brand-neutral-200 bg-brand-neutral-100 appearance-none border ${autoWidth && "w-full"} ${className}`}
       placeholder={placeholder}
       {...inputProps}
     />

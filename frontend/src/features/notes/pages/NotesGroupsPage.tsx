@@ -49,7 +49,7 @@ const DictionaryGroupsPage = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div>
         <AddSearchPanel
           title={t("groups")}
           onAddClick={openModalGroupsAdd}
