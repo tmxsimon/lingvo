@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { DictionaryEntryType } from "../../dictionary/types";
 import { fetchCardsEntries } from "../../dictionary/services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -11,6 +11,7 @@ const PATH = "/dictionary";
 export default function useCardEntry(
   groupId: number | null,
   language: number,
+  isAuto: boolean,
   isOpen: boolean = false,
 ) {
   const queryClient = useQueryClient();
@@ -62,7 +63,7 @@ export default function useCardEntry(
     }
   }, [sortedEntries]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (!sortedEntries) return;
     const currentIndex = sortedEntries.findIndex(
       (e) => e.id === currentEntry?.id,
@@ -73,7 +74,7 @@ export default function useCardEntry(
       setCurrentEntry(sortedEntries[0]);
     }
     setIsActive(false);
-  };
+  }, [currentEntry?.id, sortedEntries]);
 
   const changeTemperature = useMutation({
     mutationFn: ({
@@ -102,6 +103,24 @@ export default function useCardEntry(
       );
     },
   });
+
+  const setNextState = useCallback(() => {
+    if (!isActive) {
+      setIsActive(true);
+    } else {
+      handleNext();
+    }
+  }, [handleNext, isActive]);
+
+  useEffect(() => {
+    if (!isAuto) return;
+
+    const id = window.setInterval(() => {
+      setNextState();
+    }, 5000);
+
+    return () => clearInterval(id);
+  }, [isAuto, setNextState]);
 
   // Keyboard controls
   useEffect(() => {

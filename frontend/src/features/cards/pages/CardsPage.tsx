@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import IconButton from "../../../components/IconButton";
+import { useState } from "react";
 
 const CardsPage = () => {
   const { t } = useTranslation();
@@ -20,6 +21,8 @@ const CardsPage = () => {
   const navigate = useNavigate();
 
   const { isOpen, openModal, closeModal } = useModal();
+
+  const [isAuto, setIsAuto] = useState<boolean>(false);
 
   const {
     group,
@@ -35,6 +38,7 @@ const CardsPage = () => {
   } = useCardEntry(
     groupId ? parseInt(groupId) : null,
     parseInt(language),
+    isAuto,
     isOpen,
   );
 
@@ -69,17 +73,27 @@ const CardsPage = () => {
             </div>
 
             <div className="gap-base flex items-center">
-              <IconButton
-                icon={
-                  <Icon
-                    name={isReversed ? "arrowUpDown" : "arrowDownUp"}
-                    className="size-8"
-                  />
-                }
-                style="text"
-                padding={false}
-                onClick={() => setIsReversed(!isReversed)}
-              />
+              <div className="flex">
+                <IconButton
+                  icon={
+                    <Icon
+                      name={isReversed ? "arrowUpDown" : "arrowDownUp"}
+                      className="size-8"
+                    />
+                  }
+                  style="text"
+                  padding={false}
+                  onClick={() => setIsReversed(!isReversed)}
+                />
+                <IconButton
+                  icon={
+                    <Icon name={isAuto ? "pause" : "play"} className="size-8" />
+                  }
+                  style="text"
+                  padding={false}
+                  onClick={() => setIsAuto((prev) => !prev)}
+                />
+              </div>
               <Temperature
                 value={currentEntry.temperature}
                 buttonLeftOnClick={() =>
