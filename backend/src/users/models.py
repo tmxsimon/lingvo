@@ -20,7 +20,7 @@ class UserRead(SQLModel):
     image_url: str | None = None
     created_at: datetime
 
-class Settings(SQLModel, table=True):
+class Settings(SQLModel, table=True):    
     id: int | None = Field(default=None, primary_key=True)
     user_id: int = Field(foreign_key="user.id")
     user: "User" = Relationship(back_populates="settings")

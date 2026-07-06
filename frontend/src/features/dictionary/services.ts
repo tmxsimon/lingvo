@@ -18,16 +18,3 @@ export const fetchGroupAndEntries = async (id: number) => {
 
   return result.data;
 };
-
-export const fetchCardsEntries = async (
-  groupId: number | null,
-  language: number,
-) => {
-  const result = await api.get<{
-    entries: DictionaryEntryType[];
-    group: DictionaryGroupType | null;
-  }>(`${PATH}/cards-entries`, {
-    params: { group_id: groupId, language },
-  });
-  return result.data;
-};

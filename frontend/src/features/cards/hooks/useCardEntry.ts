@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { DictionaryEntryType } from "../../dictionary/types";
-import { fetchCardsEntries } from "../../dictionary/services";
+import { fetchCardsEntries } from "../services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
 
-const PATH = "/dictionary";
+const PATH = "/cards";
 
 // the code is trash but it works
 // TODO: fix the code

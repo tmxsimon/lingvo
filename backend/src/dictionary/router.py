@@ -1,4 +1,3 @@
-from random import shuffle
 from fastapi import APIRouter, HTTPException, status
 from src.dependencies import SessionDep
 from .service import (
@@ -9,8 +8,6 @@ from .service import (
     reorder_entries_db,
     reorder_groups_db,
     update_entry_db,
-    TemperatureActionEnum,
-    change_temperature_db,
     get_group_db,
     get_groups_db,
     create_group_db,
@@ -34,25 +31,6 @@ async def get_entries(language: int, session = SessionDep):
             detail="No entries found"
         )
     return entries
-
-@router.get("/cards-entries")
-async def get_cards_entries(language: int, group_id: int | None = None, session = SessionDep):
-    group = None
-    if group_id:
-        entries = get_entries_by_group_db(session, group_id=group_id)
-        group = entries[0].group if entries else None
-    else:
-        entries = get_entries_db(session, language=language)
-
-    if entries is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="No entries found"
-        )
-    
-    shuffle(entries)
-    return { "entries": entries, "group": group }
-
 
 @router.get("/groups/{group_id}/entries")
 async def get_entries_by_group(group_id: int, language: int, session = SessionDep):
@@ -123,22 +101,6 @@ async def update_entry(
         note=note,
         temperature=temperature,
         group_id=group_id
-    )
-    if entry is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Entry not found"
-        )
-    return entry
-
-
-@router.put("/entries/{id}/temperature")
-async def change_temperature(id: int, action: TemperatureActionEnum, step: int, session = SessionDep):
-    entry = change_temperature_db(
-        session = session,
-        id=id,
-        action=action,
-        step=step
     )
     if entry is None:
         raise HTTPException(
