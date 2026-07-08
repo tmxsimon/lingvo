@@ -8,7 +8,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session, select
 from pwdlib import PasswordHash
 from src.db import get_session
-from .models import User, Settings
+from .models import User
 
 UPLOADS_URL = "uploads/user_uploads/profile_pictures"
 DEFAULT_IMAGE_URL = "uploads/user_uploads/profile_pictures/default.jpg"
@@ -98,9 +98,6 @@ def create_user_db(
     session.add(user)
     session.flush()
     
-    settings = Settings(user_id=user.id)
-    
-    session.add(settings)
     session.commit()
     session.refresh(user)
     return user

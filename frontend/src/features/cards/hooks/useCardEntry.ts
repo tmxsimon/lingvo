@@ -104,7 +104,7 @@ export default function useCardEntry(
     },
   });
 
-  const setNextState = useCallback(() => {
+  const handleNextState = useCallback(() => {
     if (!isActive) {
       setIsActive(true);
     } else {
@@ -116,11 +116,11 @@ export default function useCardEntry(
     if (!isAuto) return;
 
     const id = window.setInterval(() => {
-      setNextState();
+      handleNextState();
     }, 5000);
 
     return () => clearInterval(id);
-  }, [isAuto, setNextState]);
+  }, [isAuto, handleNextState]);
 
   // Keyboard controls
   useEffect(() => {
@@ -165,6 +165,7 @@ export default function useCardEntry(
     isReversed,
     setIsReversed,
     handleNext,
+    handleNextState,
     changeTemperature,
     isLoading,
     error,

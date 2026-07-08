@@ -32,6 +32,7 @@ const CardsPage = () => {
     isReversed,
     setIsReversed,
     handleNext,
+    // handleNextState,
     changeTemperature,
     isLoading,
     error,
