@@ -1,38 +1,27 @@
-import { Link } from "react-router-dom";
-import Icon from "../../../components/Icon";
-import { Reorder, useDragControls } from "framer-motion";
 import type { DictionaryGroupType } from "../types";
+import ReorderableItem from "../../../components/ReorderableItem";
+import Icon from "../../../components/Icon";
+import { Link } from "react-router-dom";
 
 type DictionaryGroupProps = {
   group: DictionaryGroupType;
-  onClickSettings?: () => void;
+  onClickSettings: () => void;
 };
 
 const DictionaryGroup = ({ group, onClickSettings }: DictionaryGroupProps) => {
-  const controls = useDragControls();
+  const buttons = (
+    <>
+      <button className="cursor-pointer" onClick={onClickSettings}>
+        <Icon name="settings" className="size-8" />
+      </button>
+      <Link to={`${group.id}`} className="cursor-pointer">
+        <Icon name="arrowRight" className="size-8" />
+      </Link>
+    </>
+  );
 
   return (
-    <Reorder.Item
-      value={group}
-      dragListener={false}
-      dragControls={controls}
-      className="rounded-base px-base py-base-sm border-brand-neutral-200 backdrop-blur-base flex h-14 w-168 items-center justify-between border backdrop-brightness-95"
-    >
-      <Icon
-        name="grip"
-        className="text-gray-neutral-300 hover:text-gray-neutral-500 size-6 cursor-pointer select-none"
-        onPointerDown={(e) => controls.start(e)}
-      />
-      <div className="flex-1 truncate">{group.name}</div>
-      <div className="flex">
-        <div className="cursor-pointer" onClick={onClickSettings}>
-          <Icon name="settings" className="size-8" />
-        </div>
-        <Link to={`${group.id}`} className="cursor-pointer">
-          <Icon name="arrowRight" className="size-8" />
-        </Link>
-      </div>
-    </Reorder.Item>
+    <ReorderableItem value={group} content={group.name} buttons={buttons} />
   );
 };
 

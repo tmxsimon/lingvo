@@ -1,6 +1,6 @@
-import { Reorder, useDragControls } from "motion/react";
-import Icon from "../../../components/Icon";
 import type { DictionaryEntryType } from "../types";
+import ReorderableItem from "../../../components/ReorderableItem";
+import Icon from "../../../components/Icon";
 
 type DictionaryEntryProps = {
   entry: DictionaryEntryType;
@@ -8,40 +8,26 @@ type DictionaryEntryProps = {
 };
 
 const DictionaryEntry = ({ entry, onClickSettings }: DictionaryEntryProps) => {
-  const controls = useDragControls();
+  const content = (
+    <>
+      <div className="flex-1 truncate">{entry.content}</div>
+      <div className="flex-1 truncate">{entry.translation}</div>
+    </>
+  );
+
+  const buttons = (
+    <button className="cursor-pointer" onClick={onClickSettings}>
+      <Icon name="settings" className="size-8" />
+    </button>
+  );
 
   return (
-    <Reorder.Item
+    <ReorderableItem
       value={entry}
-      dragListener={false}
-      dragControls={controls}
-      className="rounded-base px-base py-base-sm border-brand-neutral-200 backdrop-blur-base flex h-14 w-168 items-center justify-between border backdrop-brightness-95"
-    >
-      <Icon
-        name="grip"
-        className="text-gray-neutral-300 hover:text-gray-neutral-500 size-6 cursor-pointer select-none"
-        onPointerDown={(e) => controls.start(e)}
-      />
-      <div className="flex w-full">
-        <div className="flex-1 truncate">{entry.content}</div>
-        <div className="flex-1 truncate">{entry.translation}</div>
-      </div>
-
-      <div className="flex">
-        {entry.note && (
-          <div
-            className="cursor-pointer"
-            data-tooltip-id="note-tooltip"
-            data-tooltip-content={entry.note}
-          >
-            <Icon name="info" className="size-8" />
-          </div>
-        )}
-        <div className="cursor-pointer" onClick={onClickSettings}>
-          <Icon name="settings" className="size-8" />
-        </div>
-      </div>
-    </Reorder.Item>
+      content={content}
+      note={entry.note}
+      buttons={buttons}
+    />
   );
 };
 
