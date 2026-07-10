@@ -116,9 +116,12 @@ export default function useCardEntry(
   useEffect(() => {
     if (!isAuto) return;
 
-    const id = window.setInterval(() => {
-      handleNextState();
-    }, durationSeconds * 1000);
+    const id = window.setInterval(
+      () => {
+        handleNextState();
+      },
+      (durationSeconds * 1000) / 2, // half of duration for every state
+    );
 
     return () => clearInterval(id);
   }, [isAuto, handleNextState, durationSeconds]);
