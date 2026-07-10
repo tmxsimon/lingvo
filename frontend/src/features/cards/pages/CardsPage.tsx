@@ -1,4 +1,4 @@
-import ModalChangeGroup from "../components/modals/ModalChangeGroup";
+import ModalChangeGroup from "../components/modals/ModalSettings";
 import useModal from "../../../hooks/useModal";
 import Icon from "../../../components/Icon";
 import Card from "../components/Card";
@@ -23,6 +23,16 @@ const CardsPage = () => {
   const { isOpen, openModal, closeModal } = useModal();
 
   const [isAuto, setIsAuto] = useState<boolean>(false);
+  const [durationSeconds, setDurationSeconds] = useState<number>(
+    localStorage.getItem("cardDurationSeconds")
+      ? parseInt(localStorage.getItem("cardDurationSeconds")!)
+      : 5,
+  );
+
+  const handleDurationChange = (value: number) => {
+    localStorage.setItem("cardDurationSeconds", value.toString());
+    setDurationSeconds(value);
+  };
 
   const {
     group,
@@ -39,8 +49,9 @@ const CardsPage = () => {
   } = useCardEntry(
     groupId ? parseInt(groupId) : null,
     parseInt(language),
-    isAuto,
     isOpen,
+    isAuto,
+    durationSeconds,
   );
 
   if (isLoading) return <Loading />;
@@ -55,7 +66,7 @@ const CardsPage = () => {
           theme="neutral"
           size="large"
           text={group?.name || t("cards.allEntries")}
-          iconBack={<Icon name="change" className="size-4" />}
+          iconBack={<Icon name="settings" className="size-4" />}
           onClick={openModal}
         />
         {currentEntry ? (
@@ -122,6 +133,8 @@ const CardsPage = () => {
       <ModalChangeGroup
         group={group}
         language={parseInt(language)}
+        durationSeconds={durationSeconds}
+        setDurationSeconds={setDurationSeconds}
         changeGroupId={async (id: number | "") => navigate(`/cards/${id}`)}
         isOpen={isOpen}
         closeModal={closeModal}

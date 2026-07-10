@@ -11,8 +11,9 @@ const PATH = "/cards";
 export default function useCardEntry(
   groupId: number | null,
   language: number,
-  isAuto: boolean,
   isOpen: boolean = false,
+  isAuto: boolean = false,
+  durationSeconds: number = 5,
 ) {
   const queryClient = useQueryClient();
 
@@ -117,10 +118,10 @@ export default function useCardEntry(
 
     const id = window.setInterval(() => {
       handleNextState();
-    }, 5000);
+    }, durationSeconds * 1000);
 
     return () => clearInterval(id);
-  }, [isAuto, handleNextState]);
+  }, [isAuto, handleNextState, durationSeconds]);
 
   // Keyboard controls
   useEffect(() => {

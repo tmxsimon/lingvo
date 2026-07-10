@@ -9,6 +9,8 @@
     "groups": "Groups",
     "search": "Search",
 
+    "settings": "Settings",
+
     "users": {
       "signInTitle": "Sign In",
       "signIn": "Sign In",
@@ -50,11 +52,15 @@
     "cards": {
       "cards": "Cards",
       "allEntries": "All entries",
-      "changeGroup": "Change group",
       "increase": "Increase",
       "decrease": "Decrease",
       "next": "Next",
-      "entriesNotFound": "Entries not found"
+      "entriesNotFound": "Entries not found",
+      "duration": "Duration",
+
+      "validation": {
+        "duration": "Duration must be between 1 and 120 seconds"
+      }
     },
 
     "notes": {

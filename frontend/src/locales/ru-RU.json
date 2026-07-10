@@ -9,6 +9,8 @@
     "groups": "Группы",
     "search": "Поиск",
 
+    "settings": "Настройки",
+
     "users": {
       "signInTitle": "Вход",
       "signIn": "Войти",
@@ -50,11 +52,15 @@
     "cards": {
       "cards": "Карточки",
       "allEntries": "Все записи",
-      "changeGroup": "Сменить группу",
       "increase": "Увеличить",
       "decrease": "Уменьшить",
       "next": "Далее",
-      "entriesNotFound": "Записи не найдены"
+      "entriesNotFound": "Записи не найдены",
+      "duration": "Длительность",
+
+      "validation": {
+        "duration": "Длительность должна быть от 1 до 120 секунд"
+      }
     },
 
     "notes": {

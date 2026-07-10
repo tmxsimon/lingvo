@@ -9,6 +9,8 @@
     "groups": "Skupiny",
     "search": "Vyhledávání",
 
+    "settings": "Nastavení",
+
     "users": {
       "signInTitle": "Přihlášení",
       "signIn": "Přihlásit se",
@@ -50,11 +52,15 @@
     "cards": {
       "cards": "Kartičky",
       "allEntries": "Všechny záznamy",
-      "changeGroup": "Změnit skupinu",
       "increase": "Zvýšit",
       "decrease": "Snížit",
       "next": "Další",
-      "entriesNotFound": "Záznamy nebyly nalezeny"
+      "entriesNotFound": "Záznamy nebyly nalezeny",
+      "duration": "Doba trvání",
+
+      "validation": {
+        "duration": "Doba trvání musí být mezi 1 a 120 sekundami"
+      }
     },
 
     "notes": {
