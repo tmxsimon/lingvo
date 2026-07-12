@@ -120,7 +120,7 @@ export default function useCardEntry(
       () => {
         handleNextState();
       },
-      (durationSeconds * 1000) / 2, // half of duration for every state
+      (durationSeconds * 1000) / 2, // half of duration for each state
     );
 
     return () => clearInterval(id);

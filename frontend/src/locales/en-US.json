@@ -11,6 +11,8 @@
 
     "settings": "Settings",
 
+    "pageNotFound": "Page not found",
+
     "users": {
       "signInTitle": "Sign In",
       "signIn": "Sign In",

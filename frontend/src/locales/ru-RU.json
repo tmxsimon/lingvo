@@ -11,6 +11,8 @@
 
     "settings": "Настройки",
 
+    "pageNotFound": "Страница не найдена",
+
     "users": {
       "signInTitle": "Вход",
       "signIn": "Войти",
@@ -19,7 +21,7 @@
       "signOut": "Выйти",
       "username": "Имя",
       "password": "Пароль",
-      "profilePicture": "Profile picture",
+      "profilePicture": "Фото профиля",
       "profile": "Профиль",
 
       "validation": {

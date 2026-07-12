@@ -7,6 +7,7 @@ import clearLocalStorage from "../../../utils/clearLocalStorage";
 
 type AuthContextType = {
   user: UserType | null;
+  isAuthenticated: boolean;
   isLoading: boolean;
   error: Error | null;
   signIn: (username: string, password: string) => Promise<void>;
@@ -97,6 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const value = useMemo(
     () => ({
       user: user || null,
+      isAuthenticated: !!user,
       isLoading,
       error,
       signIn,

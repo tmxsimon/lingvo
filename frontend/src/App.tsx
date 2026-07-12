@@ -13,32 +13,39 @@ import FlippersPage from "./features/flippers/pages/FlippersPage";
 import SignUpPage from "./features/users/pages/SignUpPage";
 import SignInPage from "./features/users/pages/SignInPage";
 import ProfilePage from "./features/users/pages/ProfilePage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Homepage />} />
+          <Route index element={<Homepage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/users">
-            <Route path=":userId" element={<ProfilePage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/users" element={<ProtectedRoute />}>
+              <Route path="me" element={<ProfilePage />} />
+            </Route>
+            <Route path="/languages" element={<LanguagesPage />} />
           </Route>
-          <Route path="/languages" element={<LanguagesPage />} />
-          <Route path="/dictionary">
+          <Route path="/dictionary" element={<ProtectedRoute />}>
             <Route index element={<DictionaryGroupsPage />} />
             <Route path=":groupId" element={<DictionaryEntriesPage />} />
           </Route>
-          <Route path="/notes">
+          <Route path="/notes" element={<ProtectedRoute />}>
             <Route index element={<NotesGroupsPage />} />
             <Route path=":groupId">
               <Route index element={<NotesItemsPage />} />\
               <Route path=":noteId" element={<NotePage />} />
             </Route>
           </Route>
-          <Route path="/cards/:groupId?" element={<CardsPage />} />
-          <Route path="/flippers/:groupId?" element={<FlippersPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/cards/:groupId?" element={<CardsPage />} />
+            <Route path="/flippers/:groupId?" element={<FlippersPage />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

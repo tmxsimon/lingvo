@@ -1,8 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import Icon from "./Icon";
-import { useTheme } from "../contexts/themeProvider";
-import { switchLanguage } from "../utils/switchLanguage";
-import { useState } from "react";
 import { useLanguageContext } from "../features/languages/contexts/languageProvider";
 import { useAuth } from "../features/users/contexts/authProvider";
 
@@ -100,7 +97,8 @@ const Navbar = () => {
                     className="hover:text-brand-300 size-8 rotate-180"
                   />
                 </NavbarButton>
-                <NavbarLink to={`/users/${user.id}`}>
+                <NavbarLink to="/users/me">
+                  {/*to={`/users/${user.id}`} */}
                   <Icon name="user" className="hover:text-brand-300 size-8" />
                 </NavbarLink>
               </div>

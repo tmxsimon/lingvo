@@ -11,6 +11,8 @@
 
     "settings": "Nastavení",
 
+    "pageNotFound": "Stránka nenalezena",
+
     "users": {
       "signInTitle": "Přihlášení",
       "signIn": "Přihlásit se",
@@ -19,7 +21,7 @@
       "signOut": "Odhlásit se",
       "username": "Jméno",
       "password": "Heslo",
-      "profilePicture": "Profile picture",
+      "profilePicture": "Profilovka",
       "profile": "Profil",
 
       "validation": {
