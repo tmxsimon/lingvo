@@ -40,7 +40,9 @@ const SentenceModal = ({
     handleNext();
   };
 
-  const buttons = [<Button text="Close" onClick={handleClose} autoWidth />];
+  const buttons = [
+    <Button text={t("close")} onClick={handleClose} autoWidth />,
+  ];
 
   return (
     <Modal

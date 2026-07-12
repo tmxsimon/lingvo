@@ -4,6 +4,7 @@
     "edit": "Изменить",
     "change": "Изменить",
     "delete": "Удалить",
+    "close": "Закрыть",
 
     "group": "Группа",
     "groups": "Группы",
@@ -59,7 +60,7 @@
       "next": "Далее",
       "entriesNotFound": "Записи не найдены",
       "duration": "Длительность",
-      "sentenceMessage": "Напишите предложение с использованием",
+      "sentenceMessage": "Напишите предложение с",
       "sentenceMode": "Режим предложений",
 
       "validation": {
