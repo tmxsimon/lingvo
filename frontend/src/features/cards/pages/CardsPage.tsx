@@ -11,6 +11,7 @@ import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import IconButton from "../../../components/IconButton";
 import { useState } from "react";
+import SentenceModal from "../components/modals/SentenceModal";
 
 const CardsPage = () => {
   const { t } = useTranslation();
@@ -20,19 +21,26 @@ const CardsPage = () => {
   const { groupId } = useParams();
   const navigate = useNavigate();
 
-  const { isOpen, openModal, closeModal } = useModal();
+  const {
+    isOpen: isOpenSettings,
+    openModal: openModalSettings,
+    closeModal: closeModalSettings,
+  } = useModal();
+  const {
+    isOpen: isOpenSentence,
+    openModal: openModalSentence,
+    closeModal: closeModalSentence,
+  } = useModal();
 
   const [isAuto, setIsAuto] = useState<boolean>(false);
+  const [isSentenceMode, setIsSentenceMode] = useState<boolean>(
+    localStorage.getItem("isSentenceMode") == "true",
+  );
   const [durationSeconds, setDurationSeconds] = useState<number>(
     localStorage.getItem("cardDurationSeconds")
       ? parseInt(localStorage.getItem("cardDurationSeconds")!)
       : 5,
   );
-
-  const handleDurationChange = (value: number) => {
-    localStorage.setItem("cardDurationSeconds", value.toString());
-    setDurationSeconds(value);
-  };
 
   const {
     group,
@@ -49,8 +57,10 @@ const CardsPage = () => {
   } = useCardEntry(
     groupId ? parseInt(groupId) : null,
     parseInt(language),
-    isOpen,
+    isOpenSettings,
     isAuto,
+    isSentenceMode,
+    openModalSentence,
     durationSeconds,
   );
 
@@ -67,7 +77,7 @@ const CardsPage = () => {
           size="large"
           text={group?.name || t("cards.allEntries")}
           iconBack={<Icon name="settings" className="size-4" />}
-          onClick={openModal}
+          onClick={openModalSettings}
         />
         {currentEntry ? (
           <div className="flex h-full flex-col items-center justify-between">
@@ -131,13 +141,22 @@ const CardsPage = () => {
 
       {/* modals */}
       <ModalChangeGroup
-        group={group}
         language={parseInt(language)}
+        group={group}
+        changeGroupId={async (id: number | "") => navigate(`/cards/${id}`)}
         durationSeconds={durationSeconds}
         setDurationSeconds={setDurationSeconds}
-        changeGroupId={async (id: number | "") => navigate(`/cards/${id}`)}
-        isOpen={isOpen}
-        closeModal={closeModal}
+        isSentenceMode={isSentenceMode}
+        setIsSentenceMode={setIsSentenceMode}
+        isOpen={isOpenSettings}
+        closeModal={closeModalSettings}
+      />
+
+      <SentenceModal
+        entryContent={currentEntry?.content}
+        isOpen={isOpenSentence}
+        closeModal={closeModalSentence}
+        handleNext={handleNext}
       />
     </>
   );

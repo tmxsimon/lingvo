@@ -59,6 +59,8 @@
       "next": "Další",
       "entriesNotFound": "Záznamy nebyly nalezeny",
       "duration": "Doba trvání",
+      "sentenceMessage": "Napište větu s použitím",
+      "sentenceMode": "Režim vět",
 
       "validation": {
         "duration": "Doba trvání musí být mezi 1 a 120 sekundami"

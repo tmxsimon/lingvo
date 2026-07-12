@@ -59,6 +59,8 @@
       "next": "Next",
       "entriesNotFound": "Entries not found",
       "duration": "Duration",
+      "sentenceMessage": "Write a sentence using",
+      "sentenceMode": "Sentence mode",
 
       "validation": {
         "duration": "Duration must be between 1 and 120 seconds"

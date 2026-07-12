@@ -10,23 +10,28 @@ import Loading from "../../../../components/Loading";
 import Title from "../../../../components/Title";
 import Input from "../../../../components/Input";
 import useModalSettings from "../../hooks/useModalSettings";
+import Checkbox from "../../../../components/Checkbox";
 
 type ModalChangeGroupProps = {
-  group: DictionaryGroupType | null;
   language: number;
+  group: DictionaryGroupType | null;
+  changeGroupId: (id: number | "") => void;
   durationSeconds: number;
   setDurationSeconds: Dispatch<SetStateAction<number>>;
-  changeGroupId: (id: number | "") => void;
+  isSentenceMode: boolean;
+  setIsSentenceMode: Dispatch<SetStateAction<boolean>>;
   isOpen: boolean;
   closeModal: () => void;
 };
 
 const ModalChangeGroup = ({
-  group,
   language,
+  group,
+  changeGroupId,
   durationSeconds,
   setDurationSeconds,
-  changeGroupId,
+  isSentenceMode,
+  setIsSentenceMode,
   isOpen,
   closeModal,
 }: ModalChangeGroupProps) => {
@@ -38,18 +43,23 @@ const ModalChangeGroup = ({
     durationSecondsInput,
     setDurationSecondsInput,
     maxDurationSeconds,
+    isSentenceModeInput,
+    setIsSentenceModeInput,
     validate,
-  } = useModalSettings(group, durationSeconds);
+    handleChangeDuration,
+    handleChangeSentenceMode,
+  } = useModalSettings(
+    group,
+    durationSeconds,
+    setDurationSeconds,
+    isSentenceMode,
+    setIsSentenceMode,
+  );
 
   const { groups, isLoading, error } = useDictionaryGroups(language);
 
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
-
-  const handleChangeDuration = (value: number) => {
-    localStorage.setItem("cardDurationSeconds", value.toString());
-    setDurationSeconds(value);
-  };
 
   const options: SelectOptionType[] = [
     { value: "", text: t("cards.allEntries") },
@@ -92,6 +102,13 @@ const ModalChangeGroup = ({
             onChange={(e) => setDurationSecondsInput(Number(e.target.value))}
           />
         </div>,
+        <div className="gap-base flex items-center">
+          <Title text={t("cards.sentenceMode")} />
+          <Checkbox
+            checked={isSentenceModeInput}
+            onChange={(e) => setIsSentenceModeInput(e.currentTarget.checked)}
+          />
+        </div>,
       ]}
       buttons={[
         <Button
@@ -106,6 +123,7 @@ const ModalChangeGroup = ({
                 "",
             );
             handleChangeDuration(durationSecondsInput);
+            handleChangeSentenceMode(isSentenceModeInput);
             closeModal();
           }}
         />,

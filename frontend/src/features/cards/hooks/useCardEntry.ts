@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { DictionaryEntryType } from "../../dictionary/types";
 import { fetchCardsEntries } from "../services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -11,8 +11,10 @@ const PATH = "/cards";
 export default function useCardEntry(
   groupId: number | null,
   language: number,
-  isOpen: boolean = false,
+  isOpenSettings: boolean = false,
   isAuto: boolean = false,
+  isSentenceMode: boolean = false,
+  openModalSentence: () => void,
   durationSeconds: number = 5,
 ) {
   const queryClient = useQueryClient();
@@ -108,10 +110,12 @@ export default function useCardEntry(
   const handleNextState = useCallback(() => {
     if (!isActive) {
       setIsActive(true);
-    } else {
+    } else if (!isSentenceMode) {
       handleNext();
+    } else {
+      openModalSentence();
     }
-  }, [handleNext, isActive]);
+  }, [handleNext, isActive, openModalSentence]);
 
   useEffect(() => {
     if (!isAuto) return;
@@ -129,7 +133,7 @@ export default function useCardEntry(
   // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (!currentEntry || isOpen) return;
+      if (!currentEntry || isOpenSettings) return;
 
       if (event.key === "ArrowUp") {
         event.preventDefault();
@@ -137,15 +141,12 @@ export default function useCardEntry(
       } else if (event.key === "ArrowDown") {
         event.preventDefault();
         changeTemperature.mutate({ action: "decrease" });
-      } else if (
-        event.key === "ArrowRight" ||
-        (event.key === " " && isActive)
-      ) {
+      } else if (event.key === "ArrowRight") {
         event.preventDefault();
         handleNext();
       } else if (event.key === " ") {
         event.preventDefault();
-        setIsActive(true);
+        handleNextState();
       }
     };
 
@@ -155,7 +156,7 @@ export default function useCardEntry(
     currentEntry,
     changeTemperature,
     handleNext,
-    isOpen,
+    isOpenSettings,
     isActive,
     setIsActive,
   ]);
