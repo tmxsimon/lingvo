@@ -61,6 +61,7 @@ const CardsPage = () => {
     isAuto,
     isSentenceMode,
     openModalSentence,
+    isOpenSentence,
     durationSeconds,
   );
 

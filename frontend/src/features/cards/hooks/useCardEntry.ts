@@ -15,6 +15,7 @@ export default function useCardEntry(
   isAuto: boolean = false,
   isSentenceMode: boolean = false,
   openModalSentence: () => void,
+  isOpenSentence: boolean = false,
   durationSeconds: number = 5,
 ) {
   const queryClient = useQueryClient();
@@ -135,17 +136,21 @@ export default function useCardEntry(
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!currentEntry || isOpenSettings) return;
 
-      if (event.key === "ArrowUp") {
-        event.preventDefault();
-        changeTemperature.mutate({ action: "increase" });
-      } else if (event.key === "ArrowDown") {
-        event.preventDefault();
-        changeTemperature.mutate({ action: "decrease" });
-      } else if (event.key === "ArrowRight") {
-        event.preventDefault();
-        handleNext();
-      } else if (event.key === " ") {
-        event.preventDefault();
+      if (!isOpenSentence) {
+        if (event.key === "ArrowUp") {
+          event.preventDefault();
+          changeTemperature.mutate({ action: "increase" });
+        } else if (event.key === "ArrowDown") {
+          event.preventDefault();
+          changeTemperature.mutate({ action: "decrease" });
+        } else if (event.key === "ArrowRight") {
+          event.preventDefault();
+          handleNext();
+        }
+      }
+
+      if (event.key === " ") {
+        if (!isOpenSentence) event.preventDefault();
         handleNextState();
       }
     };
