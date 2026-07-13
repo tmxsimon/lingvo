@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { DictionaryEntryType } from "../../dictionary/types";
 import { fetchCardsEntries } from "../services";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
