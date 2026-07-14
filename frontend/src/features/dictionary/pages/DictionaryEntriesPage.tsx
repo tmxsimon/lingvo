@@ -33,6 +33,12 @@ const DictionaryEntriesPage = () => {
 
   const { language } = useLanguageContext();
 
+  const parsedGroupId = Number(groupId);
+  const resolvedGroupId = Number.isNaN(parsedGroupId)
+    ? undefined
+    : parsedGroupId;
+  const parsedLanguage = Number(language);
+
   const [chosenEntry, setChosenEntry] = useState<DictionaryEntryType | null>(
     null,
   );
@@ -47,16 +53,16 @@ const DictionaryEntriesPage = () => {
     reorderEntries,
     isLoading: isLoadingEntries,
     error: errorEntries,
-  } = useDictionaryEntries(
-    groupId ? parseInt(groupId) : undefined,
-    parseInt(language),
-  );
+  } = useDictionaryEntries(resolvedGroupId, parsedLanguage);
 
   const {
     groups,
     isLoading: isLoadingGroups,
     error: errorGroups,
-  } = useDictionaryGroups(parseInt(language));
+  } = useDictionaryGroups(parsedLanguage);
+
+  const groupTitle = group?.name || t("allEntries");
+  const showAddEntry = resolvedGroupId !== undefined;
 
   if (isLoadingEntries || isLoadingGroups) return <Loading />;
   if (errorEntries || errorGroups)
@@ -67,9 +73,9 @@ const DictionaryEntriesPage = () => {
       <div className="flex w-full flex-col items-center">
         <AddSearchPanel
           title={t("dictionary.entries")}
-          groupName={group ? group!.name : t("allEntries")}
+          groupName={groupTitle}
           navigateToUrl="/dictionary"
-          onAddClick={openModalEntriesAdd}
+          onAddClick={showAddEntry ? openModalEntriesAdd : undefined}
           onSearchChange={setSearchValue}
         />
         <div className="mt-base space-x-base">
