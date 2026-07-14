@@ -61,9 +61,7 @@ const ModalChangeGroup = ({
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
 
-  const options: SelectOptionType[] = [
-    { value: "", text: t("cards.allEntries") },
-  ];
+  const options: SelectOptionType[] = [{ value: "", text: t("allEntries") }];
 
   groups?.forEach((group) => {
     options.push({ value: group.id, text: group.name });

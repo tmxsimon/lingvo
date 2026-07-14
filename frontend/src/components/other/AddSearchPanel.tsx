@@ -9,7 +9,7 @@ type AddSearchPanelProps = {
   title?: string;
   groupName?: string;
   navigateToUrl?: string;
-  onAddClick: () => void;
+  onAddClick?: () => void;
   onSearchChange: (value: string) => void;
 };
 
@@ -37,11 +37,13 @@ const AddSearchPanel = ({
         />
       )}
       <div className="gap-base mt-base-sm flex w-full items-center justify-center">
-        <IconButton
-          icon={<Icon name="plus" />}
-          size="medium"
-          onClick={onAddClick}
-        />
+        {onAddClick && (
+          <IconButton
+            icon={<Icon name="plus" />}
+            size="medium"
+            onClick={onAddClick}
+          />
+        )}
         <Input
           placeholder={t("search")}
           autoWidth={false}

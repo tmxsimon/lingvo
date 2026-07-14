@@ -17,6 +17,13 @@ export const fetchGroups = async (language: number) => {
   return result.data;
 };
 
+export const fetchAllNotes = async (language: number) => {
+  const result = await api.get<NoteType[]>(`${PATH}/`, {
+    params: { language },
+  });
+  return { group: null, notes: result.data };
+};
+
 export const fetchGroupAndNotes = async (id: number) => {
   const result = await api.get<{
     group: NotesGroupType;

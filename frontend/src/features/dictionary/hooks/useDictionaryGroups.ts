@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
 import { fetchGroups } from "../services";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const PATH = "/dictionary";
 
@@ -19,11 +19,13 @@ export function useDictionaryGroups(language: number) {
     queryFn: () => fetchGroups(language),
   });
 
-  const searchGroups = searchValue
-    ? groups?.filter((group) =>
-        group.name.toLowerCase().includes(searchValue.toLowerCase()),
-      )
-    : groups;
+  const searchGroups = useMemo(() => {
+    return searchValue
+      ? groups?.filter((group) =>
+          group.name.toLowerCase().includes(searchValue.toLowerCase()),
+        )
+      : groups;
+  }, [searchValue, groups]);
 
   const addGroup = useMutation({
     mutationFn: ({ name }: { name: string }) =>
@@ -55,6 +57,9 @@ export function useDictionaryGroups(language: number) {
   const reorderGroups = useMutation({
     mutationFn: (orderedIds: number[]) =>
       api.put(`${PATH}/groups/reorder`, orderedIds),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["groups"] });
+    },
   });
 
   return {

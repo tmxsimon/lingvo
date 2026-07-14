@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 from src.dependencies import SessionDep
 from .service import (
     get_note_db,
+    get_notes_db,
     get_notes_by_group_db,
     create_note_db,
     delete_note_db,
@@ -31,6 +32,16 @@ async def get_note(group_id: int, note_id: int, session = SessionDep):
             detail="Note not found"
         )
     return note
+
+@router.get("/")
+async def get_notes(language: int, session = SessionDep):
+    notes = get_notes_db(session, language=language)
+    if notes is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No notes found"
+        )
+    return notes
 
 @router.get("/groups/{group_id}/notes")
 async def get_notes_by_group(group_id: int, language: int, session = SessionDep):

@@ -6,6 +6,7 @@
     "delete": "Delete",
     "close": "Close",
 
+    "allEntries": "All entries",
     "group": "Group",
     "groups": "Groups",
     "search": "Search",
@@ -54,7 +55,6 @@
 
     "cards": {
       "cards": "Cards",
-      "allEntries": "All entries",
       "increase": "Increase",
       "decrease": "Decrease",
       "next": "Next",
@@ -70,6 +70,7 @@
 
     "notes": {
       "notes": "Notes",
+      "allNotes": "All notes",
       "addGroup": "Add group",
       "editGroup": "Edit group",
       "addNote": "Add note",

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
@@ -12,7 +12,7 @@ import Title from "../../../../components/Title";
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
   groups: DictionaryGroupType[];
-  group: DictionaryGroupType;
+  group: DictionaryGroupType | null;
   isOpen: boolean;
   closeModal: () => void;
   editEntry: (
@@ -46,23 +46,28 @@ const ModalEditEntry = ({
     validate,
   } = useModalEntry();
   const [currentGroupOption, setCurrentGroupOption] =
-    useState<SelectOptionType>({ value: group.id, text: group.name });
+    useState<SelectOptionType>({
+      value: groups.find((g) => g.id === entry?.group_id)?.id,
+      text: groups.find((g) => g.id === entry?.group_id)?.name,
+    });
 
   useEffect(() => {
     setContent(entry?.content || "");
     setTranslation(entry?.translation || "");
     setNote(entry?.note || "");
     setCurrentGroupOption({
-      value: entry?.group_id || group.id,
+      value: entry?.group_id || group?.id,
       text: groups.find((g) => g.id === entry?.group_id)?.name || "",
     });
-  }, [entry]);
+  }, [entry, groups, group, setContent, setTranslation, setNote]);
 
-  const options: SelectOptionType[] = [];
-
-  groups?.forEach((group) => {
-    options.push({ value: group.id, text: group.name });
-  });
+  const options: SelectOptionType[] = useMemo(() => {
+    const opts: SelectOptionType[] = [];
+    groups?.forEach((group) => {
+      opts.push({ value: group.id, text: group.name });
+    });
+    return opts;
+  }, [groups]);
 
   return (
     <Modal

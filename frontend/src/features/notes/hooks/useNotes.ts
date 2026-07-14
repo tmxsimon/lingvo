@@ -1,11 +1,12 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
-import { fetchGroupAndNotes } from "../services";
-import { useState } from "react";
+import { fetchAllNotes, fetchGroupAndNotes } from "../services";
+import { useMemo, useState } from "react";
+import type { NoteType, NotesGroupType } from "../types";
 
 const PATH = "/notes";
 
-export function useNotes(groupId: number) {
+export function useNotes(groupId?: number, language?: number) {
   const queryClient = useQueryClient();
 
   const [searchValue, setSearchValue] = useState<string>("");
@@ -14,16 +15,25 @@ export function useNotes(groupId: number) {
     data: { group, notes } = { group: null, notes: [] },
     isLoading,
     error,
-  } = useQuery({
-    queryKey: ["notes", groupId],
-    queryFn: () => fetchGroupAndNotes(groupId),
+  } = useQuery<{
+    group: NotesGroupType | null;
+    notes: NoteType[];
+  }>({
+    queryKey: ["notes", groupId, language],
+    queryFn: () =>
+      groupId !== undefined
+        ? fetchGroupAndNotes(groupId)
+        : fetchAllNotes(language!),
+    enabled: groupId !== undefined || language !== undefined,
   });
 
-  const searchNotes = searchValue
-    ? notes?.filter((note) =>
-        note.name.toLowerCase().includes(searchValue.toLowerCase()),
-      )
-    : notes;
+  const searchNotes = useMemo(() => {
+    return searchValue
+      ? notes?.filter((note) =>
+          note.name.toLowerCase().includes(searchValue.toLowerCase()),
+        )
+      : notes;
+  }, [searchValue, notes]);
 
   const addNote = useMutation({
     mutationFn: ({ name }: { name: string }) =>
@@ -72,6 +82,9 @@ export function useNotes(groupId: number) {
   const reorderNotes = useMutation({
     mutationFn: (orderedIds: number[]) =>
       api.put(`${PATH}/notes/reorder`, orderedIds),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+    },
   });
 
   return {

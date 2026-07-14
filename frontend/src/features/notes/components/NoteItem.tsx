@@ -14,7 +14,7 @@ const NoteItem = ({ note, onClickSettings }: NoteItemProps) => {
       <button className="cursor-pointer" onClick={onClickSettings}>
         <Icon name="settings" className="size-8" />
       </button>
-      <Link to={`${note.id}`}>
+      <Link to={`/notes/${note.group_id}/${note.id}`}>
         <Icon name="arrowRight" className="size-8" />
       </Link>
     </>

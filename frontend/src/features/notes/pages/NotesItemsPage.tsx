@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Tooltip } from "react-tooltip";
-import Button from "../../../components/Button";
 import useModal from "../../../hooks/useModal";
 import NoteItem from "../components/NoteItem";
-import Icon from "../../../components/Icon";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
@@ -14,13 +12,10 @@ import { useNotes } from "../hooks/useNotes";
 import ModalAddNote from "../components/modals/ModalAddNote";
 import ModalEditNote from "../components/modals/ModalEditNote";
 import { useNotesGroups } from "../hooks/useNotesGroups";
-import Input from "../../../components/Input";
-import IconButton from "../../../components/IconButton";
 import AddSearchPanel from "../../../components/other/AddSearchPanel";
 
 const NotesItemsPage = () => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const { groupId } = useParams();
 
   const {
@@ -36,6 +31,12 @@ const NotesItemsPage = () => {
 
   const { language } = useLanguageContext();
 
+  const parsedGroupId = Number(groupId);
+  const resolvedGroupId = Number.isNaN(parsedGroupId)
+    ? undefined
+    : parsedGroupId;
+  const parsedLanguage = Number(language);
+
   const [chosenNote, setChosenNote] = useState<NoteType | null>(null);
 
   const {
@@ -48,21 +49,16 @@ const NotesItemsPage = () => {
     reorderNotes,
     isLoading: isLoadingnotes,
     error: errornotes,
-  } = useNotes(parseInt(groupId!));
-
-  const [notes, setNotes] = useState(notesFetched || []);
-
-  useEffect(() => {
-    if (notesFetched) {
-      setNotes(notesFetched);
-    }
-  }, [notesFetched]);
+  } = useNotes(resolvedGroupId, parsedLanguage);
 
   const {
     groups,
     isLoading: isLoadingGroups,
     error: errorGroups,
-  } = useNotesGroups(parseInt(language));
+  } = useNotesGroups(parsedLanguage);
+
+  const groupTitle = group?.name || t("notes.allNotes");
+  const showAddNote = resolvedGroupId !== undefined;
 
   if (isLoadingnotes || isLoadingGroups) return <Loading />;
   if (errornotes || errorGroups)
@@ -70,29 +66,28 @@ const NotesItemsPage = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="flex w-full flex-col items-center">
         <AddSearchPanel
           title={t("notes.notes")}
-          groupName={group!.name}
-          navigateToUrl="/notes"
-          onAddClick={openModalNotesAdd}
+          groupName={groupTitle}
+          navigateToUrl={"/notes"}
+          onAddClick={showAddNote ? openModalNotesAdd : undefined}
           onSearchChange={setSearchValue}
         />
         <Reorder.Group
           axis="y"
-          values={notes}
+          values={notesFetched || []}
           onReorder={(newNotes) => {
             newNotes.forEach((note, index) => {
               note.position = newNotes.length - index;
             });
-            setNotes(newNotes);
             const orderedIds = newNotes.map((e) => e.id);
 
             reorderNotes.mutate(orderedIds);
           }}
-          className="gap-base-sm mt-base flex flex-col items-center"
+          className="gap-base-sm mt-base flex w-full flex-col items-center"
         >
-          {notes?.map((note) => (
+          {(notesFetched || [])?.map((note) => (
             <NoteItem
               key={note.id}
               note={note}
@@ -112,7 +107,7 @@ const NotesItemsPage = () => {
         />
         <ModalEditNote
           groups={groups!}
-          group={group!}
+          group={group}
           note={chosenNote!}
           isOpen={isOpenNotesEdit}
           closeModal={closeModalNotesEdit}

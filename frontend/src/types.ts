@@ -1,6 +1,6 @@
 export type SelectOptionType = {
-  value: string | number | readonly string[] | undefined;
-  text: string;
+  value?: string | number | readonly string[];
+  text?: string;
 };
 
 export type ThemeContextType = {

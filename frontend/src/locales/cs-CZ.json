@@ -6,6 +6,7 @@
     "delete": "Smazat",
     "close": "Zavřít",
 
+    "allEntries": "Všechny záznamy",
     "group": "Skupina",
     "groups": "Skupiny",
     "search": "Vyhledávání",
@@ -54,7 +55,6 @@
 
     "cards": {
       "cards": "Kartičky",
-      "allEntries": "Všechny záznamy",
       "increase": "Zvýšit",
       "decrease": "Snížit",
       "next": "Další",
@@ -70,6 +70,7 @@
 
     "notes": {
       "notes": "Poznámky",
+      "allNotes": "Všechny poznámky",
       "addGroup": "Přidat skupinu",
       "editGroup": "Upravit skupinu",
       "addNote": "Přidat poznámku",

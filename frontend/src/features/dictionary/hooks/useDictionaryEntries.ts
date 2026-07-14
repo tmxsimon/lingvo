@@ -1,11 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
-import { fetchGroupAndEntries } from "../services";
-import { useState } from "react";
+import { fetchGroupAndEntries, fetchEntries } from "../services";
+import { useState, useMemo } from "react";
+import type { DictionaryEntryType, DictionaryGroupType } from "../types";
 
 const PATH = "/dictionary";
 
-export function useDictionaryEntries(groupId: number) {
+export function useDictionaryEntries(
+  groupId: number | undefined,
+  language?: number,
+) {
   const queryClient = useQueryClient();
 
   const [searchValue, setSearchValue] = useState<string>("");
@@ -14,20 +18,32 @@ export function useDictionaryEntries(groupId: number) {
     data: { group, entries } = { group: null, entries: [] },
     isLoading,
     error,
-  } = useQuery({
-    queryKey: ["entries", groupId],
-    queryFn: () => fetchGroupAndEntries(groupId),
+  } = useQuery<{
+    group: DictionaryGroupType | null;
+    entries: DictionaryEntryType[];
+  }>({
+    queryKey: ["entries", groupId, language],
+    queryFn: () =>
+      groupId !== undefined
+        ? fetchGroupAndEntries(groupId)
+        : fetchEntries(language!).then((entries) => ({
+            group: null,
+            entries,
+          })),
+    enabled: groupId !== undefined || language !== undefined,
   });
 
-  const searchEntries = searchValue
-    ? entries?.filter(
-        (entry) =>
-          entry.content.toLowerCase().includes(searchValue.toLowerCase()) ||
-          entry.translation.toLowerCase().includes(searchValue.toLowerCase()) ||
-          (entry.note &&
-            entry.note.toLowerCase().includes(searchValue.toLowerCase())),
-      )
-    : entries;
+  const searchEntries = useMemo(() => {
+    return searchValue
+      ? entries?.filter(
+          (entry) =>
+            entry.content.toLowerCase().includes(searchValue.toLowerCase()) ||
+            entry.translation.toLowerCase().includes(searchValue.toLowerCase()) ||
+            (entry.note &&
+              entry.note.toLowerCase().includes(searchValue.toLowerCase())),
+        )
+      : entries;
+  }, [searchValue, entries]);
 
   const addEntry = useMutation({
     mutationFn: ({
@@ -89,6 +105,9 @@ export function useDictionaryEntries(groupId: number) {
   const reorderEntries = useMutation({
     mutationFn: (orderedIds: number[]) =>
       api.put(`${PATH}/entries/reorder`, orderedIds),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["entries"] });
+    },
   });
 
   return {

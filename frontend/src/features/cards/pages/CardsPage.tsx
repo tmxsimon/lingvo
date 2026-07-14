@@ -76,7 +76,7 @@ const CardsPage = () => {
           style="text"
           theme="neutral"
           size="large"
-          text={group?.name || t("cards.allEntries")}
+          text={group?.name || t("allEntries")}
           iconBack={<Icon name="settings" className="size-4" />}
           onClick={openModalSettings}
         />

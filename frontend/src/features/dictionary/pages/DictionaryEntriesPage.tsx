@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Tooltip } from "react-tooltip";
 import useModal from "../../../hooks/useModal";
 import DictionaryEntry from "../components/DictionaryEntry";
@@ -47,7 +47,10 @@ const DictionaryEntriesPage = () => {
     reorderEntries,
     isLoading: isLoadingEntries,
     error: errorEntries,
-  } = useDictionaryEntries(parseInt(groupId!));
+  } = useDictionaryEntries(
+    groupId ? parseInt(groupId) : undefined,
+    parseInt(language),
+  );
 
   const {
     groups,
@@ -55,22 +58,16 @@ const DictionaryEntriesPage = () => {
     error: errorGroups,
   } = useDictionaryGroups(parseInt(language));
 
-  const [entries, setEntries] = useState(entriesFetched || []);
-
-  useEffect(() => {
-    setEntries(entriesFetched || []);
-  }, [entriesFetched]);
-
   if (isLoadingEntries || isLoadingGroups) return <Loading />;
   if (errorEntries || errorGroups)
     return <div>{errorEntries?.message || errorGroups?.message}</div>;
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="flex w-full flex-col items-center">
         <AddSearchPanel
           title={t("dictionary.entries")}
-          groupName={group!.name}
+          groupName={group ? group!.name : t("allEntries")}
           navigateToUrl="/dictionary"
           onAddClick={openModalEntriesAdd}
           onSearchChange={setSearchValue}
@@ -80,30 +77,29 @@ const DictionaryEntriesPage = () => {
             text={t("flippers.flippers")}
             style="tertiary"
             size="small"
-            onClick={() => navigate(`/flippers/${groupId}`)}
+            onClick={() => navigate(`/flippers${group ? `/${groupId}` : ""}`)}
           />
           <Button
             text={t("cards.cards")}
             style="tertiary"
             size="small"
-            onClick={() => navigate(`/cards/${groupId}`)}
+            onClick={() => navigate(`/cards${group ? `/${groupId}` : ""}`)}
           />
         </div>
         <Reorder.Group
           axis="y"
-          values={entries}
+          values={entriesFetched || []}
           onReorder={(newEntries) => {
             newEntries.forEach((entry, index) => {
               entry.position = newEntries.length - index;
             });
             const orderedIds = newEntries.map((e) => e.id);
-            setEntries(newEntries);
 
             reorderEntries.mutate(orderedIds);
           }}
-          className="gap-base-sm mt-base flex flex-col items-center"
+          className="gap-base-sm mt-base flex w-full flex-col items-center"
         >
-          {entries?.map((entry) => (
+          {(entriesFetched || [])?.map((entry) => (
             <DictionaryEntry
               key={entry.id}
               entry={entry}
@@ -125,9 +121,10 @@ const DictionaryEntriesPage = () => {
             addEntry.mutate({ content, translation, note })
           }
         />
+        {/* {group && ( */}
         <ModalEditEntry
           groups={groups!}
-          group={group!}
+          group={group}
           entry={chosenEntry!}
           isOpen={isOpenEntriesEdit}
           closeModal={closeModalEntriesEdit}
@@ -140,6 +137,7 @@ const DictionaryEntriesPage = () => {
           ) => editEntry.mutate({ id, groupId, content, translation, note })}
           deleteEntry={() => deleteEntry.mutate(chosenEntry!.id)}
         />
+        {/* )} */}
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useModal from "../../../hooks/useModal";
 import { useDictionaryGroups } from "../hooks/useDictionaryGroups";
 import DictionaryGroup from "../components/DictionaryGroup";
@@ -10,9 +10,12 @@ import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
 import AddSearchPanel from "../../../components/other/AddSearchPanel";
+import Button from "../../../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const DictionaryGroupsPage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const { language } = useLanguageContext();
 
@@ -42,39 +45,40 @@ const DictionaryGroupsPage = () => {
     error,
   } = useDictionaryGroups(parseInt(language));
 
-  const [groups, setGroups] = useState(groupsFetched || []);
-
-  useEffect(() => {
-    setGroups(groupsFetched || []);
-  }, [groupsFetched]);
-
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
 
   return (
     <>
-      <div>
+      <div className="flex w-full flex-col items-center">
         <AddSearchPanel
           title={t("groups")}
           onAddClick={openModalGroupsAdd}
           onSearchChange={setSearchValue}
         />
+        <div className="mt-base">
+          <Button
+            text={t("allEntries")}
+            style="tertiary"
+            size="small"
+            onClick={() => navigate("entries")}
+          />
+        </div>
         <Reorder.Group
           axis="y"
-          values={groups}
+          values={groupsFetched || []}
           onReorder={(newGroups) => {
             newGroups.forEach((group, index) => {
               group.position = newGroups.length - index;
             });
-            setGroups(newGroups);
 
             const orderedIds = newGroups.map((g) => g.id);
 
             reorderGroups.mutate(orderedIds);
           }}
-          className="gap-base-sm mt-base flex flex-col items-center"
+          className="gap-base-sm mt-base flex w-full flex-col items-center"
         >
-          {groups.map((group) => (
+          {(groupsFetched || []).map((group) => (
             <DictionaryGroup
               key={group.id}
               group={group}

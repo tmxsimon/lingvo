@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
@@ -12,7 +12,7 @@ import Title from "../../../../components/Title";
 type ModalEditnoteProps = {
   note: NoteType | null;
   groups: NotesGroupType[];
-  group: NotesGroupType;
+  group: NotesGroupType | null;
   isOpen: boolean;
   closeModal: () => void;
   editNote: (id: number, name: string, groupId: number) => void;
@@ -32,21 +32,26 @@ const ModalEditnote = ({
 
   const { name, setName, validate } = useModalnote();
   const [currentGroupOption, setCurrentGroupOption] =
-    useState<SelectOptionType>({ value: group.id, text: group.name });
+    useState<SelectOptionType>({
+      value: groups.find((g) => g.id === note?.group_id)?.id,
+      text: groups.find((g) => g.id === note?.group_id)?.name,
+    });
 
   useEffect(() => {
     setName(note?.name || "");
     setCurrentGroupOption({
-      value: note?.group_id || group.id,
+      value: note?.group_id || group?.id,
       text: groups.find((g) => g.id === note?.group_id)?.name || "",
     });
-  }, [note]);
+  }, [note, groups, group, setName]);
 
-  const options: SelectOptionType[] = [];
-
-  groups?.forEach((group) => {
-    options.push({ value: group.id, text: group.name });
-  });
+  const options: SelectOptionType[] = useMemo(() => {
+    const opts: SelectOptionType[] = [];
+    groups?.forEach((group) => {
+      opts.push({ value: group.id, text: group.name });
+    });
+    return opts;
+  }, [groups]);
 
   return (
     <Modal

@@ -33,7 +33,7 @@ const FlippersPage = () => {
           style="text"
           theme="neutral"
           size="large"
-          text={group?.name || t("cards.allEntries")}
+          text={group?.name || t("allEntries")}
           iconBack={<Icon name="change" className="size-4" />}
           onClick={openModal}
         />

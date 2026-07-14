@@ -32,12 +32,14 @@ const App = () => {
           </Route>
           <Route path="/dictionary" element={<ProtectedRoute />}>
             <Route index element={<DictionaryGroupsPage />} />
+            <Route path="entries" element={<DictionaryEntriesPage />} />
             <Route path=":groupId" element={<DictionaryEntriesPage />} />
           </Route>
           <Route path="/notes" element={<ProtectedRoute />}>
             <Route index element={<NotesGroupsPage />} />
             <Route path=":groupId">
               <Route index element={<NotesItemsPage />} />\
+              <Route path="notes" element={<NotesItemsPage />} />
               <Route path=":noteId" element={<NotePage />} />
             </Route>
           </Route>
