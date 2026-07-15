@@ -39,7 +39,8 @@ const ProfilePage = () => {
               theme="brand"
               style="text"
               size="auto"
-              text="Edit user"
+              text={t("users.editUser")}
+              iconBack={<Icon name="change" className="size-4" />}
               onClick={openModal}
             />
           </div>

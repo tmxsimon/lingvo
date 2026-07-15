@@ -47,7 +47,7 @@ const ModalEditUser = ({
     <Modal
       open={isOpen}
       closeModal={closeModal}
-      title={t("dictionary.editEntry")}
+      title={t("users.editUser")}
       content={[
         <div>
           <Title text={t("users.username")} />

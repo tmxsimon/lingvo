@@ -25,6 +25,7 @@
       "password": "Password",
       "profilePicture": "Profile picture",
       "profile": "Profile",
+      "editUser": "Edit user",
 
       "validation": {
         "signInIncorrect": "Incorrect username or password",

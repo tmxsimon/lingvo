@@ -25,6 +25,7 @@
       "password": "Heslo",
       "profilePicture": "Profilovka",
       "profile": "Profil",
+      "editUser": "Upravit uživatele",
 
       "validation": {
         "signInIncorrect": "Nesprávné jméno nebo heslo",

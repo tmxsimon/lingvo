@@ -25,6 +25,7 @@
       "password": "Пароль",
       "profilePicture": "Фото профиля",
       "profile": "Профиль",
+      "editUser": "Редактировать пользователя",
 
       "validation": {
         "signInIncorrect": "Неверное имя или пароль",
