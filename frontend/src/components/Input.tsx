@@ -1,17 +1,11 @@
 import type React from "react";
-import { buttonHeightMap } from "../utils/buttonMaps";
+import { inputSizeMap } from "../utils/inputMaps";
 
 type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> & {
   placeholder?: string;
   size?: "small" | "medium" | "large" | "auto";
   autoWidth?: boolean;
   className?: string;
-};
-
-const sizeMap: Record<string, string> = {
-  small: `px-base-sm text-sm ${buttonHeightMap["small"]}`,
-  medium: `px-base text-md ${buttonHeightMap["medium"]}`,
-  large: `px-base-lg text-lg ${buttonHeightMap["large"]}`,
 };
 
 const Input = ({
@@ -21,7 +15,7 @@ const Input = ({
   className = "",
   ...inputProps
 }: InputProps) => {
-  className += ` ${sizeMap[size]}`;
+  className += ` ${inputSizeMap[size]}`;
 
   return (
     <input

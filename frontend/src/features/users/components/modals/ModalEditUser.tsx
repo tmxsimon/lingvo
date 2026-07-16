@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import Title from "../../../../components/Title";
 import type { UserType } from "../../types";
 import useModalUser from "../../hooks/useModalUser";
+import FilePicker from "../../../../components/FilePicker";
 
 type ModalEditUserProps = {
   user: UserType | null;
@@ -76,16 +77,15 @@ const ModalEditUser = ({
         </div>,
         <div>
           <Title text={t("users.profilePicture")} />
-          <Input
-            minLength={1}
-            type="file"
+          <FilePicker
+            id="profile-picture"
+            label={t("chooseImage")}
             accept="image/*"
             required
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               const file = e.target.files?.[0] || null;
               setImage(file);
             }}
-            className="cursor-pointer"
           />
         </div>,
       ]}

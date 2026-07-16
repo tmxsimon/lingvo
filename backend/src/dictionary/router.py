@@ -30,6 +30,8 @@ async def get_entries(language: int, session = SessionDep):
             status_code=status.HTTP_404_NOT_FOUND,
             detail="No entries found"
         )
+    
+    print(f"Entries: {len(entries)}")
     return entries
 
 @router.get("/groups/{group_id}/entries")

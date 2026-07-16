@@ -6,6 +6,7 @@ import type { LanguageType } from "../../types";
 import { useTranslation } from "react-i18next";
 import useModalLanguage from "../../hooks/useModalLanguage";
 import Title from "../../../../components/Title";
+import FilePicker from "../../../../components/FilePicker";
 
 type ModalEditLanguageProps = {
   language: LanguageType | null;
@@ -50,16 +51,15 @@ const ModalEditLanguage = ({
         </div>,
         <div>
           <Title text={t("languages.image")} />
-          <Input
-            minLength={1}
-            type="file"
+          <FilePicker
+            id="language-image"
+            label={t("chooseImage")}
             accept="image/*"
             required
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               const file = e.target.files?.[0] || null;
               setImage(file);
             }}
-            className="cursor-pointer"
           />
         </div>,
       ]}
