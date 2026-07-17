@@ -25,6 +25,7 @@
       "signOut": "Sign Out",
       "username": "Username",
       "password": "Password",
+      "newPassword": "New password",
       "profilePicture": "Profile picture",
       "profile": "Profile",
       "editUser": "Edit user",

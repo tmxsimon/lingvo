@@ -25,6 +25,7 @@
       "signOut": "Выйти",
       "username": "Имя",
       "password": "Пароль",
+      "newPassword": "Новый пароль",
       "profilePicture": "Фото профиля",
       "profile": "Профиль",
       "editUser": "Редактировать пользователя",

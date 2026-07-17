@@ -63,7 +63,7 @@ const ModalEditUser = ({
           />
         </div>,
         <div>
-          <Title text={t("users.password")} />
+          <Title text={t("users.newPassword")} />
           <Input
             type="password"
             value={password}
