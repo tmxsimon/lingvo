@@ -11,20 +11,30 @@ def get_note_db(session: Session, group_id: int, note_id: int):
         .where(Note.id == note_id)
     ).first()
 
-def get_notes_db(session: Session, language: int):
+def get_notes_db(session: Session, language: int, limit: int = 50, offset: int = 0):
     return session.exec(
         select(Note)
         .join(NotesGroup)
         .where(NotesGroup.language_id == language)
         .order_by(Note.position.desc())
+        .limit(limit)
+        .offset(offset)
     ).all()
 
-def get_notes_by_group_db(session: Session, group_id: int):
-    return session.exec(
-        select(Note)
-        .where(Note.group_id == group_id)
-        .order_by(Note.position.desc())
+def get_notes_by_group_db(session: Session, language: int, group_id: int | None = None, limit: int = 50, offset: int = 0):
+    if group_id is None:
+        notes = get_notes_db(session, language=language, limit=limit, offset=offset)
+    else:
+        notes = session.exec(
+            select(Note)
+            .join(NotesGroup)
+            .where(NotesGroup.language_id == language, Note.group_id == group_id)
+            .order_by(Note.position.desc())
+            .limit(limit)
+            .offset(offset)
         ).all() 
+        
+    return notes
 
 def create_note_db(
     session: Session,
@@ -111,11 +121,13 @@ def get_group_db(session: Session, id: int):
 
     return group
 
-def get_groups_db(session: Session, language: int):
+def get_groups_db(session: Session, language: int, limit: int = 50, offset: int = 0):
     return session.exec(
         select(NotesGroup)
         .where(NotesGroup.language_id == language)
         .order_by(NotesGroup.position.desc())
+        .limit(limit)
+        .offset(offset)
     ).all()
 
 def create_group_db(

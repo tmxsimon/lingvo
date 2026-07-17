@@ -1,44 +1,68 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 import api from "../../../lib/api";
-import { fetchGroupAndEntries, fetchEntries } from "../services";
-import { useState, useMemo } from "react";
-import type { DictionaryEntryType, DictionaryGroupType } from "../types";
+import { fetchGroupAndEntries } from "../services";
+import { useState, useMemo, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+import { FETCH_LIMIT } from "../../../constants/fetchLimit";
 
 const PATH = "/dictionary";
 
 export function useDictionaryEntries(
   groupId: number | undefined,
-  language?: number,
+  language: number,
 ) {
   const queryClient = useQueryClient();
 
   const [searchValue, setSearchValue] = useState<string>("");
 
   const {
-    data: { group, entries } = { group: null, entries: [] },
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isLoading,
     error,
-  } = useQuery<{
-    group: DictionaryGroupType | null;
-    entries: DictionaryEntryType[];
-  }>({
+  } = useInfiniteQuery({
     queryKey: ["entries", groupId, language],
-    queryFn: () =>
-      groupId !== undefined
-        ? fetchGroupAndEntries(groupId)
-        : fetchEntries(language!).then((entries) => ({
-            group: null,
-            entries,
-          })),
-    enabled: groupId !== undefined || language !== undefined,
+    initialPageParam: 0,
+    queryFn: ({ pageParam }) =>
+      fetchGroupAndEntries(language, groupId, FETCH_LIMIT, pageParam).then(
+        (data) => ({
+          group: data.group,
+          entries: data.entries,
+        }),
+      ),
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.entries.length < FETCH_LIMIT) {
+        return undefined;
+      }
+
+      return allPages.length * FETCH_LIMIT;
+    },
   });
+
+  const entries = data?.pages.flatMap((page) => page.entries) ?? [];
+  const group = data?.pages[0]?.group ?? null;
+
+  const { ref, inView } = useInView();
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage]);
 
   const searchEntries = useMemo(() => {
     return searchValue
       ? entries?.filter(
           (entry) =>
             entry.content.toLowerCase().includes(searchValue.toLowerCase()) ||
-            entry.translation.toLowerCase().includes(searchValue.toLowerCase()) ||
+            entry.translation
+              .toLowerCase()
+              .includes(searchValue.toLowerCase()) ||
             (entry.note &&
               entry.note.toLowerCase().includes(searchValue.toLowerCase())),
         )
@@ -114,6 +138,8 @@ export function useDictionaryEntries(
     group,
     entries: searchEntries,
     setSearchValue,
+    ref,
+    isFetchingNextPage,
     isLoading,
     error,
     addEntry,

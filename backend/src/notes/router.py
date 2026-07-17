@@ -33,25 +33,27 @@ async def get_note(group_id: int, note_id: int, session = SessionDep):
         )
     return note
 
-@router.get("/")
-async def get_notes(language: int, session = SessionDep):
-    notes = get_notes_db(session, language=language)
-    if notes is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="No notes found"
-        )
-    return notes
+# @router.get("/")
+# async def get_notes(language: int, session = SessionDep):
+#     notes = get_notes_db(session, language=language)
+#     if notes is None:
+#         raise HTTPException(
+#             status_code=status.HTTP_404_NOT_FOUND,
+#             detail="No notes found"
+#         )
+#     return notes
 
-@router.get("/groups/{group_id}/notes")
-async def get_notes_by_group(group_id: int, language: int, session = SessionDep):
-    notes = get_notes_by_group_db(session, group_id=group_id, language=language)
+@router.get("/")
+async def get_notes_by_group(language: int,  limit: int = 50, offset: int = 0, group_id: int | None = None, session = SessionDep):
+    notes = get_notes_by_group_db(session, group_id=group_id, language=language, limit=limit, offset=offset)
     if notes is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="No notes found"
         )
-    return notes
+    group = get_group_db(session=session, id=group_id)
+
+    return { "notes": notes, "group": group }
 
 @router.post("/notes")
 async def create_note(
@@ -114,8 +116,8 @@ async def update_note(
 # groups
 
 @router.get("/groups")
-async def get_groups(language: int, session = SessionDep):
-    groups = get_groups_db(session, language=language)
+async def get_groups(language: int, limit: int = 50, offset: int = 0, session = SessionDep):
+    groups = get_groups_db(session, language=language, limit=limit, offset=offset)
     if groups is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

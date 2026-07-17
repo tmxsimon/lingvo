@@ -10,25 +10,29 @@ export const fetchNote = async (groupId: number, noteId: number) => {
   return result.data;
 };
 
-export const fetchGroups = async (language: number) => {
-  const result = await api.get<NotesGroupType[]>(`${PATH}/groups`, {
-    params: { language },
+export const fetchGroups = async (
+  language: number,
+  limit: number = 50,
+  offset: number = 0,
+) => {
+  const result = await api.get(`${PATH}/groups`, {
+    params: { language, limit, offset },
   });
   return result.data;
 };
 
-export const fetchAllNotes = async (language: number) => {
-  const result = await api.get<NoteType[]>(`${PATH}/`, {
-    params: { language },
-  });
-  return { group: null, notes: result.data };
-};
-
-export const fetchGroupAndNotes = async (id: number) => {
+export const fetchGroupAndNotes = async (
+  language: number,
+  groupId?: number,
+  limit: number = 50,
+  offset: number = 0,
+) => {
   const result = await api.get<{
     group: NotesGroupType;
     notes: NoteType[];
-  }>(`${PATH}/groups/${id}`);
+  }>(`${PATH}/`, {
+    params: { language, limit, offset, group_id: groupId },
+  });
 
   return result.data;
 };

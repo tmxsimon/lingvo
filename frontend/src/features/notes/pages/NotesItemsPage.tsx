@@ -32,9 +32,7 @@ const NotesItemsPage = () => {
   const { language } = useLanguageContext();
 
   const parsedGroupId = Number(groupId);
-  const resolvedGroupId = Number.isNaN(parsedGroupId)
-    ? undefined
-    : parsedGroupId;
+  const resolvedGroupId = Number.isNaN(parsedGroupId) ? null : parsedGroupId;
   const parsedLanguage = Number(language);
 
   const [chosenNote, setChosenNote] = useState<NoteType | null>(null);
@@ -47,9 +45,11 @@ const NotesItemsPage = () => {
     editNote,
     deleteNote,
     reorderNotes,
+    ref,
+    isFetchingNextPage,
     isLoading: isLoadingnotes,
     error: errornotes,
-  } = useNotes(resolvedGroupId, parsedLanguage);
+  } = useNotes(resolvedGroupId!, parsedLanguage);
 
   const {
     groups,
@@ -97,7 +97,10 @@ const NotesItemsPage = () => {
               }}
             />
           ))}
+          <div ref={ref} />
+          {isFetchingNextPage && <Loading />}
         </Reorder.Group>
+
         <Tooltip id="note-tooltip" className="z-50 max-w-92 break-all" />
         {/* modals */}
         <ModalAddNote

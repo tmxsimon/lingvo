@@ -47,10 +47,12 @@ const DictionaryEntriesPage = () => {
     group,
     entries: entriesFetched,
     setSearchValue,
+    ref,
     addEntry,
     editEntry,
     deleteEntry,
     reorderEntries,
+    isFetchingNextPage,
     isLoading: isLoadingEntries,
     error: errorEntries,
   } = useDictionaryEntries(resolvedGroupId, parsedLanguage);
@@ -65,8 +67,8 @@ const DictionaryEntriesPage = () => {
   const showAddEntry = resolvedGroupId !== undefined;
 
   if (isLoadingEntries || isLoadingGroups) return <Loading />;
-  if (errorEntries || errorGroups)
-    return <div>{errorEntries?.message || errorGroups?.message}</div>;
+  if (errorEntries) return <div>{errorEntries?.message}</div>;
+  if (errorGroups) return <div>{errorGroups?.message}</div>;
 
   return (
     <>
@@ -115,36 +117,36 @@ const DictionaryEntriesPage = () => {
               }}
             />
           ))}
+          <div ref={ref} />
+          {isFetchingNextPage && <Loading />}
         </Reorder.Group>
-
-        <Tooltip id="note-tooltip" className="z-50 max-w-92 break-all" />
-
-        {/* modals */}
-        <ModalAddEntry
-          isOpen={isOpenEntriesAdd}
-          closeModal={closeModalEntriesAdd}
-          addEntry={(content: string, translation: string, note?: string) =>
-            addEntry.mutate({ content, translation, note })
-          }
-        />
-        {/* {group && ( */}
-        <ModalEditEntry
-          groups={groups!}
-          group={group}
-          entry={chosenEntry!}
-          isOpen={isOpenEntriesEdit}
-          closeModal={closeModalEntriesEdit}
-          editEntry={(
-            id: number,
-            groupId: number,
-            content: string,
-            translation: string,
-            note?: string,
-          ) => editEntry.mutate({ id, groupId, content, translation, note })}
-          deleteEntry={() => deleteEntry.mutate(chosenEntry!.id)}
-        />
-        {/* )} */}
       </div>
+
+      <Tooltip id="note-tooltip" className="z-50 max-w-92 break-all" />
+
+      {/* modals */}
+      <ModalAddEntry
+        isOpen={isOpenEntriesAdd}
+        closeModal={closeModalEntriesAdd}
+        addEntry={(content: string, translation: string, note?: string) =>
+          addEntry.mutate({ content, translation, note })
+        }
+      />
+      <ModalEditEntry
+        groups={groups!}
+        group={group}
+        entry={chosenEntry!}
+        isOpen={isOpenEntriesEdit}
+        closeModal={closeModalEntriesEdit}
+        editEntry={(
+          id: number,
+          groupId: number,
+          content: string,
+          translation: string,
+          note?: string,
+        ) => editEntry.mutate({ id, groupId, content, translation, note })}
+        deleteEntry={() => deleteEntry.mutate(chosenEntry!.id)}
+      />
     </>
   );
 };

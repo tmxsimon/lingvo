@@ -1,7 +1,13 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useInfiniteQuery,
+} from "@tanstack/react-query";
 import api from "../../../lib/api";
 import { fetchGroups } from "../services";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { FETCH_LIMIT } from "../../../constants/fetchLimit";
+import { useInView } from "react-intersection-observer";
 
 const PATH = "/notes";
 
@@ -11,13 +17,36 @@ export function useNotesGroups(language: number) {
   const [searchValue, setSearchValue] = useState<string>("");
 
   const {
-    data: groups,
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
     isLoading,
     error,
-  } = useQuery({
+  } = useInfiniteQuery({
     queryKey: ["groups", language],
-    queryFn: () => fetchGroups(language),
+    initialPageParam: 0,
+    queryFn: ({ pageParam }) =>
+      fetchGroups(language, FETCH_LIMIT, pageParam).then((data) => ({
+        groups: data,
+      })),
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.groups.length < FETCH_LIMIT) {
+        return undefined;
+      }
+
+      return allPages.length * FETCH_LIMIT;
+    },
   });
+
+  const groups = data?.pages.flatMap((page) => page.groups) ?? [];
+
+  const { ref, inView } = useInView();
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage]);
 
   const searchGroups = useMemo(() => {
     return searchValue
@@ -64,12 +93,14 @@ export function useNotesGroups(language: number) {
 
   return {
     groups: searchGroups,
-    setSearchValue,
-    isLoading,
-    error,
     addGroup,
     editGroup,
     deleteGroup,
     reorderGroups,
+    setSearchValue,
+    isLoading,
+    error,
+    ref,
+    isFetchingNextPage,
   };
 }

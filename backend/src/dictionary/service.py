@@ -3,20 +3,30 @@ from .models import DictionaryEntry, EntriesGroup
 
 # entries
 
-def get_entries_db(session: Session, language: int):
+def get_entries_db(session: Session, language: int, limit: int = 50, offset: int = 0):
     return session.exec(
         select(DictionaryEntry)
         .join(EntriesGroup)
         .where(EntriesGroup.language_id == language)
         .order_by(DictionaryEntry.position.desc())
+        .limit(limit)
+        .offset(offset)
     ).all()
 
-def get_entries_by_group_db(session: Session, group_id: int):
-    return session.exec(
-        select(DictionaryEntry)
-        .where(DictionaryEntry.group_id == group_id)
-        .order_by(DictionaryEntry.position.desc())
+def get_entries_by_group_db(session: Session, language: int, group_id: int | None = None, limit: int = 50, offset: int = 0):
+    if group_id is None:
+        entries = get_entries_db(session, language=language, limit=limit, offset=offset)
+    else:
+        entries = session.exec(
+            select(DictionaryEntry)
+            .join(EntriesGroup)
+            .where(EntriesGroup.language_id == language, DictionaryEntry.group_id == group_id)
+            .order_by(DictionaryEntry.position.desc())
+            .limit(limit)
+            .offset(offset)
         ).all() 
+        
+    return entries
 
 def create_entry_db(
     session: Session,
@@ -114,11 +124,13 @@ def get_group_db(session: Session, id: int):
 
     return group
 
-def get_groups_db(session: Session, language: int):
+def get_groups_db(session: Session, language: int, limit: int = 50, offset: int = 0):
     return session.exec(
         select(EntriesGroup)
         .where(EntriesGroup.language_id == language)
         .order_by(EntriesGroup.position.desc())
+        .limit(limit)
+        .offset(offset)
     ).all()
 
 def create_group_db(

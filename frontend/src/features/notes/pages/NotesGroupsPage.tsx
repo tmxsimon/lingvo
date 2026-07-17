@@ -32,12 +32,14 @@ const DictionaryGroupsPage = () => {
   } = useModal();
 
   const {
-    groups: groupsFetched,
+    groups,
     setSearchValue,
     addGroup,
     editGroup,
     deleteGroup,
     reorderGroups,
+    ref,
+    isFetchingNextPage,
     isLoading,
     error,
   } = useNotesGroups(parseInt(language));
@@ -63,7 +65,7 @@ const DictionaryGroupsPage = () => {
         </div>
         <Reorder.Group
           axis="y"
-          values={groupsFetched || []}
+          values={groups || []}
           onReorder={(newGroups) => {
             newGroups.forEach((group, index) => {
               group.position = newGroups.length - index;
@@ -75,7 +77,7 @@ const DictionaryGroupsPage = () => {
           }}
           className="gap-base-sm mt-base flex w-full flex-col items-center"
         >
-          {(groupsFetched || []).map((group) => (
+          {(groups || []).map((group) => (
             <NotesGroup
               key={group.id}
               group={group}
@@ -85,6 +87,8 @@ const DictionaryGroupsPage = () => {
               }}
             />
           ))}
+          <div ref={ref} />
+          {isFetchingNextPage && <Loading />}
         </Reorder.Group>
       </div>
 

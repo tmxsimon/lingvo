@@ -22,27 +22,18 @@ router = APIRouter(
 
 # entries
 
-@router.get("/entries")
-async def get_entries(language: int, session = SessionDep):
-    entries = get_entries_db(session, language=language)
-    if entries is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="No entries found"
-        )
-    
-    print(f"Entries: {len(entries)}")
-    return entries
 
-@router.get("/groups/{group_id}/entries")
-async def get_entries_by_group(group_id: int, language: int, session = SessionDep):
-    entries = get_entries_by_group_db(session, group_id=group_id, language=language)
+@router.get("/entries")
+async def get_entries_by_group(language: int, limit: int = 50, offset: int = 0, group_id: int | None = None, session = SessionDep):
+    entries = get_entries_by_group_db(session, group_id=group_id, language=language, limit=limit, offset=offset)
     if entries is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="No entries found"
         )
-    return entries
+    group = get_group_db(session=session, id=group_id)
+
+    return { "entries": entries, "group": group }
 
 @router.post("/entries")
 async def create_entry(
@@ -115,8 +106,8 @@ async def update_entry(
 # groups
 
 @router.get("/groups")
-async def get_groups(language: int, session = SessionDep):
-    groups = get_groups_db(session, language=language)
+async def get_groups(language: int, limit: int = 50, offset: int = 0, session = SessionDep):
+    groups = get_groups_db(session, language=language, limit=limit, offset=offset)
     if groups is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

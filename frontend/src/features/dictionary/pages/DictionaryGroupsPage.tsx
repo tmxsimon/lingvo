@@ -41,6 +41,8 @@ const DictionaryGroupsPage = () => {
     editGroup,
     deleteGroup,
     reorderGroups,
+    ref,
+    isFetchingNextPage,
     isLoading,
     error,
   } = useDictionaryGroups(parseInt(language));
@@ -88,6 +90,8 @@ const DictionaryGroupsPage = () => {
               }}
             />
           ))}
+          <div ref={ref} />
+          {isFetchingNextPage && <Loading />}
         </Reorder.Group>
       </div>
 
