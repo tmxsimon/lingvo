@@ -99,7 +99,8 @@
     },
 
     "flippers": {
-      "flippers": "Flippery"
+      "flippers": "Flippery",
+      "changeGroup": "Změnit skupinu"
     },
 
     "home": {

@@ -87,7 +87,8 @@
     },
 
     "flippers": {
-      "flippers": "Флипперы"
+      "flippers": "Флипперы",
+      "changeGroup": "Изменить группу"
     },
 
     "languages": {

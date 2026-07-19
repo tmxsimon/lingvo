@@ -44,7 +44,7 @@ const ModalChangeGroup = ({
     <Modal
       open={isOpen}
       closeModal={closeModal}
-      title={t("cards.changeGroup")}
+      title={t("flippers.changeGroup")}
       content={[
         <div>
           <Title text={t("group")} />
