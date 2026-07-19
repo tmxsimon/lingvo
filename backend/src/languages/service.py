@@ -1,8 +1,6 @@
-import os
-from pathlib import Path
-import uuid
 from fastapi import UploadFile
 from sqlmodel import Session, select, func
+from src.utils.images import add_image, remove_image, replace_image
 from src.users.models import User
 from .models import Language
 
@@ -23,12 +21,7 @@ def create_language_db(
 
     filepath = DEFAULT_IMAGE_URL
     if image:
-        ext = image.filename.split(".")[-1]
-        filename = f"{uuid.uuid4()}.{ext}"
-        filepath = os.path.join(UPLOADS_URL, filename)
-
-        with open("src/" + filepath, "wb") as buffer:
-            buffer.write(image.file.read())    
+        filepath = add_image(image, UPLOADS_URL)
 
     language = Language(name=name, image_url=filepath, position=position, user_id=user.id)
 
@@ -50,9 +43,7 @@ def delete_language_db(
     if language is None:
         return None
     
-    if language.image_url and language.image_url != DEFAULT_IMAGE_URL:
-        image_to_delete_url = language.image_url
-        os.remove(image_to_delete_url)
+    remove_image(language.image_url, DEFAULT_IMAGE_URL)
 
     session.delete(language)
     session.commit()
@@ -72,17 +63,8 @@ def update_language_db(
     
     filepath = language.image_url if language.image_url else DEFAULT_IMAGE_URL
     if image:
-        path_exists = Path("src/" + language.image_url).exists()
-        if path_exists and language.image_url != DEFAULT_IMAGE_URL:
-            os.remove("src/" + language.image_url)
-        ext = image.filename.split(".")[-1]
-        filename = f"{uuid.uuid4()}.{ext}"
-        filepath = os.path.join(UPLOADS_URL, filename)
-
-        with open("src/" + filepath, "wb") as buffer:
-            buffer.write(image.file.read())
-
-    language.image_url = filepath
+        filepath = replace_image(language.image_url, image, DEFAULT_IMAGE_URL, UPLOADS_URL)
+        language.image_url = filepath
 
     if name:
         language.name = name

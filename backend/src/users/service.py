@@ -1,6 +1,3 @@
-import os
-from pathlib import Path
-import uuid
 from datetime import datetime, timedelta, timezone
 import jwt
 from fastapi import Depends, HTTPException, status, UploadFile
@@ -8,6 +5,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlmodel import Session, select
 from pwdlib import PasswordHash
 from src.db import get_session
+from src.utils.images import add_image, remove_image, replace_image
 from .models import User
 
 UPLOADS_URL = "uploads/user_uploads/profile_pictures"
@@ -83,12 +81,7 @@ def create_user_db(
     
     filepath = DEFAULT_IMAGE_URL
     if image:
-        ext = image.filename.split(".")[-1]
-        filename = f"{uuid.uuid4()}.{ext}"
-        filepath = os.path.join(UPLOADS_URL, filename)
-
-        with open("src/" + filepath, "wb") as buffer:
-            buffer.write(image.file.read())    
+        filepath = add_image(image, UPLOADS_URL)
 
     user = User(username=username, hashed_password=password_hash.hash(password), image_url=filepath)
 
@@ -110,12 +103,7 @@ def delete_user_db(
     if user is None:
         return None
     
-    if user.image_url and user.image_url != DEFAULT_IMAGE_URL:
-        image_to_delete_url = user.image_url
-        try:
-            os.remove(image_to_delete_url)
-        except:
-            pass
+    remove_image(user.image_url, DEFAULT_IMAGE_URL)
 
     session.delete(user)
     session.commit()
@@ -135,17 +123,8 @@ def update_user_db(
     
     filepath = user.image_url if user.image_url else DEFAULT_IMAGE_URL
     if image:
-        path_exists = Path("src/" + user.image_url).exists()
-        if path_exists and user.image_url != DEFAULT_IMAGE_URL:
-            os.remove("src/" + user.image_url)
-        ext = image.filename.split(".")[-1]
-        filename = f"{uuid.uuid4()}.{ext}"
-        filepath = os.path.join(UPLOADS_URL, filename)
-
-        with open("src/" + filepath, "wb") as buffer:
-            buffer.write(image.file.read())
-
-    user.image_url = filepath
+        filepath = replace_image(user.image_url, image, DEFAULT_IMAGE_URL, UPLOADS_URL)
+        user.image_url = filepath
 
     if username:
         user.username = username
