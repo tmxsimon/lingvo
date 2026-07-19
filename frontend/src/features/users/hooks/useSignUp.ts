@@ -10,6 +10,7 @@ const useSignUp = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [image, setImage] = useState<File | null>(null);
 
   const validate = () => {
     if (validator.isLength(username, { min: 1, max: 16 })) {
@@ -31,7 +32,7 @@ const useSignUp = () => {
   };
 
   const handleSubmit = async (
-    signIn: (username: string, password: string) => void,
+    signIn: (username: string, password: string, image: File | null) => void,
     event: FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
@@ -41,7 +42,7 @@ const useSignUp = () => {
     }
 
     try {
-      await signIn(username, password);
+      await signIn(username, password, image);
       navigate(`/`);
     } catch (error) {
       toast.error(t("users.validation.signInIncorrect"));
@@ -53,6 +54,8 @@ const useSignUp = () => {
     setUsername,
     password,
     setPassword,
+    image,
+    setImage,
     handleSubmit,
     validate,
   };

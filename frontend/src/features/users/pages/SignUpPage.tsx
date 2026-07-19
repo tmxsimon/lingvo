@@ -5,12 +5,20 @@ import SignBox from "../components/SignBox";
 import { useTranslation } from "react-i18next";
 import useSignUp from "../hooks/useSignUp";
 import Title from "../../../components/Title";
+import FilePicker from "../../../components/FilePicker";
 
 const SignUpPage = () => {
   const { t } = useTranslation();
   const { signUp } = useAuth();
-  const { username, setUsername, password, setPassword, handleSubmit } =
-    useSignUp();
+  const {
+    username,
+    setUsername,
+    password,
+    setPassword,
+    image,
+    setImage,
+    handleSubmit,
+  } = useSignUp();
 
   const content = [
     <div>
@@ -30,6 +38,19 @@ const SignUpPage = () => {
         onChange={(event) => setPassword(event.target.value)}
         type="password"
         required
+      />
+    </div>,
+    <div>
+      <Title text={t("users.profilePicture")} />
+      <FilePicker
+        id="profile-picture"
+        label={t("chooseImage")}
+        size="large"
+        accept="image/*"
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          const file = e.target.files?.[0] || null;
+          setImage(file);
+        }}
       />
     </div>,
   ];

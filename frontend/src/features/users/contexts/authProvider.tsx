@@ -11,7 +11,11 @@ type AuthContextType = {
   isLoading: boolean;
   error: Error | null;
   signIn: (username: string, password: string) => Promise<void>;
-  signUp: (username: string, password: string) => Promise<void>;
+  signUp: (
+    username: string,
+    password: string,
+    image: File | null,
+  ) => Promise<void>;
   signOut: () => void;
 };
 
@@ -66,13 +70,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     mutationFn: async ({
       username,
       password,
+      image,
     }: {
       username: string;
       password: string;
+      image: File | null;
     }) => {
       const form = new FormData();
       form.append("username", username);
       form.append("password", password);
+      if (image) form.append("image", image);
 
       return api.post(`${PATH}/`, form);
     },
@@ -83,8 +90,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     clearLocalStorage();
   };
 
-  const signUp = async (username: string, password: string) => {
-    await signUpMutation.mutateAsync({ username, password });
+  const signUp = async (
+    username: string,
+    password: string,
+    image: File | null,
+  ) => {
+    await signUpMutation.mutateAsync({ username, password, image });
     await signIn(username, password);
   };
 
