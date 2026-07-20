@@ -5,10 +5,12 @@ import Loading from "../../../components/Loading";
 import Button from "../../../components/Button";
 import Icon from "../../../components/Icon";
 import MarkdownEditor from "../components/MarkdownEditor";
+import { useTranslation } from "react-i18next";
 
 const DEBOUNCE_DELAY = 2 * 1000;
 
 const NotePage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { groupId, noteId } = useParams();
@@ -39,16 +41,20 @@ const NotePage = () => {
   if (error) return <div>{error?.message}</div>;
 
   return (
-    <div className="gap-base h-screen-no-navbar-page flex w-320 flex-col">
-      <Button
-        style="text"
-        theme="neutral"
-        size="large"
-        text={note!.name}
-        iconBack={<Icon name="close" className="size-5 stroke-2" />}
-        onClick={() => navigate(`/notes/${groupId}`)}
-      />
-      <div className="h-full">
+    <div className="gap-base h-screen-no-navbar-page flex w-320 flex-col items-center">
+      <div className="flex flex-col items-center justify-center">
+        <div className="text-xl">{t("notes.notes")}</div>
+        <Button
+          style="text"
+          theme="neutral"
+          size="auto"
+          text={note!.name}
+          iconBack={<Icon name="close" className="size-5 stroke-2" />}
+          onClick={() => navigate(`/notes/${groupId}`)}
+        />
+      </div>
+
+      <div className="h-full w-full">
         <MarkdownEditor
           value={value}
           onSave={() => editNote.mutate({ id: note!.id, content: value })}
