@@ -4,7 +4,7 @@ import Button from "../../../components/Button";
 import SignBox from "../components/SignBox";
 import { useTranslation } from "react-i18next";
 import useSignUp from "../hooks/useSignUp";
-import Title from "../../../components/Title";
+import ModalTitle from "../../../components/ModalTitle";
 import FilePicker from "../../../components/FilePicker";
 
 const SignUpPage = () => {
@@ -22,7 +22,7 @@ const SignUpPage = () => {
 
   const content = [
     <div>
-      <Title text={t("users.username")} />
+      <ModalTitle text={t("users.username")} />
       <Input
         size="large"
         value={username}
@@ -31,7 +31,7 @@ const SignUpPage = () => {
       />
     </div>,
     <div>
-      <Title text={t("users.password")} />
+      <ModalTitle text={t("users.password")} />
       <Input
         size="large"
         value={password}
@@ -41,7 +41,7 @@ const SignUpPage = () => {
       />
     </div>,
     <div>
-      <Title text={t("users.profilePicture")} />
+      <ModalTitle text={t("users.profilePicture")} />
       <FilePicker
         id="profile-picture"
         label={t("chooseImage")}

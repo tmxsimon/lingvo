@@ -9,6 +9,7 @@ import Flippers from "../components/Flippers";
 import ModalChangeGroup from "../components/modals/ModalChangeGroup";
 import { Tooltip } from "react-tooltip";
 import useFetchFlippers from "../hooks/useFetchFlippers";
+import PageTitleWithButton from "../../../components/other/PageTitleWithButton";
 
 const FlippersPage = () => {
   const { t } = useTranslation();
@@ -25,18 +26,21 @@ const FlippersPage = () => {
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
 
+  const button = (
+    <Button
+      style="text"
+      theme="neutral"
+      size="auto"
+      text={group?.name || t("allEntries")}
+      iconBack={<Icon name="change" className="size-4 stroke-2" />}
+      onClick={openModal}
+    />
+  );
+
   return (
     <>
       <div className="pb-base-lg h-screen-no-navbar-page flex flex-col items-center">
-        <div className="text-xl">{t("flippers.flippers")}</div>
-        <Button
-          style="text"
-          theme="neutral"
-          size="large"
-          text={group?.name || t("allEntries")}
-          iconBack={<Icon name="change" className="size-4" />}
-          onClick={openModal}
-        />
+        <PageTitleWithButton title={t("flippers.flippers")} button={button} />
         {flippersPages ? (
           <div className="mt-12 flex h-full flex-col items-center justify-between">
             <Flippers flippersPages={flippersPages} />

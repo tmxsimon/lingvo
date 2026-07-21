@@ -7,7 +7,7 @@ import { useDictionaryGroups } from "../../../dictionary/hooks/useDictionaryGrou
 import type { SelectOptionType } from "../../../../types";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../../components/Loading";
-import Title from "../../../../components/Title";
+import ModalTitle from "../../../../components/ModalTitle";
 
 type ModalChangeGroupProps = {
   group: DictionaryGroupType | null;
@@ -47,7 +47,7 @@ const ModalChangeGroup = ({
       title={t("flippers.changeGroup")}
       content={[
         <div>
-          <Title text={t("group")} />
+          <ModalTitle text={t("group")} />
           <Select
             value={
               (typeof currentGroupOption !== "string" &&

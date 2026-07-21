@@ -1,5 +1,5 @@
 import { type FormEventHandler } from "react";
-import Title from "../../../components/Title";
+import ModalTitle from "../../../components/ModalTitle";
 
 type SignBoxProps = {
   title: string;
@@ -15,7 +15,7 @@ const SignBox = ({ title, content, buttons, onSubmit }: SignBoxProps) => {
         onSubmit={onSubmit}
         className="border-brand-neutral-200 backdrop-blur-base p-base-lg rounded-base flex h-full max-h-138 w-full max-w-128 flex-col justify-between border backdrop-brightness-95"
       >
-        <Title size="large" text={title} className="text-center" />
+        <ModalTitle size="large" text={title} className="text-center" />
 
         <div className="mb-base-lg gap-base flex flex-col">
           {content.map((part, i) => {

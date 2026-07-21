@@ -3,7 +3,7 @@ import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { useTranslation } from "react-i18next";
 import useModalLanguage from "../../hooks/useModalLanguage";
-import Title from "../../../../components/Title";
+import ModalTitle from "../../../../components/ModalTitle";
 import FilePicker from "../../../../components/FilePicker";
 
 type ModalAddLanguageProps = {
@@ -32,7 +32,7 @@ const ModalAddLanguage = ({
       title={t("languages.addLanguage")}
       content={[
         <div>
-          <Title text={t("languages.name")} />
+          <ModalTitle text={t("languages.name")} />
           <Input
             minLength={1}
             maxLength={30}
@@ -42,7 +42,7 @@ const ModalAddLanguage = ({
           />
         </div>,
         <div>
-          <Title text={t("languages.image")} />
+          <ModalTitle text={t("languages.image")} />
           <FilePicker
             id="language-image"
             label={t("chooseImage")}

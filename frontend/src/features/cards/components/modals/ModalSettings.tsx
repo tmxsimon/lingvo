@@ -7,7 +7,7 @@ import { useDictionaryGroups } from "../../../dictionary/hooks/useDictionaryGrou
 import type { SelectOptionType } from "../../../../types";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../../components/Loading";
-import Title from "../../../../components/Title";
+import ModalTitle from "../../../../components/ModalTitle";
 import Input from "../../../../components/Input";
 import useModalSettings from "../../hooks/useModalSettings";
 import Checkbox from "../../../../components/Checkbox";
@@ -74,7 +74,7 @@ const ModalChangeGroup = ({
       title={t("settings")}
       content={[
         <div>
-          <Title text={t("group")} />
+          <ModalTitle text={t("group")} />
           <Select
             value={
               (typeof currentGroupOption !== "string" &&
@@ -91,7 +91,7 @@ const ModalChangeGroup = ({
           />
         </div>,
         <div>
-          <Title text={t("cards.duration")} />
+          <ModalTitle text={t("cards.duration")} />
           <Input
             type="number"
             min={1}
@@ -101,7 +101,7 @@ const ModalChangeGroup = ({
           />
         </div>,
         <div className="gap-base flex items-center">
-          <Title text={t("cards.sentenceMode")} />
+          <ModalTitle text={t("cards.sentenceMode")} />
           <Checkbox
             checked={isSentenceModeInput}
             onChange={(e) => setIsSentenceModeInput(e.currentTarget.checked)}

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import i18n from "../../../lib/i18n";
 import { useAuth } from "../contexts/authProvider";
-import Title from "../../../components/Title";
+import ModalTitle from "../../../components/ModalTitle";
 import Icon from "../../../components/Icon";
 import { useTheme } from "../../../contexts/themeProvider";
 import { useState } from "react";
@@ -28,7 +28,7 @@ const ProfilePage = () => {
     <>
       <div className="h-screen-no-navbar-page flex w-full items-center justify-center">
         <div className="border-brand-neutral-200 backdrop-blur-base p-base-lg rounded-base flex h-full max-h-154 w-full max-w-192 flex-col items-center justify-between border backdrop-brightness-95">
-          <Title size="large" text={t("users.profile")} />
+          <ModalTitle size="large" text={t("users.profile")} />
           <div className="mt-base flex w-full flex-col items-center">
             <img
               className="border-brand-neutral-200 aspect-square w-full max-w-64 rounded-full border object-cover"

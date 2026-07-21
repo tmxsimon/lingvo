@@ -12,6 +12,7 @@ import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import IconButton from "../../../components/IconButton";
 import { useState } from "react";
 import SentenceModal from "../components/modals/SentenceModal";
+import PageTitleWithButton from "../../../components/other/PageTitleWithButton";
 
 const CardsPage = () => {
   const { t } = useTranslation();
@@ -68,18 +69,21 @@ const CardsPage = () => {
   if (isLoading) return <Loading />;
   if (error) return <div>{error.message}</div>;
 
+  const button = (
+    <Button
+      style="text"
+      theme="neutral"
+      size="auto"
+      text={group?.name || t("allEntries")}
+      iconBack={<Icon name="settings" className="size-4 stroke-2" />}
+      onClick={openModalSettings}
+    />
+  );
+
   return (
     <>
       <div className="pb-base-lg h-screen-no-navbar-page flex flex-col items-center">
-        <div className="text-xl">{t("cards.cards")}</div>
-        <Button
-          style="text"
-          theme="neutral"
-          size="large"
-          text={group?.name || t("allEntries")}
-          iconBack={<Icon name="settings" className="size-4" />}
-          onClick={openModalSettings}
-        />
+        <PageTitleWithButton title={t("cards.cards")} button={button} />
         {currentEntry ? (
           <div className="flex h-full flex-col items-center justify-between">
             <div

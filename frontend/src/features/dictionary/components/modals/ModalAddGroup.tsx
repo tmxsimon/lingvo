@@ -4,7 +4,7 @@ import Button from "../../../../components/Button";
 import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
 import useModalGroup from "../../hooks/useModalGroup";
-import Title from "../../../../components/Title";
+import ModalTitle from "../../../../components/ModalTitle";
 
 type ModalAddGroupProps = {
   isOpen: boolean;
@@ -31,7 +31,7 @@ const ModalAddGroup = ({
       title={t("dictionary.addGroup")}
       content={[
         <div>
-          <Title text={t("dictionary.name")} />
+          <ModalTitle text={t("dictionary.name")} />
           <Input
             minLength={1}
             maxLength={30}

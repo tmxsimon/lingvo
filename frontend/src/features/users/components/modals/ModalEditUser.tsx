@@ -3,7 +3,7 @@ import Modal from "../../../../components/Modal";
 import Input from "../../../../components/Input";
 import Button from "../../../../components/Button";
 import { useTranslation } from "react-i18next";
-import Title from "../../../../components/Title";
+import ModalTitle from "../../../../components/ModalTitle";
 import type { UserType } from "../../types";
 import useModalUser from "../../hooks/useModalUser";
 import FilePicker from "../../../../components/FilePicker";
@@ -51,7 +51,7 @@ const ModalEditUser = ({
       title={t("users.editUser")}
       content={[
         <div>
-          <Title text={t("users.username")} />
+          <ModalTitle text={t("users.username")} />
           <Input
             value={username}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -63,7 +63,7 @@ const ModalEditUser = ({
           />
         </div>,
         <div>
-          <Title text={t("users.newPassword")} />
+          <ModalTitle text={t("users.newPassword")} />
           <Input
             type="password"
             value={password}
@@ -76,7 +76,7 @@ const ModalEditUser = ({
           />
         </div>,
         <div>
-          <Title text={t("users.profilePicture")} />
+          <ModalTitle text={t("users.profilePicture")} />
           <FilePicker
             id="profile-picture"
             label={t("chooseImage")}

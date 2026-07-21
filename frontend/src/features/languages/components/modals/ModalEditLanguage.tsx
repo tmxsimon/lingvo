@@ -5,7 +5,7 @@ import Button from "../../../../components/Button";
 import type { LanguageType } from "../../types";
 import { useTranslation } from "react-i18next";
 import useModalLanguage from "../../hooks/useModalLanguage";
-import Title from "../../../../components/Title";
+import ModalTitle from "../../../../components/ModalTitle";
 import FilePicker from "../../../../components/FilePicker";
 
 type ModalEditLanguageProps = {
@@ -38,7 +38,7 @@ const ModalEditLanguage = ({
       title={t("languages.editLanguage")}
       content={[
         <div>
-          <Title text={t("languages.name")} />
+          <ModalTitle text={t("languages.name")} />
           <Input
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -50,7 +50,7 @@ const ModalEditLanguage = ({
           />
         </div>,
         <div>
-          <Title text={t("languages.image")} />
+          <ModalTitle text={t("languages.image")} />
           <FilePicker
             id="language-image"
             label={t("chooseImage")}

@@ -5,7 +5,7 @@ import Button from "../../../../components/Button";
 import type { DictionaryGroupType } from "../../types";
 import { useTranslation } from "react-i18next";
 import useModalGroup from "../../hooks/useModalGroup";
-import Title from "../../../../components/Title";
+import ModalTitle from "../../../../components/ModalTitle";
 
 type ModalEditGroupProps = {
   group: DictionaryGroupType | null;
@@ -37,7 +37,7 @@ const ModalEditGroup = ({
       title={t("dictionary.editGroup")}
       content={[
         <div>
-          <Title text={t("dictionary.name")} />
+          <ModalTitle text={t("dictionary.name")} />
           <Input
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

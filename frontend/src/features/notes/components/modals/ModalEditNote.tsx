@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import Select from "../../../../components/Select";
 import type { SelectOptionType } from "../../../../types";
 import useModalnote from "../../hooks/useModalNote";
-import Title from "../../../../components/Title";
+import ModalTitle from "../../../../components/ModalTitle";
 
 type ModalEditnoteProps = {
   note: NoteType | null;
@@ -60,7 +60,7 @@ const ModalEditnote = ({
       title={t("notes.editNote")}
       content={[
         <div>
-          <Title text={t("notes.name")} />
+          <ModalTitle text={t("notes.name")} />
           <Input
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -72,7 +72,7 @@ const ModalEditnote = ({
           />
         </div>,
         <div>
-          <Title text={t("group")} />
+          <ModalTitle text={t("group")} />
           <Select
             value={
               (typeof currentGroupOption !== "string" &&

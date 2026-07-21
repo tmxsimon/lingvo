@@ -5,7 +5,7 @@ import Button from "../../../../components/Button";
 import type { NotesGroupType } from "../../types";
 import { useTranslation } from "react-i18next";
 import useModalGroup from "../../hooks/useModalNotesGroup";
-import Title from "../../../../components/Title";
+import ModalTitle from "../../../../components/ModalTitle";
 
 type ModalEditNotesGroupProps = {
   group: NotesGroupType | null;
@@ -37,7 +37,7 @@ const ModalEditNotesGroup = ({
       title={t("notes.editGroup")}
       content={[
         <div>
-          <Title text={t("notes.name")} />
+          <ModalTitle text={t("notes.name")} />
           <Input
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
