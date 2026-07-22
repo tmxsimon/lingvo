@@ -3,7 +3,6 @@ import Icon from "../Icon";
 import IconButton from "../IconButton";
 import Input from "../Input";
 import { useNavigate } from "react-router-dom";
-import PageTitle from "../PageTitle";
 import Button from "../Button";
 import PageTitleWithButton from "./PageTitleWithButton";
 

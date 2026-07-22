@@ -36,7 +36,7 @@ const ProfilePage = () => {
             />
             <div className="mt-base text-3xl">{user?.username}</div>
             <Button
-              theme="brand"
+              theme="neutral"
               style="text"
               size="auto"
               text={t("users.editUser")}
