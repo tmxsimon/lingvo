@@ -49,7 +49,7 @@ const NotesItemsPage = () => {
     isFetchingNextPage,
     isLoading: isLoadingnotes,
     error: errornotes,
-  } = useNotes(resolvedGroupId!, parsedLanguage);
+  } = useNotes(parsedLanguage, resolvedGroupId!);
 
   const {
     groups,
