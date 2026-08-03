@@ -94,6 +94,16 @@ export default function useCardEntry(
     setIsActive(false);
   }, [queue, currentEntry?.id]);
 
+  const onSuccessChangeTemperature = useCallback(() => {
+    setQueue((prevQueue) =>
+      prevQueue.map((entry) =>
+        entry.id === currentEntry?.id
+          ? { ...entry, temperature: temperature }
+          : entry,
+      ),
+    );
+  }, [currentEntry?.id, temperature]);
+
   const changeTemperatureCards = useCallback(
     async (action: TemperatureActionType) => {
       const newTemperature =
@@ -101,7 +111,12 @@ export default function useCardEntry(
           ? Math.min(temperature + TEMPERATURE_STEP, 100)
           : Math.max(temperature - TEMPERATURE_STEP, 0);
       setTemperature(newTemperature);
-      await changeTemperature(currentEntry!.id, action, 20);
+      await changeTemperature(
+        currentEntry!.id,
+        action,
+        TEMPERATURE_STEP,
+        onSuccessChangeTemperature,
+      );
     },
     [changeTemperature, temperature],
   );

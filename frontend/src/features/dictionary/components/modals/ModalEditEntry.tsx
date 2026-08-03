@@ -60,11 +60,11 @@ const ModalEditEntry = ({
     setContent(entry?.content || "");
     setTranslation(entry?.translation || "");
     setNote(entry?.note || "");
+    setTemperature(entry?.temperature !== undefined ? entry.temperature : 100);
     setCurrentGroupOption({
       value: entry?.group_id || group?.id,
       text: groups.find((g) => g.id === entry?.group_id)?.name || "",
     });
-    setTemperature(entry?.temperature || 100);
   }, [
     entry,
     groups,

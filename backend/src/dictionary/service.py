@@ -92,7 +92,7 @@ def update_entry_db(
         entry.translation = translation
     if note:
         entry.note = note
-    if temperature and 0 <= temperature <= 100:
+    if temperature is not None and 0 <= temperature <= 100:
         entry.temperature = temperature
     if group_id:
         entry.group_id = group_id
