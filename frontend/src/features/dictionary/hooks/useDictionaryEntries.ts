@@ -99,12 +99,14 @@ export function useDictionaryEntries(
       content,
       translation,
       note,
+      temperature,
     }: {
       id: number;
       groupId?: number;
       content?: string;
       translation?: string;
       note?: string;
+      temperature?: number;
     }) =>
       api.put(`${PATH}/entries/${id}`, null, {
         params: {
@@ -112,6 +114,7 @@ export function useDictionaryEntries(
           content: content,
           translation: translation,
           note: note,
+          temperature: temperature,
         },
       }),
     onSuccess: () => {

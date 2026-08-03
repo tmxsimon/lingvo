@@ -25,7 +25,7 @@ const Temperature = ({
   }
   return (
     <div
-      className="rounded-base flex h-full w-128 items-center justify-between"
+      className="rounded-base flex h-full w-full max-w-128 items-center justify-between"
       style={{
         background: `linear-gradient(to right, var(--color-brand-300) ${value}%, var(--color-brand-100) ${viaStop}%)`,
       }}

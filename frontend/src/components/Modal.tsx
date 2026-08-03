@@ -51,7 +51,7 @@ const Modal = ({
             onClick={handleBackdropClick}
           >
             <div
-              className={`border-brand-neutral-200 backdrop-blur-base-lg rounded-base px-base pb-base-lg relative flex ${autoSize ? "h-auto w-auto" : "h-136 w-112"} flex-col justify-between border ${title ? "pt-12" : "pt-base-lg"} backdrop-brightness-150`}
+              className={`border-brand-neutral-200 backdrop-blur-base-lg rounded-base px-base pb-base-lg relative flex ${autoSize ? "h-auto w-auto" : "h-146 w-116"} flex-col justify-between border ${title ? "pt-12" : "pt-base-lg"} backdrop-brightness-150`}
             >
               <div className="top-base text-brand-neutral-300 absolute self-center">
                 {title}

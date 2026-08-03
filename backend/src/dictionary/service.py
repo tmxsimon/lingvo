@@ -1,3 +1,4 @@
+from enum import Enum
 from sqlmodel import Session, func, select
 from .models import DictionaryEntry, EntriesGroup
 
@@ -95,6 +96,38 @@ def update_entry_db(
         entry.temperature = temperature
     if group_id:
         entry.group_id = group_id
+
+    session.add(entry)
+    session.commit()
+    session.refresh(entry)
+
+    return entry
+
+
+class TemperatureActionEnum(str, Enum):
+    increase = "increase"
+    decrease = "decrease"
+
+def change_temperature_db(
+    session: Session,
+    id: int,
+    action: TemperatureActionEnum,
+    step: int,
+):
+    entry = session.exec(select(DictionaryEntry).where(DictionaryEntry.id == id)).first()
+    if entry is None:
+        return None
+    
+    changeStep = step
+
+    if action == "increase":
+        temperature = min(100, entry.temperature + changeStep)
+    elif action == "decrease":
+        temperature = max(0, entry.temperature - changeStep)
+    else:
+        return None
+
+    entry.temperature = temperature
 
     session.add(entry)
     session.commit()

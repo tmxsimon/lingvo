@@ -2,6 +2,10 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import validator from "validator";
 import { toast } from "react-toastify";
+import {
+  TEMPERATURE_STEP,
+  type TemperatureActionType,
+} from "../../../hooks/useTemperature";
 
 const useModalEntry = () => {
   const { t } = useTranslation();
@@ -9,6 +13,15 @@ const useModalEntry = () => {
   const [content, setContent] = useState<string>("");
   const [translation, setTranslation] = useState<string>("");
   const [note, setNote] = useState<string>("");
+  const [temperature, setTemperature] = useState<number>(100);
+
+  const changeTemperature = (action: TemperatureActionType) => {
+    if (action === "increase") {
+      setTemperature((prev) => Math.min(prev + TEMPERATURE_STEP, 100));
+    } else if (action === "decrease") {
+      setTemperature((prev) => Math.max(prev - TEMPERATURE_STEP, 0));
+    }
+  };
 
   const validate = () => {
     if (validator.isLength(content, { min: 1, max: 30 })) {
@@ -36,6 +49,9 @@ const useModalEntry = () => {
     setTranslation,
     note,
     setNote,
+    temperature,
+    setTemperature,
+    changeTemperature,
     validate,
   };
 };

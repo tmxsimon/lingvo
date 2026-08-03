@@ -13,12 +13,12 @@ import IconButton from "../../../components/IconButton";
 import { useState } from "react";
 import SentenceModal from "../components/modals/SentenceModal";
 import PageTitleWithButton from "../../../components/other/PageTitleWithButton";
+import useTemperature from "../../../hooks/useTemperature";
 
 const CardsPage = () => {
+  // TODO: clean up this section
   const { t } = useTranslation();
-
   const { language } = useLanguageContext();
-
   const { groupId } = useParams();
   const navigate = useNavigate();
 
@@ -43,16 +43,18 @@ const CardsPage = () => {
       : 5,
   );
 
+  const { changeTemperature } = useTemperature();
+
   const {
     group,
     currentEntry,
+    temperature,
     isActive,
     setIsActive,
     isReversed,
     setIsReversed,
     handleNext,
-    // handleNextState,
-    changeTemperature,
+    changeTemperatureCards,
     isLoading,
     error,
   } = useCardEntry(
@@ -64,6 +66,7 @@ const CardsPage = () => {
     openModalSentence,
     isOpenSentence,
     durationSeconds,
+    changeTemperature,
   );
 
   if (isLoading) return <Loading />;
@@ -99,7 +102,7 @@ const CardsPage = () => {
               />
             </div>
 
-            <div className="gap-base flex items-center">
+            <div className="gap-base flex w-full items-center justify-center">
               <div className="flex">
                 <IconButton
                   icon={
@@ -122,17 +125,9 @@ const CardsPage = () => {
                 />
               </div>
               <Temperature
-                value={currentEntry.temperature}
-                buttonLeftOnClick={() =>
-                  changeTemperature.mutate({
-                    action: "decrease",
-                  })
-                }
-                buttonRightOnClick={() =>
-                  changeTemperature.mutate({
-                    action: "increase",
-                  })
-                }
+                value={temperature}
+                buttonLeftOnClick={() => changeTemperatureCards("decrease")}
+                buttonRightOnClick={() => changeTemperatureCards("increase")}
               />
               <Button text={t("cards.next")} onClick={handleNext} />
             </div>

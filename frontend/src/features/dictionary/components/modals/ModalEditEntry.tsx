@@ -8,6 +8,7 @@ import Select from "../../../../components/Select";
 import type { SelectOptionType } from "../../../../types";
 import useModalEntry from "../../hooks/useModalEntry";
 import ModalTitle from "../../../../components/ModalTitle";
+import Temperature from "../../../cards/components/Temperature";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
@@ -21,6 +22,7 @@ type ModalEditEntryProps = {
     content: string,
     translation: string,
     note?: string,
+    temperature?: number,
   ) => void;
   deleteEntry: (id: number) => void;
 };
@@ -43,6 +45,9 @@ const ModalEditEntry = ({
     setTranslation,
     note,
     setNote,
+    temperature,
+    setTemperature,
+    changeTemperature: changeTemperatureLocal,
     validate,
   } = useModalEntry();
   const [currentGroupOption, setCurrentGroupOption] =
@@ -59,7 +64,16 @@ const ModalEditEntry = ({
       value: entry?.group_id || group?.id,
       text: groups.find((g) => g.id === entry?.group_id)?.name || "",
     });
-  }, [entry, groups, group, setContent, setTranslation, setNote]);
+    setTemperature(entry?.temperature || 100);
+  }, [
+    entry,
+    groups,
+    group,
+    setContent,
+    setTranslation,
+    setNote,
+    setTemperature,
+  ]);
 
   const options: SelectOptionType[] = useMemo(() => {
     const opts: SelectOptionType[] = [];
@@ -110,6 +124,14 @@ const ModalEditEntry = ({
           />
         </div>,
         <div>
+          <ModalTitle text={t("temperature")} />
+          <Temperature
+            value={temperature}
+            buttonLeftOnClick={() => changeTemperatureLocal("decrease")}
+            buttonRightOnClick={() => changeTemperatureLocal("increase")}
+          />
+        </div>,
+        <div>
           <ModalTitle text={t("group")} />
           <Select
             value={
@@ -150,6 +172,7 @@ const ModalEditEntry = ({
               content || "",
               translation || "",
               note,
+              temperature,
             );
             closeModal();
           }}

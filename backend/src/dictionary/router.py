@@ -1,6 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
 from src.dependencies import SessionDep
 from .service import (
+    change_temperature_db,
+    TemperatureActionEnum,
     get_entries_db,
     get_entries_by_group_db,
     create_entry_db,
@@ -101,7 +103,21 @@ async def update_entry(
             detail="Entry not found"
         )
     return entry
-    
+
+@router.put("/entries/{id}/temperature")
+async def change_temperature(id: int, action: TemperatureActionEnum, step: int, session = SessionDep):
+    entry = change_temperature_db(
+        session = session,
+        id=id,
+        action=action,
+        step=step
+    )
+    if entry is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Entry not found"
+        )
+    return entry
 
 # groups
 

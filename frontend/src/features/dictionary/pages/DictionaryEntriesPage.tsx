@@ -144,7 +144,17 @@ const DictionaryEntriesPage = () => {
           content: string,
           translation: string,
           note?: string,
-        ) => editEntry.mutate({ id, groupId, content, translation, note })}
+          temperature?: number,
+        ) =>
+          editEntry.mutate({
+            id,
+            groupId,
+            content,
+            translation,
+            note,
+            temperature,
+          })
+        }
         deleteEntry={() => deleteEntry.mutate(chosenEntry!.id)}
       />
     </>
