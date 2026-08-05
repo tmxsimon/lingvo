@@ -3,7 +3,6 @@ from src.dependencies import SessionDep
 from .service import (
     change_temperature_db,
     TemperatureActionEnum,
-    get_entries_db,
     get_entries_by_group_db,
     create_entry_db,
     delete_entry_db,
