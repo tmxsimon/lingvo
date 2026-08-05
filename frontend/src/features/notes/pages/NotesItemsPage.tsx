@@ -32,7 +32,9 @@ const NotesItemsPage = () => {
   const { language } = useLanguageContext();
 
   const parsedGroupId = Number(groupId);
-  const resolvedGroupId = Number.isNaN(parsedGroupId) ? null : parsedGroupId;
+  const resolvedGroupId = Number.isNaN(parsedGroupId)
+    ? undefined
+    : parsedGroupId;
   const parsedLanguage = Number(language);
 
   const [chosenNote, setChosenNote] = useState<NoteType | null>(null);
