@@ -13,10 +13,10 @@ router = APIRouter(
 async def get_flippers(language: int, group_id: int | None = None, session = SessionDep):
     group = None
     if group_id:
-        entries = get_entries_by_group_db(session, language=language, group_id=group_id)
+        entries = get_entries_by_group_db(session, language=language, group_id=group_id, limit=None)
         group = entries[0].group if entries else None
     else:
-        entries = get_entries_db(session, language=language)
+        entries = get_entries_db(session, language=language, limit=None)
 
     if entries is None:
         raise HTTPException(
