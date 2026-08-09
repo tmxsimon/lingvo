@@ -25,7 +25,7 @@ const Language = ({ language, onClick, onClickSettings }: LanguageProps) => {
       />
       <div className="gap-base-sm relative flex w-full items-center justify-between">
         <div className="relative flex w-full flex-col items-center justify-center">
-          <div className="text-center text-4xl break-all">{language.name}</div>
+          <div className="text-center text-3xl break-all">{language.name}</div>
           <div className="gap-base absolute top-full flex">
             <div className="text-brand-neutral-300 flex items-center justify-center">
               <Icon name="dictionary" className="size-4" />
