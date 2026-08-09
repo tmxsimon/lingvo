@@ -9,4 +9,6 @@ export type LanguageType = {
   name: string;
   image_url: string;
   position: number;
+  entries_count: number;
+  notes_count: number;
 };

@@ -15,7 +15,7 @@ class Language(SQLModel, table=True):
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
-    
+
 from src.users.models import User
 from src.dictionary.models import EntriesGroup
 from src.notes.models import NotesGroup

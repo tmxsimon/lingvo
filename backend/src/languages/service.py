@@ -7,8 +7,26 @@ from .models import Language
 UPLOADS_URL = "uploads/user_uploads/language_images"
 DEFAULT_IMAGE_URL = "uploads/user_uploads/language_images/default.jpg"
 
+def _language_to_dict(language: Language) -> dict[str, Any]:
+    entries_count = sum(len(group.entries or []) for group in language.entries_groups or [])
+    notes_count = sum(len(group.notes or []) for group in language.notes_groups or [])
+
+    return {
+        "id": language.id,
+        "name": language.name,
+        "image_url": language.image_url,
+        "position": language.position,
+        "created_at": language.created_at,
+        "entries_count": entries_count,
+        "notes_count": notes_count,
+    }
+
 def get_languages_db(user: User, session: Session):
-    return session.exec(select(Language).where(Language.user_id == user.id).order_by(Language.position.desc())).all()
+    languages = session.exec(select(Language).where(Language.user_id == user.id).order_by(Language.position.desc())).all()
+    languages_with_sizes = []
+    for language in languages:
+        languages_with_sizes.append(_language_to_dict(language))
+    return languages_with_sizes
 
 def create_language_db(
     user: User,
@@ -80,13 +98,16 @@ def reorder_languages_db(session: Session, ordered_ids: list[int]):
     language_map = {language.id: language for language in languages}
 
     for index, language_id in enumerate(ordered_ids):
-        if language_id in language_map:
-            language_map[language_id].position = len(ordered_ids) - index
-            session.add(language_map[language_id])
+        language = language_map.get(language_id)
+        if language is None:
+            continue
+
+        language.position = len(ordered_ids) - index
+        session.add(language)
 
     session.commit()
 
-    return list(language_map.values())
+    return [language_map[language_id] for language_id in ordered_ids if language_id in language_map]
 
 # def remove_language_image_db(session: Session, id):
 #     language = session.get(Language, id)
