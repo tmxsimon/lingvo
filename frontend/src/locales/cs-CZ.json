@@ -95,7 +95,7 @@
       "image": "Obrázek",
 
       "validation": {
-        "nameLength": "Název musí mít 1 až 30 znaků"
+        "nameLength": "Název musí mít 1 až 16 znaků"
       }
     },
 

@@ -10,7 +10,7 @@ const useModalLanguage = () => {
   const [image, setImage] = useState<File | null>(null);
 
   const validate = () => {
-    if (validator.isLength(name, { min: 1, max: 30 })) {
+    if (validator.isLength(name, { min: 1, max: 16 })) {
     } else {
       toast.error(t("languages.validation.nameLength"));
       return false;

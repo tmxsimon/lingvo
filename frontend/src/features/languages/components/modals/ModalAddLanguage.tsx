@@ -35,7 +35,7 @@ const ModalAddLanguage = ({
           <ModalTitle text={t("languages.name")} />
           <Input
             minLength={1}
-            maxLength={30}
+            maxLength={16}
             required
             value={name}
             onChange={(e) => setName(e.target.value)}

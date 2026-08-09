@@ -100,7 +100,7 @@
       "image": "Image",
 
       "validation": {
-        "nameLength": "Name must be between 1 and 30 characters"
+        "nameLength": "Name must be between 1 and 16 characters"
       }
     },
 
