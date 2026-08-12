@@ -10,7 +10,7 @@ from src.users.router import router as users_router
 
 app = FastAPI()
 
-app.mount("/uploads", StaticFiles(directory="src/uploads"), name="uploads")
+app.mount("/assets", StaticFiles(directory="src/assets"), name="assets")
 
 routers = [dictionary_router, cards_router, notes_router, languages_router, flippers_router, users_router]
 for router in routers:

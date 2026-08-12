@@ -20,7 +20,7 @@ const Language = ({ language, onClick, onClickSettings }: LanguageProps) => {
       className="p-base border-brand-neutral-200 backdrop-blur-base rounded-base-sm gap-base flex h-52 w-152 cursor-pointer border backdrop-brightness-95"
     >
       <img
-        className="rounded-base-sm border-brand-neutral-200 h-full border object-cover"
+        className="rounded-base-sm border-brand-neutral-200 aspect-square h-full border object-cover"
         src={`http://localhost:8000/${language.image_url}`}
       />
       <div className="gap-base-sm relative flex w-full items-center justify-between">

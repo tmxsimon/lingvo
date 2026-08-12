@@ -4,8 +4,8 @@ from src.utils.images import add_image, remove_image, replace_image
 from src.users.models import User
 from .models import Language
 
-UPLOADS_URL = "uploads/user_uploads/language_images"
-DEFAULT_IMAGE_URL = "uploads/user_uploads/language_images/default.jpg"
+UPLOADS_URL = "assets/user_uploads/language_images"
+DEFAULT_IMAGE_URL = "assets/default_images/default_language.png"
 
 def _language_to_dict(language: Language) -> dict[str, Any]:
     entries_count = sum(len(group.entries or []) for group in language.entries_groups or [])

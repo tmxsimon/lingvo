@@ -1,5 +1,9 @@
 __pycache__
 .venv
 *.db
-src/uploads/user_uploads/*
-!src/uploads/user_uploads/README.md
+
+src/assets/user_uploads/profile_pictures/*
+!src/assets/user_uploads/profile_pictures/README.md
+
+src/assets/user_uploads/language_images/*
+!src/assets/user_uploads/language_images/README.md

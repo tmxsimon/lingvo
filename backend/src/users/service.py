@@ -8,8 +8,8 @@ from src.db import get_session
 from src.utils.images import add_image, remove_image, replace_image
 from .models import User
 
-UPLOADS_URL = "uploads/user_uploads/profile_pictures"
-DEFAULT_IMAGE_URL = "uploads/user_uploads/profile_pictures/default.jpg"
+UPLOADS_URL = "assets/user_uploads/profile_pictures"
+DEFAULT_IMAGE_URL = "assets/default_images/default_user.png"
 
 SECRET_KEY = ":/"  # very secret
 ALGORITHM = "HS256"
