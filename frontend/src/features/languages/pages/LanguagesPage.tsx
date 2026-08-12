@@ -1,4 +1,3 @@
-import Button from "../../../components/Button";
 import Loading from "../../../components/Loading";
 import useModal from "../../../hooks/useModal";
 import Language from "../components/Language";
