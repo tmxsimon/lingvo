@@ -95,12 +95,9 @@
     background-color: var(--color-brand-300) !important;
   }
 
-  html {
-    font-family: "Inter", sans-serif;
-  }
-
   body {
     overflow-y: scroll;
+    font-family: "Inter", sans-serif;
   }
 
   svg {
