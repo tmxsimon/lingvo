@@ -7,6 +7,7 @@
     "close": "Zavřít",
 
     "allEntries": "Všechny záznamy",
+    "entriesNotFound": "Záznamy nebyly nalezeny",
     "group": "Skupina",
     "groups": "Skupiny",
     "search": "Vyhledávání",
@@ -63,7 +64,6 @@
       "increase": "Zvýšit",
       "decrease": "Snížit",
       "next": "Další",
-      "entriesNotFound": "Záznamy nebyly nalezeny",
       "duration": "Doba trvání",
       "sentenceMessage": "Napište větu s použitím",
       "sentenceMode": "Režim vět",

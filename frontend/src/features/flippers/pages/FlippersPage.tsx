@@ -47,7 +47,7 @@ const FlippersPage = () => {
           </div>
         ) : (
           <div className="text-gray-neutral-300 mt-40 text-4xl">
-            {t("cards.entriesNotFound")}
+            {t("entriesNotFound")}
           </div>
         )}
       </div>

@@ -7,6 +7,7 @@
     "close": "Закрыть",
 
     "allEntries": "Все записи",
+    "entriesNotFound": "Записи не найдены",
     "group": "Группа",
     "groups": "Группы",
     "search": "Поиск",
@@ -63,7 +64,6 @@
       "increase": "Увеличить",
       "decrease": "Уменьшить",
       "next": "Далее",
-      "entriesNotFound": "Записи не найдены",
       "duration": "Длительность",
       "sentenceMessage": "Напишите предложение с",
       "sentenceMode": "Режим предложений",
