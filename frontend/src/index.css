@@ -103,6 +103,7 @@
   body {
     overflow-y: scroll;
     font-family: "Inter", sans-serif;
+    font-weight: 450;
   }
 
   svg {
