@@ -48,6 +48,10 @@ export default function useCardEntry(
     currentEntry?.temperature ?? 100,
   );
 
+  useEffect(() => {
+    if (currentEntry) setTemperature(currentEntry.temperature)
+  }, [currentEntry?.id])
+
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isReversed, setIsReversed] = useState<boolean>(
     localStorage.getItem("isReversed") === "true",
