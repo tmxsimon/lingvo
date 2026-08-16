@@ -1,45 +1,20 @@
-# lingvo
+# 🌍 lingvo
+---
+Platform for language self-study
 
-lingvo — a platform for language self-study
+## ✨ Features
+### 🃏 Cards
+---
+A mode for actively learning words and phrases using flashcards
 
-# Setup Instructions
+### 🧠 Flippers
+---
+A mode for memorizing entries and improving memory
 
-## Backend
+### 📖 Dictionary
+---
+Used to write entries into groups for use in other modes
 
-### Open a terminal and go to the backend folder
-
-cd backend
-
-### Create and activate a virtual environment
-
-python -m venv .venv
-
-source .venv/bin/activate
-or
-.venv\Scripts\activate for Windows
-
-### Install dependencies
-
-pip install -r requirements.txt
-
-### Create database
-
-alembic upgrade head
-
-### Run the backend server
-
-uvicorn src.main:app --reload
-
-## Frontend
-
-### Open a new terminal and go to the frontend folder
-
-cd frontend
-
-### Install dependencies
-
-npm install
-
-### Run the frontend dev server
-
-npm run dev
+### 📝 Notes
+---
+Used for writing down grammar and more complex aspects of the language in .md format
