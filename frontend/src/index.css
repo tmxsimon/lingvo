@@ -95,6 +95,11 @@
     background-color: var(--color-brand-300) !important;
   }
 
+  @font-face {
+    font-family: "Inter";
+    src: url("assets/fonts/Inter.woff2") format("woff2");
+  }
+
   body {
     overflow-y: scroll;
     font-family: "Inter", sans-serif;
