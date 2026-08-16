@@ -2,7 +2,7 @@
 Platform for language self-study
 
 ## 🚀 Quick Start
-See setup in [a relative link](SETUP.md)
+See setup in [SETUP.md](SETUP.md)
 
 ## ✨ Features
 ### 🃏 Cards
