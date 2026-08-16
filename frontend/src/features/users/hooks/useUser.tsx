@@ -45,7 +45,7 @@ export function useUser() {
     mutationFn: (id: number) => api.delete(`${PATH}/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user"] });
-      localStorage.removeItem("accessToken");
+      localStorage.clear();
     },
   });
 
