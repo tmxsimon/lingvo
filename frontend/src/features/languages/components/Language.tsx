@@ -17,7 +17,7 @@ const Language = ({ language, onClick, onClickSettings }: LanguageProps) => {
       dragListener={false}
       dragControls={controls}
       onClick={onClick}
-      className="p-base border-brand-neutral-200 backdrop-blur-base rounded-base-sm gap-base flex h-52 w-152 cursor-pointer border backdrop-brightness-95"
+      className="p-base border-brand-neutral-200 backdrop-blur-base rounded-base-sm gap-base flex sm:h-52 h-42 max-w-152 w-full cursor-pointer border backdrop-brightness-95"
     >
       <img
         className="rounded-base-sm border-brand-neutral-200 aspect-square h-full border object-cover"

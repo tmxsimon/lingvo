@@ -41,7 +41,7 @@ const NotePage = () => {
   if (error) return <div>{error?.message}</div>;
 
   return (
-    <div className="gap-base h-screen-no-navbar-page flex w-320 flex-col items-center">
+    <div className="gap-base h-screen-no-navbar-page flex max-w-320 w-full flex-col items-center">
       <div className="flex flex-col items-center justify-center">
         <div className="text-xl">{t("notes.notes")}</div>
         <Button

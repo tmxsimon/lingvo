@@ -28,7 +28,7 @@ const Flipper = ({
 
   return (
     <motion.div
-      className="rounded-base-sm p-base backdrop-blur-base border-brand-neutral-200 flex h-46 w-72 cursor-pointer flex-col items-center justify-center border text-center backdrop-brightness-95"
+      className="rounded-base-sm p-base backdrop-blur-base border-brand-neutral-200 flex max-h-46 h-full max-w-72 w-full cursor-pointer flex-col items-center justify-center border text-center backdrop-brightness-95"
       {...animationProps}
       onClick={() => {
         if (disabled || isMatched) return;
@@ -51,7 +51,7 @@ const Flipper = ({
           animate={{ rotateY: isFlipped ? 0 : 180 }}
           transition={{ duration: flipDuration }}
         >
-          <div className="text-lg">{value}</div>
+          <div className="xl:text-lg lg:text-base text-sm">{value}</div>
           {note && isMatched && (
             <div
               className="absolute right-0 bottom-0 cursor-pointer"

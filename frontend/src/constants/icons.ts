@@ -1,3 +1,4 @@
+import Menu from "../assets/icons/menu.svg?react";
 import Globe from "../assets/icons/globe.svg?react";
 import Settings from "../assets/icons/settings.svg?react";
 import Change from "../assets/icons/change.svg?react";
@@ -28,8 +29,11 @@ import English from "../assets/icons/flags/en-US.svg?react";
 import Czech from "../assets/icons/flags/cs-CZ.svg?react";
 import Russian from "../assets/icons/flags/ru-RU.svg?react";
 
+export type iconsType = keyof typeof ICONS;
+
 const ICONS = {
   // Common
+  menu: Menu,
   plus: Plus,
   close: Close,
   globe: Globe,

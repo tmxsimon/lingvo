@@ -21,7 +21,7 @@ const DictionaryGroup = ({ group, onClickSettings }: DictionaryGroupProps) => {
   );
 
   return (
-    <ReorderableItem value={group} content={group.name} buttons={buttons} />
+    <ReorderableItem value={group} content={<div className="truncate">{group.name}</div>} buttons={buttons} />
   );
 };
 

@@ -6,12 +6,12 @@ import Icon from "../../../components/Icon";
 import { useTheme } from "../../../contexts/themeProvider";
 import { useState } from "react";
 import { switchLanguage } from "../../../utils/switchLanguage";
-import type ICONS from "../../../constants/icons";
 import Button from "../../../components/Button";
 import useModal from "../../../hooks/useModal";
 import ModalEditUser from "../components/modals/ModalEditUser";
 import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
+import type { iconsType } from "../../../constants/icons";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ const ProfilePage = () => {
               onClick={() => switchLanguage(setLng)}
               className="cursor-pointer"
             >
-              <Icon name={lng as keyof typeof ICONS} className="size-8" />
+              <Icon name={lng as iconsType} className="size-8" />
             </button>
             <button onClick={toggleTheme} className="cursor-pointer">
               <Icon

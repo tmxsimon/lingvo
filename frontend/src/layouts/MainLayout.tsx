@@ -8,7 +8,7 @@ const MainLayout = () => {
       <Background />
       <div className="z-10">
         <Navbar />
-        <main className="mt-after-navbar pb-base px-base-lg flex flex-1 flex-col items-center">
+        <main className="mt-after-navbar pb-base px-base flex flex-1 flex-col items-center">
           <Outlet />
         </main>
       </div>

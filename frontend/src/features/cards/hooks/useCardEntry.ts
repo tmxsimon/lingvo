@@ -35,11 +35,12 @@ export default function useCardEntry(
   const group = query.data?.group ?? null;
   const { isLoading, error } = query;
 
-  const [queue, setQueue] = useState<DictionaryEntryType[]>([]);
+  const [queue, setQueue] = useState<DictionaryEntryType[]>(entries);
 
   useEffect(() => {
     setQueue(entries);
   }, [entries]);
+
   const [currentEntry, setCurrentEntry] = useState<DictionaryEntryType | null>(
     null,
   );
@@ -49,8 +50,8 @@ export default function useCardEntry(
   );
 
   useEffect(() => {
-    if (currentEntry) setTemperature(currentEntry.temperature)
-  }, [currentEntry?.id])
+    if (currentEntry) setTemperature(currentEntry.temperature);
+  }, [currentEntry?.id]);
 
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isReversed, setIsReversed] = useState<boolean>(

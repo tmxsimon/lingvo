@@ -20,7 +20,13 @@ const NoteItem = ({ note, onClickSettings }: NoteItemProps) => {
     </>
   );
 
-  return <ReorderableItem value={note} content={note.name} buttons={buttons} />;
+  return (
+    <ReorderableItem
+      value={note}
+      content={<div className="truncate">{note.name}</div>}
+      buttons={buttons}
+    />
+  );
 };
 
 export default NoteItem;

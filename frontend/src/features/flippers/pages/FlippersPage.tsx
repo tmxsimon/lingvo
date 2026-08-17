@@ -39,10 +39,10 @@ const FlippersPage = () => {
 
   return (
     <>
-      <div className="pb-base-lg h-screen-no-navbar-page flex flex-col items-center">
+      <div className="pb-base-lg h-screen-no-navbar-page flex flex-col items-center w-full">
         <PageTitleWithButton title={t("flippers.flippers")} button={button} />
         {flippersPages ? (
-          <div className="mt-12 flex h-full flex-col items-center justify-between">
+          <div className="flex h-full flex-col items-center justify-center mt-base-lg w-full">
             <Flippers flippersPages={flippersPages} />
           </div>
         ) : (

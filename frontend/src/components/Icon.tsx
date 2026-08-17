@@ -1,8 +1,8 @@
 import type { SVGProps } from "react";
-import icons from "../constants/icons";
+import icons, { type iconsType } from "../constants/icons";
 
 type IconProps = SVGProps<SVGSVGElement> & {
-  name: keyof typeof icons;
+  name: iconsType;
   autoSize?: boolean;
   className?: string;
 };

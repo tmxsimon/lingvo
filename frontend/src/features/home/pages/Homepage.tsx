@@ -12,7 +12,7 @@ const Homepage = () => {
   return (
     <>
       <div className="h-screen-no-navbar-page flex items-center justify-center">
-        <div className="mb-after-navbar flex items-center justify-center gap-24">
+        <div className="flex items-center justify-center gap-24">
           <motion.div
             className="flex max-w-260 min-w-100 flex-col items-center text-center md:text-left lg:items-start"
             initial={{ opacity: 0, x: -60 }}

@@ -54,7 +54,7 @@ const LanguagesPage = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col w-full items-center">
         <AddSearchPanel
           title={t("languages.yourLanguages")}
           onAddClick={openModalAdd}
@@ -73,7 +73,7 @@ const LanguagesPage = () => {
 
             reorderLanguages.mutate(orderedIds);
           }}
-          className="gap-base mt-base flex h-full w-300 flex-col items-center"
+          className="gap-base mt-base flex h-full w-full flex-col items-center"
         >
           {languages?.map((language) => (
             <Language

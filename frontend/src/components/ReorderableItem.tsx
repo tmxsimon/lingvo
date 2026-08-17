@@ -28,7 +28,7 @@ const ReorderableItem = ({
         className="text-gray-neutral-300 hover:text-gray-neutral-500 size-6 cursor-pointer select-none"
         onPointerDown={(e) => controls.start(e)}
       />
-      <div className="flex w-full">{content}</div>
+      <div className="flex w-full min-w-0 xs:text-base text-sm">{content}</div>
       <div className="flex min-w-16 justify-end">
         {note && (
           <div
