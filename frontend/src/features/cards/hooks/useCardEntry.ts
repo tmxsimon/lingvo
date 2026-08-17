@@ -68,7 +68,7 @@ export default function useCardEntry(
     }
 
     if (!currentEntry) {
-      setCurrentEntry(queue[0]);
+      handleNext();
       return;
     }
   }, [queue]);
