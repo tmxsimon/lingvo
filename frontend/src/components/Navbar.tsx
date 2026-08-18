@@ -195,14 +195,14 @@ const Navbar = () => {
         <>
           <NavbarButton
             onClick={switchMenu}
-            className="absolute top-5 right-5 z-150 hover:cursor-pointer md:hidden"
+            className="fixed top-5 right-5 z-150 hover:cursor-pointer md:hidden"
           >
             <Icon
               name={isMenuOpened ? "close" : "menu"}
               className="z-100 size-8"
             />
           </NavbarButton>
-          <div className="space-y-base backdrop-blur-base absolute inset-0 z-100 flex h-screen w-screen flex-col items-center justify-center backdrop-brightness-10 md:hidden">
+          <div className="space-y-base backdrop-blur-base fixed inset-0 z-100 flex h-screen w-screen flex-col items-center justify-center backdrop-brightness-10 md:hidden">
             {linksWithLanguage}
             {linksWithUser}
             <div className="mt-base space-y-base">{authButtons}</div>
