@@ -102,7 +102,7 @@ const CardsPage = () => {
               />
             </div>
 
-            <div className="gap-base flex w-full items-center justify-center">
+            <div className="gap-base px-base flex w-full items-center justify-center">
               <div className="flex">
                 <IconButton
                   icon={

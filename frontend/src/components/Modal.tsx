@@ -47,7 +47,7 @@ const Modal = ({
         <>
           <div className="fixed inset-0 z-100 backdrop-brightness-50"></div>
           <div
-            className="fixed inset-0 z-100 flex h-screen w-screen items-center justify-center"
+            className="px-base fixed inset-0 z-100 flex h-screen w-screen items-center justify-center"
             onClick={handleBackdropClick}
           >
             <div
