@@ -29,6 +29,12 @@ const Modal = ({
   };
 
   useEffect(() => {
+    if (open) {
+      document.documentElement.classList.add("overflow-y-hidden");
+    } else {
+      document.documentElement.classList.remove("overflow-y-hidden");
+    }
+
     if (!open || !closeModal) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
