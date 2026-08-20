@@ -54,6 +54,7 @@ const ModalEditGroup = ({
           text={t("delete")}
           theme="danger"
           size="large"
+          confirm
           autoWidth
           onClick={() => {
             deleteGroup(group!.id);

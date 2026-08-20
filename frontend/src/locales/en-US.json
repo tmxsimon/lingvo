@@ -5,6 +5,7 @@
     "change": "Change",
     "delete": "Delete",
     "close": "Close",
+    "confirm": "Confirm",
 
     "allEntries": "All entries",
     "entriesNotFound": "Entries not found",

@@ -94,6 +94,7 @@ const ModalEditnote = ({
           text={t("delete")}
           theme="danger"
           size="large"
+          confirm
           autoWidth
           onClick={() => {
             deleteNote(note!.id);

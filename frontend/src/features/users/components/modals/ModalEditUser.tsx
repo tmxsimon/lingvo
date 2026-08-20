@@ -94,6 +94,7 @@ const ModalEditUser = ({
           text={t("delete")}
           theme="danger"
           size="large"
+          confirm
           autoWidth
           onClick={() => {
             deleteUser(user!.id);

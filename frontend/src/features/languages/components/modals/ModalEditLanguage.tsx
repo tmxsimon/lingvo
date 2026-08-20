@@ -68,6 +68,7 @@ const ModalEditLanguage = ({
           text={t("delete")}
           theme="danger"
           size="large"
+          confirm
           autoWidth
           onClick={() => {
             deleteLanguage(language!.id);
