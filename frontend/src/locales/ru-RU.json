@@ -31,7 +31,7 @@
       "newPassword": "Новый пароль",
       "profilePicture": "Фото профиля",
       "profile": "Профиль",
-      "editUser": "Редактировать пользователя",
+      "editUser": "Редактировать",
 
       "validation": {
         "signInIncorrect": "Неверное имя или пароль",
