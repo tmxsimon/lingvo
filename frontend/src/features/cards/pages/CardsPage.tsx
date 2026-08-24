@@ -14,6 +14,8 @@ import { useState } from "react";
 import SentenceModal from "../components/modals/SentenceModal";
 import PageTitleWithButton from "../../../components/other/PageTitleWithButton";
 import useTemperature from "../../../hooks/useTemperature";
+import ModalEditEntry from "../../dictionary/components/modals/ModalEditEntry";
+import { useDictionaryEntries } from "../../dictionary/hooks/useDictionaryEntries";
 
 const CardsPage = () => {
   // TODO: clean up this section
@@ -31,6 +33,11 @@ const CardsPage = () => {
     isOpen: isOpenSentence,
     openModal: openModalSentence,
     closeModal: closeModalSentence,
+  } = useModal();
+  const {
+    isOpen: isOpenEntriesEdit,
+    openModal: openModalEntriesEdit,
+    closeModal: closeModalEntriesEdit,
   } = useModal();
 
   const [isAuto, setIsAuto] = useState<boolean>(false);
@@ -66,11 +73,17 @@ const CardsPage = () => {
     openModalSentence,
     isOpenSentence,
     durationSeconds,
+    isOpenEntriesEdit,
     changeTemperature,
   );
 
+  const { editEntry, deleteEntry } = useDictionaryEntries(
+    group?.id,
+    parseInt(language),
+  );
+
   if (isLoading) return <Loading />;
-  if (error) return <div>{error.message}</div>;
+  if (error) return <div>{error?.message}</div>;
 
   const button = (
     <Button
@@ -123,6 +136,12 @@ const CardsPage = () => {
                   padding={false}
                   onClick={() => setIsAuto((prev) => !prev)}
                 />
+                <IconButton
+                  icon={<Icon name="change" className="size-8" />}
+                  style="text"
+                  padding={false}
+                  onClick={openModalEntriesEdit}
+                />
               </div>
               <Temperature
                 value={temperature}
@@ -157,6 +176,31 @@ const CardsPage = () => {
         isOpen={isOpenSentence}
         closeModal={closeModalSentence}
         handleNext={handleNext}
+      />
+
+      <ModalEditEntry
+        group={group}
+        entry={currentEntry}
+        isOpen={isOpenEntriesEdit}
+        closeModal={closeModalEntriesEdit}
+        editEntry={(
+          id: number,
+          groupId: number,
+          content: string,
+          translation: string,
+          note?: string,
+          temperature?: number,
+        ) =>
+          editEntry.mutate({
+            id,
+            groupId,
+            content,
+            translation,
+            note,
+            temperature,
+          })
+        }
+        deleteEntry={() => deleteEntry.mutate(currentEntry!.id)}
       />
     </>
   );

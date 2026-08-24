@@ -9,10 +9,12 @@ import type { SelectOptionType } from "../../../../types";
 import useModalEntry from "../../hooks/useModalEntry";
 import ModalTitle from "../../../../components/ModalTitle";
 import Temperature from "../../../cards/components/Temperature";
+import { useDictionaryGroups } from "../../hooks/useDictionaryGroups";
+import { useLanguageContext } from "../../../languages/contexts/languageProvider";
+import Loading from "../../../../components/Loading";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
-  groups: DictionaryGroupType[];
   group: DictionaryGroupType | null;
   isOpen: boolean;
   closeModal: () => void;
@@ -29,7 +31,6 @@ type ModalEditEntryProps = {
 
 const ModalEditEntry = ({
   entry,
-  groups,
   group,
   isOpen,
   closeModal,
@@ -37,6 +38,14 @@ const ModalEditEntry = ({
   deleteEntry,
 }: ModalEditEntryProps) => {
   const { t } = useTranslation();
+
+  const { language } = useLanguageContext();
+
+  const {
+    groups,
+    isLoading: isLoading,
+    error: error,
+  } = useDictionaryGroups(parseInt(language));
 
   const {
     content,
@@ -65,15 +74,7 @@ const ModalEditEntry = ({
       value: entry?.group_id || group?.id,
       text: groups.find((g) => g.id === entry?.group_id)?.name || "",
     });
-  }, [
-    entry,
-    groups,
-    group,
-    setContent,
-    setTranslation,
-    setNote,
-    setTemperature,
-  ]);
+  }, [entry, group, setContent, setTranslation, setNote, setTemperature]);
 
   const options: SelectOptionType[] = useMemo(() => {
     const opts: SelectOptionType[] = [];
@@ -82,6 +83,9 @@ const ModalEditEntry = ({
     });
     return opts;
   }, [groups]);
+
+  if (isLoading) return <Loading />;
+  if (error) return <div>{error?.message}</div>;
 
   return (
     <Modal

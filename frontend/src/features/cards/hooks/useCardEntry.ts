@@ -18,6 +18,7 @@ export default function useCardEntry(
   openModalSentence: () => void,
   isOpenSentence: boolean = false,
   durationSeconds: number = 5,
+  isOpenEditEntry: boolean = false,
   changeTemperature: (
     entryId: number,
     action: TemperatureActionType,
@@ -26,7 +27,7 @@ export default function useCardEntry(
   ) => Promise<void> = async () => {},
 ) {
   const query = useQuery({
-    queryKey: [groupId, language, "cardEntries"],
+    queryKey: ["cardEntries", groupId, language],
     queryFn: () => fetchCardsEntries(groupId, language),
     refetchOnWindowFocus: false,
   });
@@ -37,13 +38,17 @@ export default function useCardEntry(
 
   const [queue, setQueue] = useState<DictionaryEntryType[]>(entries);
 
-  useEffect(() => {
-    setQueue(entries);
-  }, [entries]);
-
   const [currentEntry, setCurrentEntry] = useState<DictionaryEntryType | null>(
     null,
   );
+
+  useEffect(() => {
+    setQueue(entries);
+    setCurrentEntry((previousEntry) => {
+      if (!previousEntry) return previousEntry;
+      return entries.find((entry) => entry.id === previousEntry.id) ?? null;
+    });
+  }, [entries]);
 
   const [temperature, setTemperature] = useState<number>(
     currentEntry?.temperature ?? 100,
@@ -51,7 +56,7 @@ export default function useCardEntry(
 
   useEffect(() => {
     if (currentEntry) setTemperature(currentEntry.temperature);
-  }, [currentEntry?.id]);
+  }, [currentEntry]);
 
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isReversed, setIsReversed] = useState<boolean>(
@@ -154,7 +159,7 @@ export default function useCardEntry(
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!currentEntry || isOpenSettings) return;
 
-      if (!isOpenSentence) {
+      if (!isOpenSentence && !isOpenEditEntry) {
         if (event.key === "ArrowUp") {
           event.preventDefault();
           changeTemperatureCards("increase");
@@ -167,7 +172,7 @@ export default function useCardEntry(
         }
       }
 
-      if (event.key === " ") {
+      if (event.key === " " && !isOpenEditEntry) {
         if (!isOpenSentence) event.preventDefault();
         handleNextState();
       }

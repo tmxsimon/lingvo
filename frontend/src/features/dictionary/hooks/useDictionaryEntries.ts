@@ -89,6 +89,7 @@ export function useDictionaryEntries(
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["entries"] });
+      queryClient.invalidateQueries({ queryKey: ["cardEntries"] });
     },
   });
 
@@ -119,6 +120,7 @@ export function useDictionaryEntries(
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["entries"] });
+      queryClient.invalidateQueries({ queryKey: ["cardEntries"] });
     },
   });
 
@@ -126,6 +128,7 @@ export function useDictionaryEntries(
     mutationFn: (id: number) => api.delete(`${PATH}/entries/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["entries"] });
+      queryClient.invalidateQueries({ queryKey: ["cardEntries"] });
     },
   });
 

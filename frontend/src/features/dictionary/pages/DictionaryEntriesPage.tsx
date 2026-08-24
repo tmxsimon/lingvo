@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next";
 import Loading from "../../../components/Loading";
 import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
-import { useDictionaryGroups } from "../hooks/useDictionaryGroups";
 import AddSearchPanel from "../../../components/other/AddSearchPanel";
 import Button from "../../../components/Button";
 
@@ -57,18 +56,11 @@ const DictionaryEntriesPage = () => {
     error: errorEntries,
   } = useDictionaryEntries(resolvedGroupId, parsedLanguage);
 
-  const {
-    groups,
-    isLoading: isLoadingGroups,
-    error: errorGroups,
-  } = useDictionaryGroups(parsedLanguage);
-
   const groupTitle = group?.name || t("allEntries");
   const showAddEntry = resolvedGroupId !== undefined;
 
-  if (isLoadingEntries || isLoadingGroups) return <Loading />;
+  if (isLoadingEntries) return <Loading />;
   if (errorEntries) return <div>{errorEntries?.message}</div>;
-  if (errorGroups) return <div>{errorGroups?.message}</div>;
 
   return (
     <>
@@ -133,7 +125,6 @@ const DictionaryEntriesPage = () => {
         }
       />
       <ModalEditEntry
-        groups={groups!}
         group={group}
         entry={chosenEntry!}
         isOpen={isOpenEntriesEdit}
