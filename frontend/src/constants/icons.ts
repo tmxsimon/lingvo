@@ -24,6 +24,8 @@ import SignUp from "../assets/icons/sign-up.svg?react";
 import SignOut from "../assets/icons/sign-out.svg?react";
 import Play from "../assets/icons/play.svg?react";
 import Pause from "../assets/icons/pause.svg?react";
+import Search from "../assets/icons/search.svg?react";
+import Friends from "../assets/icons/friends.svg?react";
 
 import English from "../assets/icons/flags/en-US.svg?react";
 import Czech from "../assets/icons/flags/cs-CZ.svg?react";
@@ -59,6 +61,8 @@ const ICONS = {
   signOut: SignOut,
   play: Play,
   pause: Pause,
+  search: Search,
+  friends: Friends,
 
   // Languages
   "en-US": English,

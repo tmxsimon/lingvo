@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { buttonColorMap, buttonHeightMap } from "../utils/buttonMaps";
 import { useTranslation } from "react-i18next";
 
-type ButtonProps = Omit<
+export type ButtonProps = Omit<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   "size"
 > & {
@@ -14,7 +14,7 @@ type ButtonProps = Omit<
   style?: "primary" | "secondary" | "tertiary" | "text";
   theme?: "brand" | "neutral" | "danger" | "warning";
   size?: "small" | "medium" | "large" | "auto";
-  onClick: any;
+  onClick?: any;
   autoWidth?: boolean;
   underline?: boolean;
   hoverEffect?: boolean;
@@ -68,6 +68,10 @@ const Button = ({
       setTextToDisplay(text);
     }
   }, [isClicked]);
+
+  useEffect(() => {
+    setTextToDisplay(text);
+  }, [text]);
 
   return (
     <button

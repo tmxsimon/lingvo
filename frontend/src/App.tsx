@@ -15,6 +15,8 @@ import SignInPage from "./features/users/pages/SignInPage";
 import ProfilePage from "./features/users/pages/ProfilePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage";
+import SearchFriendsPage from "./features/users/pages/SearchFriendsPage";
+import OwnFriendsPage from "./features/users/pages/OwnFriendsPage";
 
 const App = () => {
   return (
@@ -26,7 +28,11 @@ const App = () => {
           <Route path="/sign-in" element={<SignInPage />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/users" element={<ProtectedRoute />}>
-              <Route path="me" element={<ProfilePage />} />
+              <Route path="search-friends" element={<SearchFriendsPage />} />
+              <Route path="me">
+                <Route index element={<ProfilePage />} />
+                <Route path="friends" element={<OwnFriendsPage />} />
+              </Route>
             </Route>
             <Route path="/languages" element={<LanguagesPage />} />
           </Route>

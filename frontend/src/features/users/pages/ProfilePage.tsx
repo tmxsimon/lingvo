@@ -44,6 +44,12 @@ const ProfilePage = () => {
               onClick={openModal}
             />
           </div>
+          <Button
+            theme="brand"
+            style="primary"
+            text={t("users.friends.friends")}
+            onClick={() => navigate("friends")}
+          />
           <div className="gap-base-sm flex w-full justify-center">
             <button
               onClick={() => switchLanguage(setLng)}

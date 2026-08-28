@@ -33,6 +33,17 @@
       "profile": "Профиль",
       "editUser": "Редактировать",
 
+      "friends": {
+        "friends": "Друзья",
+        "myFriends": "Мои друзья",
+        "searchFriends": "Поиск друзей",
+        "sendRequest": "Отправить запрос",
+        "accept": "Принять",
+        "reject": "Отклонить",
+        "cancel": "Отменить",
+        "unfriend": "Удалить"
+      },
+
       "validation": {
         "signInIncorrect": "Неверное имя или пароль",
         "usernameLength": "Имя должно содержать от 1 до 16 символов"

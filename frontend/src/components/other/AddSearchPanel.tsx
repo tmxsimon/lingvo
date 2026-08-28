@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next";
 import Icon from "../Icon";
 import IconButton from "../IconButton";
-import Input from "../Input";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import PageTitleWithButton from "./PageTitleWithButton";
+import Search from "../Search";
 
 type AddSearchPanelProps = {
   title: string;
@@ -36,7 +36,7 @@ const AddSearchPanel = ({
   );
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex w-full flex-col items-center">
       <PageTitleWithButton title={title!} button={button} />
       <div className="gap-base mt-base-sm flex w-full items-center justify-center">
         {onAddClick && (
@@ -46,10 +46,8 @@ const AddSearchPanel = ({
             onClick={onAddClick}
           />
         )}
-        <Input
+        <Search
           placeholder={t("search")}
-          autoWidth={false}
-          className="max-w-92 w-full"
           onChange={(e) => onSearchChange(e.target.value)}
         />
       </div>

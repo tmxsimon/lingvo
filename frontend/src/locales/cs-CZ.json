@@ -33,6 +33,17 @@
       "profile": "Profil",
       "editUser": "Upravit uživatele",
 
+      "friends": {
+        "friends": "Přátelé",
+        "myFriends": "Moji přátelé",
+        "searchFriends": "Hledat přátele",
+        "sendRequest": "Poslat žádost",
+        "accept": "Přijmout",
+        "reject": "Odmítnout",
+        "cancel": "Zrušit",
+        "unfriend": "Odebrat"
+      },
+
       "validation": {
         "signInIncorrect": "Nesprávné jméno nebo heslo",
         "usernameLength": "Jméno musí mít 1 až 16 znaků"

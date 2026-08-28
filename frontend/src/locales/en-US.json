@@ -33,6 +33,17 @@
       "profile": "Profile",
       "editUser": "Edit user",
 
+      "friends": {
+        "friends": "Friends",
+        "myFriends": "My friends",
+        "searchFriends": "Search friends",
+        "sendRequest": "Send request",
+        "accept": "Accept",
+        "reject": "Reject",
+        "cancel": "Cancel",
+        "unfriend": "Unfriend"
+      },
+
       "validation": {
         "signInIncorrect": "Incorrect username or password",
         "usernameLength": "Username must be between 1 and 16 characters"

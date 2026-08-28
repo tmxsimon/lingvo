@@ -6,7 +6,7 @@ from sqlmodel import Session, select
 from pwdlib import PasswordHash
 from src.db import get_session
 from src.utils.images import add_image, remove_image, replace_image
-from .models import User
+from .models import User, UserFriend
 
 UPLOADS_URL = "assets/user_uploads/profile_pictures"
 DEFAULT_IMAGE_URL = "assets/default_images/default_user.png"
@@ -136,3 +136,127 @@ def update_user_db(
     session.refresh(user)
 
     return user
+
+# friends
+
+def search_friend_db(
+    session: Session,
+    username: str
+):
+    users = session.exec(select(User).where(User.username.contains(username))).all()
+    return users
+
+def get_user_friends_db(
+    session: Session,
+    user_id: int
+):
+    user = session.get(User, user_id)
+    if user is None:
+        return None
+
+    user_friends = session.exec(
+        select(User)
+        .join(
+            UserFriend,
+            (UserFriend.uid1 == User.id) | (UserFriend.uid2 == User.id)
+        )
+        .where(
+            ((UserFriend.uid1 == user_id) | (UserFriend.uid2 == user_id))
+            & (User.id != user_id)
+            & UserFriend.is_approved
+        )
+    ).all()
+
+    pending_friends_from_user = session.exec(
+        select(User)
+        .join(
+            UserFriend,
+            (UserFriend.uid1 == User.id) | (UserFriend.uid2 == User.id)
+        )
+        .where(
+            ((UserFriend.uid1 == user_id) | (UserFriend.uid2 == user_id))
+            & (User.id != user_id)
+            & (user_id == UserFriend.requestor)
+            & ~UserFriend.is_approved
+        )
+    ).all()
+
+    pending_friends_for_user = session.exec(
+        select(User)
+        .join(
+            UserFriend,
+            (UserFriend.uid1 == User.id) | (UserFriend.uid2 == User.id)
+        )
+        .where(
+            ((UserFriend.uid1 == user_id) | (UserFriend.uid2 == user_id))
+            & (User.id != user_id)
+            & (user_id != UserFriend.requestor)
+            & ~UserFriend.is_approved
+        )
+    ).all()
+
+    return {"friends": user_friends, "pending_friends_from_user": pending_friends_from_user, "pending_friends_for_user": pending_friends_for_user}
+
+def add_user_friend_db(
+    session: Session,
+    user_id: int,
+    friend_id: int
+):
+    user = session.get(User, user_id)
+    friend = session.get(User, friend_id)
+    if user is None or friend is None:
+        return None
+    
+    existing_friendship = session.exec(
+        select(UserFriend).where(
+            ((UserFriend.uid1 == min(user_id, friend_id)) & (UserFriend.uid2 == max(user_id, friend_id)))
+        )
+    ).first()
+
+    if existing_friendship:
+        return None
+
+    new_friendship = UserFriend(uid1=min(user_id, friend_id), uid2=max(user_id, friend_id), requestor=user_id, is_approved=False)
+    session.add(new_friendship)
+    session.commit()
+
+    return new_friendship
+
+def approve_user_friend_db(
+    session: Session,
+    user_id: int,
+    friend_id: int
+):
+    friendship = session.exec(
+        select(UserFriend).where(
+            ((UserFriend.uid1 == min(user_id, friend_id)) & (UserFriend.uid2 == max(user_id, friend_id)))
+        )
+    ).first()
+
+    if friendship is None or friendship.requestor != friend_id:
+        return None
+    
+    friendship.is_approved = True
+    session.add(friendship)
+    session.commit()
+
+    return friendship
+
+def remove_user_friend_db(
+    session: Session,
+    user_id: int,
+    friend_id: int
+):
+    friendship = session.exec(
+        select(UserFriend).where(
+            ((UserFriend.uid1 == min(user_id, friend_id)) & (UserFriend.uid2 == max(user_id, friend_id)))
+        )
+    ).first()
+
+    if friendship is None:
+        return None
+    
+    session.delete(friendship)
+    session.commit()
+
+    return friendship

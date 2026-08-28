@@ -8,6 +8,11 @@ from .service import (
     create_user_db,
     delete_user_db,
     update_user_db,
+    search_friend_db,
+    get_user_friends_db,
+    add_user_friend_db,
+    approve_user_friend_db,
+    remove_user_friend_db,
 )
 from .models import User, UserRead
 
@@ -105,3 +110,58 @@ async def update_user(
         )
     
     return user
+
+# friends
+
+@router.get("/friends/search", response_model=list[UserRead])
+async def search_friend(username: str, session = SessionDep):
+    friends = search_friend_db(session=session, username=username)
+    return friends
+
+@router.get("/{user_id}/friends")
+async def get_user_friends(user_id: int, session = SessionDep):
+    friends = get_user_friends_db(session=session, user_id=user_id)
+
+    if friends is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No friends found",
+        )
+    
+    return friends
+
+@router.post("/{user_id}/friends/{friend_id}")
+async def add_user_friend(user_id: int, friend_id: int, session = SessionDep):
+    friend = add_user_friend_db(session=session, user_id=user_id, friend_id=friend_id)
+
+    if friend is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Friend not added",
+        )
+    
+    return friend
+
+@router.put("/{user_id}/friends/{friend_id}/approve")
+async def approve_user_friend(user_id: int, friend_id: int, session = SessionDep):
+    friend = approve_user_friend_db(session=session, user_id=user_id, friend_id=friend_id)
+
+    if friend is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Friend not approved",
+        )
+    
+    return friend
+
+@router.delete("/{user_id}/friends/{friend_id}")
+async def remove_user_friend(user_id: int, friend_id: int, session = SessionDep):
+    friend = remove_user_friend_db(session=session, user_id=user_id, friend_id=friend_id)
+
+    if friend is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Friend not removed",
+        )
+    
+    return friend
