@@ -10,8 +10,9 @@ import Button from "../../../components/Button";
 import useModal from "../../../hooks/useModal";
 import ModalEditUser from "../components/modals/ModalEditUser";
 import { useUser } from "../hooks/useUser";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import type { iconsType } from "../../../constants/icons";
+import Loading from "../../../components/Loading";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -19,64 +20,82 @@ const ProfilePage = () => {
   const { theme, toggleTheme } = useTheme();
   const [lng, setLng] = useState(i18n.language);
 
-  const { user, signOut } = useAuth();
-  const { editUser, deleteUser } = useUser();
+  const { userId } = useParams();
+  const { user: currentUser, signOut } = useAuth();
 
+  const { user, isLoading, error, editUser, deleteUser } = useUser(
+    parseInt(userId!),
+  );
   const { isOpen, openModal, closeModal } = useModal();
+
+  if (isLoading) return <Loading />;
+  if (error) return <div>{error?.message}</div>;
+
+  const isSelfProfile = parseInt(userId!) === currentUser?.id;
 
   return (
     <>
       <div className="h-screen-no-navbar-page flex w-full items-center justify-center">
         <div className="border-brand-neutral-200 backdrop-blur-base p-base-lg rounded-base flex h-full max-h-154 w-full max-w-192 flex-col items-center justify-between border backdrop-brightness-95">
-          <ModalTitle size="large" text={t("users.profile")} />
-          <div className="mt-base flex w-full flex-col items-center">
-            <img
-              className="border-brand-neutral-200 aspect-square w-full max-w-64 rounded-full border object-cover"
-              src={`http://localhost:8000/${user?.image_url}`}
-            />
-            <div className="mt-base text-3xl">{user?.username}</div>
-            <Button
-              theme="neutral"
-              style="text"
-              size="auto"
-              text={t("users.editUser")}
-              iconBack={<Icon name="change" className="size-4" />}
-              onClick={openModal}
-            />
-          </div>
-          <Button
-            theme="brand"
-            style="primary"
-            text={t("users.friends.friends")}
-            onClick={() => navigate("friends")}
-          />
-          <div className="gap-base-sm flex w-full justify-center">
-            <button
-              onClick={() => switchLanguage(setLng)}
-              className="cursor-pointer"
-            >
-              <Icon name={lng as iconsType} className="size-8" />
-            </button>
-            <button onClick={toggleTheme} className="cursor-pointer">
-              <Icon
-                className="hover:text-brand-300 size-8"
-                name={theme === "dark" ? "moon" : "sun"}
+          <div className="gap-base flex h-full flex-col items-center">
+            <ModalTitle size="large" text={t("users.profile")} />
+            <div className="mt-base flex h-full w-full flex-col items-center justify-center">
+              <img
+                className="border-brand-neutral-200 aspect-square w-full max-w-64 rounded-full border object-cover"
+                src={`http://localhost:8000/${user?.image_url}`}
               />
-            </button>
+              <div className="mt-base text-3xl">{user?.username}</div>
+              {isSelfProfile && (
+                <Button
+                  theme="neutral"
+                  style="text"
+                  size="auto"
+                  text={t("users.editUser")}
+                  iconBack={<Icon name="change" className="size-4" />}
+                  onClick={openModal}
+                />
+              )}
+            </div>
           </div>
+          {isSelfProfile && (
+            <div className="gap-base flex flex-col items-center">
+              <Button
+                theme="brand"
+                style="primary"
+                text={t("users.friends.friends")}
+                onClick={() => navigate("friends")}
+              />
+              <div className="gap-base-sm flex w-full justify-center">
+                <button
+                  onClick={() => switchLanguage(setLng)}
+                  className="cursor-pointer"
+                >
+                  <Icon name={lng as iconsType} className="size-8" />
+                </button>
+                <button onClick={toggleTheme} className="cursor-pointer">
+                  <Icon
+                    className="hover:text-brand-300 size-8"
+                    name={theme === "dark" ? "moon" : "sun"}
+                  />
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      <ModalEditUser
-        user={user}
-        isOpen={isOpen}
-        closeModal={closeModal}
-        editUser={editUser}
-        deleteUser={(id: number) => {
-          deleteUser(id);
-          signOut();
-          navigate("/");
-        }}
-      />
+      {isSelfProfile && (
+        <ModalEditUser
+          user={currentUser}
+          isOpen={isOpen}
+          closeModal={closeModal}
+          editUser={editUser}
+          deleteUser={(id: number) => {
+            deleteUser(id);
+            signOut();
+            navigate("/");
+          }}
+        />
+      )}
     </>
   );
 };

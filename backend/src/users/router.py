@@ -4,6 +4,7 @@ from .service import (
     create_access_token,
     authenticate_user,
     get_current_user,
+    get_user_db,
     get_users_db,
     create_user_db,
     delete_user_db,
@@ -40,6 +41,18 @@ async def login_for_access_token(
 @router.get("/me", response_model=UserRead)
 async def read_users_me(current_user: User = Depends(get_current_user)):
     return current_user
+
+@router.get("/{id}", response_model=UserRead)
+async def get_user(id: int, session = SessionDep):
+    user = get_user_db(session=session, id=id)
+
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found",
+        )
+
+    return user
 
 @router.get("/", response_model=list[UserRead])
 async def get_users(session = SessionDep):

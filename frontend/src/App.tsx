@@ -29,7 +29,7 @@ const App = () => {
           <Route element={<ProtectedRoute />}>
             <Route path="/users" element={<ProtectedRoute />}>
               <Route path="search-friends" element={<SearchFriendsPage />} />
-              <Route path="me">
+              <Route path=":userId">
                 <Route index element={<ProfilePage />} />
                 <Route path="friends" element={<OwnFriendsPage />} />
               </Route>

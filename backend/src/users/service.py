@@ -68,6 +68,14 @@ def get_current_user(
     return user
 
 
+def get_user_db(session: Session, id):
+    user = session.get(User, id)
+
+    if user is None:
+        return None
+
+    return user
+
 def get_users_db(session: Session):
     return session.exec(select(User)).all()
 

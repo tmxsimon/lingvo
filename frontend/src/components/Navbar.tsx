@@ -129,7 +129,7 @@ const Navbar = () => {
           className="hover:text-brand-300 size-8 rotate-180"
         />
       </NavbarButton>
-      <NavbarLink to="/users/me" closeMenu={closeMenu}>
+      <NavbarLink to={`/users/${user.id}`} closeMenu={closeMenu}>
         <Icon name="user" className="hover:text-brand-300 size-8" />
       </NavbarLink>
     </>

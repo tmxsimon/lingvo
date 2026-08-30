@@ -8,15 +8,8 @@ import PageTitle from "../../../components/PageTitle";
 const OwnFriendsPage = () => {
   const { t } = useTranslation();
 
-  const {
-    isLoading,
-    error,
-    pendingFriendsFromUserList,
-    pendingFriendsForUserList,
-    friendsList,
-    searchValue,
-    setSearchValue,
-  } = useOwnFriendsPage();
+  const { isLoading, error, allFriendsList, searchValue, setSearchValue } =
+    useOwnFriendsPage();
 
   if (error) return <div>{error?.message}</div>;
 
@@ -36,21 +29,9 @@ const OwnFriendsPage = () => {
           <Loading />
         ) : (
           <div className="w-full">
-            {!!pendingFriendsFromUserList?.length && (
-              <div className="mt-base gap-base flex w-full flex-col items-center justify-between">
-                {pendingFriendsFromUserList}
-              </div>
-            )}
-            {!!pendingFriendsForUserList?.length && (
-              <div className="mt-base gap-base flex w-full flex-col items-center justify-between">
-                {pendingFriendsForUserList}
-              </div>
-            )}
-            {!!friendsList?.length && (
-              <div className="mt-base gap-base flex w-full flex-col items-center justify-between">
-                {friendsList}
-              </div>
-            )}
+            <div className="mt-base gap-base flex w-full flex-col items-center justify-between">
+              {allFriendsList}
+            </div>
           </div>
         )}
       </div>

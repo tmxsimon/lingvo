@@ -8,12 +8,19 @@ export const fetchMe = async () => {
   return result.data;
 };
 
+export const fetchUser = async (id: number) => {
+  const result = await api.get<UserType>(`${PATH}/${id}`);
+  return result.data;
+};
+
+export type AllFriendsType = {
+  friends: UserType[];
+  pending_friends_from_user: UserType[];
+  pending_friends_for_user: UserType[];
+};
+
 export const fetchFriends = async (userId: number) => {
-  const result = await api.get<{
-    friends: UserType[];
-    pending_friends_from_user: UserType[];
-    pending_friends_for_user: UserType[];
-  }>(`${PATH}/${userId}/friends`);
+  const result = await api.get<AllFriendsType>(`${PATH}/${userId}/friends`);
   return result.data;
 };
 

@@ -1,10 +1,21 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "../../../lib/api";
+import { fetchUser } from "../services";
 
 const PATH = "/users";
 
-export function useUser() {
+export function useUser(id: number) {
   const queryClient = useQueryClient();
+
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["user", id],
+    queryFn: () => fetchUser(id),
+    enabled: !!id,
+  });
 
   const editUserMutation = useMutation({
     mutationFn: async ({
@@ -63,6 +74,9 @@ export function useUser() {
   };
 
   return {
+    user,
+    isLoading,
+    error,
     editUser,
     deleteUser,
   };
