@@ -18,23 +18,25 @@ const useOwnFriendsPage = () => {
 
   const allFriends = Object.values(friends || []).flat();
 
-  const allFriendsList = allFriends.map((friend, i) => {
-    return (
-      <UserItem
-        key={i}
-        user={friend}
-        button={
-          <UserItemButton
-            approveFriend={approveFriend}
-            removeFriend={removeFriend}
-            allFriends={friends!}
-            friend={friend}
-            user={user!}
-          />
-        }
-      />
-    );
-  });
+  const allFriendsList = allFriends
+    .map((friend, i) => {
+      return (
+        <UserItem
+          key={i}
+          user={friend}
+          button={
+            <UserItemButton
+              approveFriend={approveFriend}
+              removeFriend={removeFriend}
+              allFriends={friends!}
+              friend={friend}
+              user={user!}
+            />
+          }
+        />
+      );
+    })
+    .reverse();
 
   return {
     isLoading,
