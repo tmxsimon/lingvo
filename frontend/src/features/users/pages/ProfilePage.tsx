@@ -13,6 +13,8 @@ import { useUser } from "../hooks/useUser";
 import { useNavigate, useParams } from "react-router-dom";
 import type { iconsType } from "../../../constants/icons";
 import Loading from "../../../components/Loading";
+import UserItemButton from "../components/UserItemButton";
+import useFriends from "../hooks/useFriends";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -26,12 +28,23 @@ const ProfilePage = () => {
   const { user, isLoading, error, editUser, deleteUser } = useUser(
     parseInt(userId!),
   );
-  const { isOpen, openModal, closeModal } = useModal();
-
-  if (isLoading) return <Loading />;
-  if (error) return <div>{error?.message}</div>;
 
   const isSelfProfile = parseInt(userId!) === currentUser?.id;
+
+  const {
+    friends,
+    addFriend,
+    approveFriend,
+    removeFriend,
+    isLoading: isLoadingFriends,
+    error: errorFriends,
+  } = useFriends(currentUser?.id, !isSelfProfile);
+
+  const { isOpen, openModal, closeModal } = useModal();
+
+  if (isLoading || isLoadingFriends) return <Loading />;
+  if (error || errorFriends)
+    return <div>{error?.message || errorFriends?.message}</div>;
 
   return (
     <>
@@ -57,30 +70,41 @@ const ProfilePage = () => {
               )}
             </div>
           </div>
-          {isSelfProfile && (
-            <div className="gap-base flex flex-col items-center">
-              <Button
-                theme="brand"
-                style="primary"
-                text={t("users.friends.friends")}
-                onClick={() => navigate("friends")}
+          <div className="gap-base flex flex-col items-center">
+            {isSelfProfile ? (
+              <>
+                <Button
+                  theme="brand"
+                  style="primary"
+                  text={t("users.friends.friends")}
+                  onClick={() => navigate("friends")}
+                />
+                <div className="gap-base-sm flex w-full justify-center">
+                  <button
+                    onClick={() => switchLanguage(setLng)}
+                    className="cursor-pointer"
+                  >
+                    <Icon name={lng as iconsType} className="size-8" />
+                  </button>
+                  <button onClick={toggleTheme} className="cursor-pointer">
+                    <Icon
+                      className="hover:text-brand-300 size-8"
+                      name={theme === "dark" ? "moon" : "sun"}
+                    />
+                  </button>
+                </div>
+              </>
+            ) : (
+              <UserItemButton
+                allFriends={friends!}
+                addFriend={addFriend}
+                approveFriend={approveFriend}
+                removeFriend={removeFriend}
+                friendId={parseInt(userId!)}
+                userId={currentUser!.id}
               />
-              <div className="gap-base-sm flex w-full justify-center">
-                <button
-                  onClick={() => switchLanguage(setLng)}
-                  className="cursor-pointer"
-                >
-                  <Icon name={lng as iconsType} className="size-8" />
-                </button>
-                <button onClick={toggleTheme} className="cursor-pointer">
-                  <Icon
-                    className="hover:text-brand-300 size-8"
-                    name={theme === "dark" ? "moon" : "sun"}
-                  />
-                </button>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
       {isSelfProfile && (

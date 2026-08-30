@@ -6,7 +6,7 @@ import type { UserType } from "../types";
 
 const PATH = "/users";
 
-const useFriends = (userId: number) => {
+const useFriends = (userId?: number, isEnabled: boolean = true) => {
   const queryClient = useQueryClient();
 
   const [searchValue, setSearchValue] = useState<string>(""); // filter your friends by username
@@ -19,7 +19,8 @@ const useFriends = (userId: number) => {
     error,
   } = useQuery({
     queryKey: ["friends", userId],
-    queryFn: () => fetchFriends(userId),
+    queryFn: () => fetchFriends(userId!),
+    enabled: isEnabled && !!userId,
   });
 
   const {

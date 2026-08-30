@@ -29,8 +29,8 @@ const useOwnFriendsPage = () => {
               approveFriend={approveFriend}
               removeFriend={removeFriend}
               allFriends={friends!}
-              friend={friend}
-              user={user!}
+              friendId={friend.id}
+              userId={user!.id}
             />
           }
         />

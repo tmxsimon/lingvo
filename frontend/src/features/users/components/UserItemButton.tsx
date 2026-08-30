@@ -1,11 +1,10 @@
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/Button";
 import type { AllFriendsType } from "../services";
-import type { UserType } from "../types";
 
 type UserItemButtonProps = {
-  user: UserType;
-  friend: UserType;
+  userId: number;
+  friendId: number;
   allFriends: AllFriendsType;
   addFriend?: (userId: number, friendId: number) => void;
   approveFriend: (userId: number, friendId: number) => void;
@@ -13,8 +12,8 @@ type UserItemButtonProps = {
 };
 
 const UserItemButton = ({
-  user,
-  friend,
+  userId,
+  friendId,
   allFriends,
   addFriend,
   approveFriend,
@@ -29,35 +28,35 @@ const UserItemButton = ({
     (friend) => friend.id,
   );
 
-  if (friendsIds.includes(friend.id)) {
+  if (friendsIds.includes(friendId)) {
     return (
       <Button
         text={t("users.friends.unfriend")}
         theme="danger"
         confirm
-        onClick={() => removeFriend(user.id, friend.id)}
+        onClick={() => removeFriend(userId, friendId)}
       />
     );
-  } else if (pendingFromUserIds.includes(friend.id)) {
+  } else if (pendingFromUserIds.includes(friendId)) {
     return (
       <Button
         text={t("users.friends.cancel")}
         theme="neutral"
-        onClick={() => removeFriend(user.id, friend.id)}
+        onClick={() => removeFriend(userId, friendId)}
       />
     );
-  } else if (pendingForUserIds.includes(friend.id)) {
+  } else if (pendingForUserIds.includes(friendId)) {
     return (
       <div className="gap-base-sm flex">
         <Button
           text={t("users.friends.reject")}
           theme="danger"
-          onClick={() => removeFriend(user.id, friend.id)}
+          onClick={() => removeFriend(userId, friendId)}
         />
         <Button
           text={t("users.friends.accept")}
           theme="brand"
-          onClick={() => approveFriend(user.id, friend.id)}
+          onClick={() => approveFriend(userId, friendId)}
         />
       </div>
     );
@@ -65,7 +64,7 @@ const UserItemButton = ({
     return (
       <Button
         text={t("users.friends.sendRequest")}
-        onClick={() => addFriend?.(user.id, friend.id)}
+        onClick={() => addFriend?.(userId, friendId)}
       />
     );
   }
