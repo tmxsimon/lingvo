@@ -5,6 +5,7 @@ import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
 import useModalNote from "../../hooks/useModalNote";
 import ModalTitle from "../../../../components/ModalTitle";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalAddEntryProps = {
   isOpen: boolean;
@@ -17,13 +18,8 @@ const ModalAddEntry = ({ isOpen, closeModal, addNote }: ModalAddEntryProps) => {
 
   const { name, setName, validate } = useModalNote();
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={() => {
-        resetStateValues([setName]);
-        closeModal();
-      }}
+  const page = (
+    <ModalPage
       title={t("notes.addNote")}
       content={[
         <div>
@@ -50,6 +46,17 @@ const ModalAddEntry = ({ isOpen, closeModal, addNote }: ModalAddEntryProps) => {
           }}
         />,
       ]}
+    />
+  );
+
+  return (
+    <Modal
+      pages={[page]}
+      open={isOpen}
+      closeModal={() => {
+        resetStateValues([setName]);
+        closeModal();
+      }}
     />
   );
 };

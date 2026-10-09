@@ -26,6 +26,9 @@ import Play from "../assets/icons/play.svg?react";
 import Pause from "../assets/icons/pause.svg?react";
 import Search from "../assets/icons/search.svg?react";
 import Friends from "../assets/icons/friends.svg?react";
+import Users from "../assets/icons/users.svg?react";
+import LogoLight from "../assets/icons/logo-light.svg?react";
+import LogoDark from "../assets/icons/logo-dark.svg?react";
 
 import English from "../assets/icons/flags/en-US.svg?react";
 import Czech from "../assets/icons/flags/cs-CZ.svg?react";
@@ -63,6 +66,9 @@ const ICONS = {
   pause: Pause,
   search: Search,
   friends: Friends,
+  users: Users,
+  logoLight: LogoLight,
+  logoDark: LogoDark,
 
   // Languages
   "en-US": English,

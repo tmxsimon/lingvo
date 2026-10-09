@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import useModalLanguage from "../../hooks/useModalLanguage";
 import ModalTitle from "../../../../components/ModalTitle";
 import FilePicker from "../../../../components/FilePicker";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalAddLanguageProps = {
   isOpen: boolean;
@@ -21,14 +22,8 @@ const ModalAddLanguage = ({
 
   const { name, setName, image, setImage, validate } = useModalLanguage();
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={() => {
-        setName("");
-        setImage(null);
-        closeModal();
-      }}
+  const page = (
+    <ModalPage
       title={t("languages.addLanguage")}
       content={[
         <div>
@@ -69,6 +64,18 @@ const ModalAddLanguage = ({
           }}
         />,
       ]}
+    />
+  );
+
+  return (
+    <Modal
+      pages={[page]}
+      open={isOpen}
+      closeModal={() => {
+        setName("");
+        setImage(null);
+        closeModal();
+      }}
     />
   );
 };

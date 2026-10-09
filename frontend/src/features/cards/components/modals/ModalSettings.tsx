@@ -11,6 +11,7 @@ import ModalTitle from "../../../../components/ModalTitle";
 import Input from "../../../../components/Input";
 import useModalSettings from "../../hooks/useModalSettings";
 import Checkbox from "../../../../components/Checkbox";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalChangeGroupProps = {
   language: number;
@@ -67,10 +68,8 @@ const ModalChangeGroup = ({
     options.push({ value: group.id, text: group.name });
   });
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={closeModal}
+  const page = (
+    <ModalPage
       title={t("settings")}
       content={[
         <div>
@@ -128,6 +127,8 @@ const ModalChangeGroup = ({
       ]}
     />
   );
+
+  return <Modal pages={[page]} open={isOpen} closeModal={closeModal} />;
 };
 
 export default ModalChangeGroup;

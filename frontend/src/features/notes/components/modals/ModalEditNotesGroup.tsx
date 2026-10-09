@@ -6,6 +6,7 @@ import type { NotesGroupType } from "../../types";
 import { useTranslation } from "react-i18next";
 import useModalGroup from "../../hooks/useModalNotesGroup";
 import ModalTitle from "../../../../components/ModalTitle";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalEditNotesGroupProps = {
   group: NotesGroupType | null;
@@ -30,10 +31,8 @@ const ModalEditNotesGroup = ({
     setName(group?.name || "");
   }, [group]);
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={closeModal}
+  const page = (
+    <ModalPage
       title={t("notes.editGroup")}
       content={[
         <div>
@@ -74,6 +73,8 @@ const ModalEditNotesGroup = ({
       ]}
     />
   );
+
+  return <Modal pages={[page]} open={isOpen} closeModal={closeModal} />;
 };
 
 export default ModalEditNotesGroup;

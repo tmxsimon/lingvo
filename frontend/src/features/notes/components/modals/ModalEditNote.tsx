@@ -8,6 +8,7 @@ import Select from "../../../../components/Select";
 import type { SelectOptionType } from "../../../../types";
 import useModalnote from "../../hooks/useModalNote";
 import ModalTitle from "../../../../components/ModalTitle";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalEditnoteProps = {
   note: NoteType | null;
@@ -53,10 +54,8 @@ const ModalEditnote = ({
     return opts;
   }, [groups]);
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={closeModal}
+  const page = (
+    <ModalPage
       title={t("notes.editNote")}
       content={[
         <div>
@@ -114,6 +113,8 @@ const ModalEditnote = ({
       ]}
     />
   );
+
+  return <Modal pages={[page]} open={isOpen} closeModal={closeModal} />;
 };
 
 export default ModalEditnote;

@@ -6,6 +6,7 @@ import type { DictionaryGroupType } from "../../types";
 import { useTranslation } from "react-i18next";
 import useModalGroup from "../../hooks/useModalGroup";
 import ModalTitle from "../../../../components/ModalTitle";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalEditGroupProps = {
   group: DictionaryGroupType | null;
@@ -30,10 +31,8 @@ const ModalEditGroup = ({
     setName(group?.name || "");
   }, [group]);
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={closeModal}
+  const page = (
+    <ModalPage
       title={t("dictionary.editGroup")}
       content={[
         <div>
@@ -74,6 +73,8 @@ const ModalEditGroup = ({
       ]}
     />
   );
+
+  return <Modal pages={[page]} open={isOpen} closeModal={closeModal} />;
 };
 
 export default ModalEditGroup;

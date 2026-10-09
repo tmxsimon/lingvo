@@ -7,7 +7,13 @@ class User(SQLModel, table=True):
     hashed_password: str
     image_url: str | None = Field(default=None)
     is_public: bool = Field(default=True)
-    languages: list["Language"] = Relationship(back_populates="user", cascade_delete=True)
+    languages_permissions: list["LanguageUserPermissions"] = Relationship(
+        back_populates="user",
+        sa_relationship_kwargs={
+            "foreign_keys": "[LanguageUserPermissions.user_id]"
+        },
+        cascade_delete=True
+    )
 
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
@@ -34,4 +40,5 @@ class UserFriend(SQLModel, table=True):
         default_factory=lambda: datetime.now(timezone.utc)
     )
 
+from src.languages.models import LanguageUserPermissions
 from src.languages.models import Language

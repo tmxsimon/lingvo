@@ -42,6 +42,7 @@ const Button = ({
   underline = false,
   hoverEffect = true,
   activeEffect = true,
+  disabled = false,
   className = "",
   ...buttonProps
 }: ButtonProps) => {
@@ -51,6 +52,7 @@ const Button = ({
   const [textToDisplay, setTextToDisplay] = useState<string>(text);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const handleConfirm = () => {
+    if (disabled) return;
     if (isClicked) {
       onClick();
       return;
@@ -75,7 +77,7 @@ const Button = ({
 
   return (
     <button
-      className={`rounded-base-sm ${autoWidth ? "w-full" : ""} cursor-pointer ${underline ? "hover:underline" : ""} ${hoverEffect ? "hover:brightness-103" : ""} ${activeEffect ? "active:brightness-97" : ""} ${className}`}
+      className={`rounded-base-sm ${autoWidth ? "w-full" : ""} cursor-pointer ${underline ? "hover:underline" : ""} ${hoverEffect && !disabled ? "hover:brightness-103" : ""} ${activeEffect && !disabled ? "active:brightness-97" : ""} ${disabled ? "brightness-60 hover:brightness-63 active:brightness-57" : ""} ${className}`}
       onClick={!confirm ? onClick : handleConfirm}
       {...buttonProps}
     >

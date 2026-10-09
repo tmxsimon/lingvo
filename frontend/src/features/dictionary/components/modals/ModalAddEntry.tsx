@@ -5,6 +5,7 @@ import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
 import useModalEntry from "../../hooks/useModalEntry";
 import ModalTitle from "../../../../components/ModalTitle";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalAddEntryProps = {
   isOpen: boolean;
@@ -29,13 +30,8 @@ const ModalAddEntry = ({
     validate,
   } = useModalEntry();
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={() => {
-        resetStateValues([setContent, setTranslation, setNote]);
-        closeModal();
-      }}
+  const page = (
+    <ModalPage
       title={t("dictionary.addEntry")}
       content={[
         <div>
@@ -80,6 +76,17 @@ const ModalAddEntry = ({
           }}
         />,
       ]}
+    />
+  );
+
+  return (
+    <Modal
+      pages={[page]}
+      open={isOpen}
+      closeModal={() => {
+        resetStateValues([setContent, setTranslation, setNote]);
+        closeModal();
+      }}
     />
   );
 };

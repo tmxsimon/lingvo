@@ -3,6 +3,7 @@ import Button from "../../../../components/Button";
 import Input from "../../../../components/Input";
 import Modal from "../../../../components/Modal";
 import { useTranslation } from "react-i18next";
+import ModalPage from "../../../../components/ModalPage";
 
 type SentenceModalProps = {
   entryContent?: string;
@@ -44,10 +45,11 @@ const SentenceModal = ({
     <Button text={t("close")} onClick={handleClose} autoWidth />,
   ];
 
+  const page = <ModalPage content={content} buttons={buttons} />;
+
   return (
     <Modal
-      content={content}
-      buttons={buttons}
+      pages={[page]}
       autoSize
       closable={false}
       open={isOpen}

@@ -105,7 +105,8 @@
     },
 
     "languages": {
-      "yourLanguages": "Ваши языки",
+      "myLanguages": "Мои языки",
+      "sharedLanguages": "Общие языки",
       "addLanguage": "Добавить язык",
       "editLanguage": "Редактировать язык",
       "name": "Название",

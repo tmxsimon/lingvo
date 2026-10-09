@@ -12,6 +12,7 @@ import Temperature from "../../../cards/components/Temperature";
 import { useDictionaryGroups } from "../../hooks/useDictionaryGroups";
 import { useLanguageContext } from "../../../languages/contexts/languageProvider";
 import Loading from "../../../../components/Loading";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
@@ -87,10 +88,8 @@ const ModalEditEntry = ({
   if (isLoading) return <Loading />;
   if (error) return <div>{error?.message}</div>;
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={closeModal}
+  const page = (
+    <ModalPage
       title={t("dictionary.editEntry")}
       content={[
         <div>
@@ -185,6 +184,8 @@ const ModalEditEntry = ({
       ]}
     />
   );
+
+  return <Modal pages={[page]} open={isOpen} closeModal={closeModal} />;
 };
 
 export default ModalEditEntry;

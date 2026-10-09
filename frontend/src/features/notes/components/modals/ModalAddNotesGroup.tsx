@@ -5,6 +5,7 @@ import resetStateValues from "../../../../utils/resetStateValues";
 import { useTranslation } from "react-i18next";
 import useModalGroup from "../../hooks/useModalNotesGroup";
 import ModalTitle from "../../../../components/ModalTitle";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalAddGroupProps = {
   isOpen: boolean;
@@ -21,13 +22,8 @@ const ModalAddGroup = ({
 
   const { name, setName, validate } = useModalGroup();
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={() => {
-        resetStateValues([setName]);
-        closeModal();
-      }}
+  const page = (
+    <ModalPage
       title={t("notes.addGroup")}
       content={[
         <div>
@@ -54,6 +50,17 @@ const ModalAddGroup = ({
           }}
         />,
       ]}
+    />
+  );
+
+  return (
+    <Modal
+      pages={[page]}
+      open={isOpen}
+      closeModal={() => {
+        resetStateValues([setName]);
+        closeModal();
+      }}
     />
   );
 };

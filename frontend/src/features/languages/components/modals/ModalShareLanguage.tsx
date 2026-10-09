@@ -1,0 +1,201 @@
+import Modal from "../../../../components/Modal";
+import Button from "../../../../components/Button";
+import { useTranslation } from "react-i18next";
+import ModalTitle from "../../../../components/ModalTitle";
+import Select from "../../../../components/Select";
+import useModalShareLanguage from "../../hooks/useModalShareLanguage";
+import type { LanguageType } from "../../types";
+import ModalPage from "../../../../components/ModalPage";
+import { useState } from "react";
+import ModalPageIcon from "../../../../components/ModalPageIcon";
+
+type ModalShareLanguageProps = {
+  isOpen: boolean;
+  closeModal: () => void;
+  language: LanguageType;
+};
+
+const ModalShareLanguage = ({
+  isOpen,
+  closeModal,
+  language,
+}: ModalShareLanguageProps) => {
+  const { t } = useTranslation();
+  const [isLanguageUsersEnabled, setIsLanguageUsersEnabled] =
+    useState<boolean>(false);
+
+  const {
+    userId,
+    role,
+    currentUserOption,
+    setCurrentUserOption,
+    currentRoleOption,
+    setCurrentRoleOption,
+    usersOptions,
+    rolesOptions,
+    addUserToLanguage,
+    changeUserRole,
+    removeUserFromLanguage,
+  } = useModalShareLanguage(language?.id, isLanguageUsersEnabled);
+
+  const canShare = Boolean(language?.user_permissions?.can_share);
+
+  const pages = [
+    <ModalPage
+      onOpen={() => {
+        setIsLanguageUsersEnabled(false);
+      }}
+      title={t("user.myFriends")}
+      content={[
+        <div>
+          <ModalTitle text={t("user.myFriends")} />
+          <Select
+            value={
+              (typeof currentUserOption !== "string" &&
+                currentUserOption?.value) ||
+              ""
+            }
+            options={usersOptions}
+            onChange={(e) => {
+              setCurrentUserOption({
+                value: e.target.value,
+                text: "",
+              });
+            }}
+          />
+        </div>,
+        <div>
+          <ModalTitle text={t("user.roles")} />
+          <Select
+            value={
+              (typeof currentRoleOption !== "string" &&
+                currentRoleOption?.value) ||
+              ""
+            }
+            options={rolesOptions}
+            onChange={(e) => {
+              setCurrentRoleOption({
+                value: e.target.value,
+                text: "",
+              });
+            }}
+          />
+        </div>,
+      ]}
+      buttons={[
+        <Button
+          text={t("add")}
+          size="large"
+          autoWidth
+          disabled={!canShare}
+          onClick={() => {
+            addUserToLanguage.mutate({
+              languageId: language.id,
+              userId,
+              role,
+            });
+            closeModal();
+          }}
+        />,
+      ]}
+    />,
+    <ModalPage
+      onOpen={() => {
+        setIsLanguageUsersEnabled(true);
+      }}
+      title={t("user.manageUsers")}
+      content={[
+        <div>
+          <ModalTitle text={t("user.myFriends")} />
+          <Select
+            value={
+              (typeof currentUserOption !== "string" &&
+                currentUserOption?.value) ||
+              ""
+            }
+            options={usersOptions}
+            onChange={(e) => {
+              setCurrentUserOption({
+                value: e.target.value,
+                text: "",
+              });
+            }}
+          />
+        </div>,
+        <div>
+          <ModalTitle text={t("user.roles")} />
+          <Select
+            value={
+              (typeof currentRoleOption !== "string" &&
+                currentRoleOption?.value) ||
+              ""
+            }
+            options={rolesOptions}
+            onChange={(e) => {
+              setCurrentRoleOption({
+                value: e.target.value,
+                text: "",
+              });
+            }}
+          />
+        </div>,
+      ]}
+      buttons={[
+        <Button
+          text={t("delete")}
+          size="large"
+          theme="danger"
+          autoWidth
+          confirm
+          onClick={() => {
+            removeUserFromLanguage.mutate({
+              languageId: language.id,
+              userId: parseInt(currentUserOption.value as string),
+            });
+            closeModal();
+          }}
+        />,
+        <Button
+          text={t("change")}
+          size="large"
+          autoWidth
+          disabled={!canShare}
+          onClick={() => {
+            changeUserRole.mutate({
+              languageId: language.id,
+              userId,
+              role,
+            });
+            closeModal();
+          }}
+        />,
+      ]}
+    />,
+  ];
+
+  return (
+    <Modal
+      pages={pages}
+      open={isOpen}
+      closeModal={() => {
+        closeModal();
+      }}
+      pagesIcons={[
+        <ModalPageIcon
+          name="signUp"
+          onClick={() => {
+            setIsLanguageUsersEnabled(false);
+          }}
+        />,
+        <ModalPageIcon
+          name="users"
+          onClick={() => {
+            setIsLanguageUsersEnabled(true);
+          }}
+        />,
+      ]}
+    />
+  );
+};
+
+export default ModalShareLanguage;

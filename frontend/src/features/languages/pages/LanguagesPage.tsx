@@ -1,15 +1,14 @@
-import Loading from "../../../components/Loading";
 import useModal from "../../../hooks/useModal";
-import Language from "../components/Language";
 import ModalAddLanguage from "../components/modals/ModalAddLanguage";
-import { useLanguages } from "../hooks/useLanguage";
 import ModalEditLanguage from "../components/modals/ModalEditLanguage";
-import type { LanguageType } from "../types";
-import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Reorder } from "motion/react";
-import { useLanguageContext } from "../contexts/languageProvider";
 import AddSearchPanel from "../../../components/other/AddSearchPanel";
+import LanguagesPageSwitch from "../components/LanguagesPageSwitch";
+import useLanguagesPage from "../hooks/useLanguagesPage";
+import ModalShareLanguage from "../components/modals/ModalShareLanguage";
+import Button from "../../../components/Button";
+import Popup from "../../../components/Popup";
 
 const LanguagesPage = () => {
   const { t } = useTranslation();
@@ -24,43 +23,42 @@ const LanguagesPage = () => {
     openModal: openModalEdit,
     closeModal: closeModalEdit,
   } = useModal();
-
-  const { changeLanguage } = useLanguageContext();
-  const [chosenLanguage, setChosenLanguage] = useState<LanguageType | null>(
-    null,
-  );
+  const {
+    isOpen: isOpenShare,
+    currentIndex,
+    setCurrentIndex,
+    openModal: openModalShare,
+    closeModal: closeModalShare,
+  } = useModal();
 
   const {
-    languages: languagesFetched,
+    pageTitle,
     setSearchValue,
     addLanguage,
     editLanguage,
     deleteLanguage,
     reorderLanguages,
-    isLoading,
-    error,
-  } = useLanguages();
-
-  const [languages, setLanguages] = useState(languagesFetched || []);
-
-  useEffect(() => {
-    if (languagesFetched) {
-      setLanguages(languagesFetched);
-    }
-  }, [languagesFetched]);
-
-  if (isLoading) return <Loading />;
-  if (error) return <div>{error.message}</div>;
+    setIsMyLanguages,
+    setLanguages,
+    languages,
+    languagesList,
+    requestsList,
+    sharedLanguagesList,
+    chosenLanguage,
+  } = useLanguagesPage(openModalEdit, openModalShare);
 
   return (
     <>
-      <div className="flex flex-col w-full items-center">
+      <div className="gap-base flex w-full flex-col items-center">
         <AddSearchPanel
-          title={t("languages.yourLanguages")}
+          title={t(pageTitle)}
           onAddClick={openModalAdd}
           onSearchChange={setSearchValue}
         />
-
+        <LanguagesPageSwitch
+          onClickLeftButton={() => setIsMyLanguages(true)}
+          onClickRightButton={() => setIsMyLanguages(false)}
+        />
         <Reorder.Group
           axis="y"
           values={languages}
@@ -73,19 +71,11 @@ const LanguagesPage = () => {
 
             reorderLanguages.mutate(orderedIds);
           }}
-          className="gap-base mt-base flex h-full w-full flex-col items-center"
+          className="gap-base flex h-full w-full flex-col items-center"
         >
-          {languages?.map((language) => (
-            <Language
-              key={language.id}
-              language={language}
-              onClick={() => {
-                setChosenLanguage(language);
-                changeLanguage(language.id.toString());
-              }}
-              onClickSettings={openModalEdit}
-            />
-          ))}
+          {languagesList}
+          {requestsList}
+          {sharedLanguagesList}
         </Reorder.Group>
       </div>
 
@@ -105,6 +95,13 @@ const LanguagesPage = () => {
           editLanguage.mutate({ id, name, image });
         }}
         deleteLanguage={() => deleteLanguage.mutate(chosenLanguage!.id)}
+      />
+      <ModalShareLanguage
+        isOpen={isOpenShare}
+        currentIndex={currentIndex}
+        setCurrentIndex={setCurrentIndex}
+        closeModal={closeModalShare}
+        language={chosenLanguage!}
       />
     </>
   );

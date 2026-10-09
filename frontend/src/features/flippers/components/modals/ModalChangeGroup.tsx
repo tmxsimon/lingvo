@@ -8,6 +8,7 @@ import type { SelectOptionType } from "../../../../types";
 import { useTranslation } from "react-i18next";
 import Loading from "../../../../components/Loading";
 import ModalTitle from "../../../../components/ModalTitle";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalChangeGroupProps = {
   group: DictionaryGroupType | null;
@@ -40,10 +41,8 @@ const ModalChangeGroup = ({
     options.push({ value: group.id, text: group.name });
   });
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={closeModal}
+  const page = (
+    <ModalPage
       title={t("flippers.changeGroup")}
       content={[
         <div>
@@ -81,6 +80,8 @@ const ModalChangeGroup = ({
       ]}
     />
   );
+
+  return <Modal pages={[page]} open={isOpen} closeModal={closeModal} />;
 };
 
 export default ModalChangeGroup;

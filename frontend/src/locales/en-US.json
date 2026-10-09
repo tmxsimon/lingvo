@@ -105,7 +105,8 @@
     },
 
     "languages": {
-      "yourLanguages": "Your languages",
+      "myLanguages": "My languages",
+      "sharedLanguages": "Shared languages",
       "addLanguage": "Add language",
       "editLanguage": "Edit language",
       "name": "Name",

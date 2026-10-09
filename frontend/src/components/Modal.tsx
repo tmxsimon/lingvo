@@ -1,11 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Icon from "./Icon";
 
 type ModalProps = {
-  title?: string;
-  content: React.ReactNode[];
-  buttons: React.ReactNode[];
-  centeredButtons?: boolean;
+  pages: React.ReactNode[];
+  pagesIcons?: React.ReactNode[];
+  haveTitle?: boolean;
   closable?: boolean;
   open?: boolean;
   autoSize?: boolean;
@@ -13,18 +12,28 @@ type ModalProps = {
 };
 
 const Modal = ({
-  title,
-  content,
-  buttons,
-  centeredButtons = false,
+  pages,
+  pagesIcons,
+  haveTitle = true,
   closable = true,
   open = false,
   autoSize = false,
   closeModal,
 }: ModalProps) => {
+  const [pageIndex, setPageIndex] = useState(0);
+
+  const currentPage = pages.find((page) => pages.indexOf(page) === pageIndex);
+
+  const handleCloseModal = () => {
+    if (closable && closeModal) {
+      closeModal();
+      // setPageIndex(0);
+    }
+  };
+
   const handleBackdropClick = (e: React.MouseEvent) => {
-    if (open && e.target === e.currentTarget && closable) {
-      closeModal?.();
+    if (open && e.target === e.currentTarget) {
+      handleCloseModal();
     }
   };
 
@@ -38,8 +47,8 @@ const Modal = ({
     if (!open || !closeModal) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && closable) {
-        closeModal();
+      if (event.key === "Escape") {
+        handleCloseModal();
       }
     };
 
@@ -57,37 +66,31 @@ const Modal = ({
             onClick={handleBackdropClick}
           >
             <div
-              className={`border-brand-neutral-200 backdrop-blur-base-lg rounded-base px-base pb-base-lg relative flex ${autoSize ? "h-auto w-auto" : "h-146 w-116"} flex-col justify-between border ${title ? "pt-12" : "pt-base-lg"} backdrop-brightness-150`}
+              className={`border-brand-neutral-200 backdrop-blur-base-lg rounded-base px-base pb-base-lg relative flex ${autoSize ? "h-auto w-auto" : "h-146 w-116"} flex-col justify-between border ${haveTitle ? "pt-12" : "pt-base-lg"} backdrop-brightness-150`}
             >
-              <div className="top-base text-brand-neutral-300 absolute self-center">
-                {title}
-              </div>
+              {!!pagesIcons && (
+                <div className="gap-base-sm left-base top-base absolute flex">
+                  {pagesIcons.map((icon, i) => (
+                    <div
+                      key={i}
+                      onClick={() => setPageIndex(i)}
+                      className="cursor-pointer"
+                    >
+                      {icon}
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {closable && (
                 <Icon
                   name="close"
                   className="right-base top-base text-brand-neutral-300 absolute size-8 cursor-pointer"
-                  onClick={closeModal}
+                  onClick={handleCloseModal}
                 />
               )}
-              <div className="gap-base flex w-full flex-col">
-                {content.map((part, i) => {
-                  return <div key={i}>{part}</div>;
-                })}
-              </div>
-
-              <div
-                className={`gap-base mt-base flex w-full ${centeredButtons ? "justify-center" : "justify-between"}`}
-              >
-                {buttons.map((button, i) => {
-                  return (
-                    <div
-                      key={i}
-                      className={`${!centeredButtons ? "flex-1" : ""}`}
-                    >
-                      {button}
-                    </div>
-                  );
-                })}
+              <div className="flex h-full flex-col justify-between">
+                {currentPage}
               </div>
             </div>
           </div>

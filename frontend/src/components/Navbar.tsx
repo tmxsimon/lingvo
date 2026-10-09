@@ -4,6 +4,7 @@ import { useLanguageContext } from "../features/languages/contexts/languageProvi
 import { useAuth } from "../features/users/contexts/authProvider";
 import { useEffect, useState } from "react";
 import type { iconsType } from "../constants/icons";
+import { useTheme } from "../contexts/themeProvider";
 
 const NavbarButton = ({
   children,
@@ -52,6 +53,7 @@ const NavbarLink = ({
 const Navbar = () => {
   const navigate = useNavigate();
 
+  const { theme } = useTheme();
   const { language, clearLanguage } = useLanguageContext();
   const { user, signOut } = useAuth();
 
@@ -163,7 +165,13 @@ const Navbar = () => {
                 closeMenu={closeMenu}
                 className="text-brand-300 text-2xl font-bold"
               >
-                lingvo
+                <div className="flex items-center gap-2">
+                  <Icon
+                    name={theme === "light" ? "logoLight" : "logoDark"}
+                    className="size-6"
+                  />
+                  lingvo
+                </div>
               </NavbarLink>
               <div className="flex">
                 {/* desktop menu */}

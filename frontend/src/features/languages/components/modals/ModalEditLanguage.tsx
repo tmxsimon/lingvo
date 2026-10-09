@@ -7,9 +7,11 @@ import { useTranslation } from "react-i18next";
 import useModalLanguage from "../../hooks/useModalLanguage";
 import ModalTitle from "../../../../components/ModalTitle";
 import FilePicker from "../../../../components/FilePicker";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalEditLanguageProps = {
   language: LanguageType | null;
+  // canDelete: boolean;
   isOpen: boolean;
   closeModal: () => void;
   editLanguage: (id: number, name: string, image: File) => void;
@@ -22,19 +24,20 @@ const ModalEditLanguage = ({
   closeModal,
   editLanguage,
   deleteLanguage,
+  // canDelete,
 }: ModalEditLanguageProps) => {
   const { t } = useTranslation();
 
   const { name, setName, image, setImage, validate } = useModalLanguage();
+  const canDelete = Boolean(language?.user_permissions?.can_delete);
+  const canEdit = Boolean(language?.user_permissions?.can_edit);
 
   useEffect(() => {
     setName(language?.name || "");
   }, [language]);
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={closeModal}
+  const page = (
+    <ModalPage
       title={t("languages.editLanguage")}
       content={[
         <div>
@@ -70,7 +73,9 @@ const ModalEditLanguage = ({
           size="large"
           confirm
           autoWidth
+          disabled={!canDelete}
           onClick={() => {
+            if (!canDelete) return;
             deleteLanguage(language!.id);
             setImage(null);
             closeModal();
@@ -80,8 +85,9 @@ const ModalEditLanguage = ({
           text={t("edit")}
           size="large"
           autoWidth
+          disabled={!canEdit}
           onClick={() => {
-            if (!validate()) return;
+            if (!validate() || !canEdit) return;
             editLanguage(language!.id, name || "", image!);
             setImage(null);
             closeModal();
@@ -90,6 +96,8 @@ const ModalEditLanguage = ({
       ]}
     />
   );
+
+  return <Modal pages={[page]} open={isOpen} closeModal={closeModal} />;
 };
 
 export default ModalEditLanguage;

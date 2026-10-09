@@ -7,6 +7,7 @@ import ModalTitle from "../../../../components/ModalTitle";
 import type { UserType } from "../../types";
 import useModalUser from "../../hooks/useModalUser";
 import FilePicker from "../../../../components/FilePicker";
+import ModalPage from "../../../../components/ModalPage";
 
 type ModalEditUserProps = {
   user: UserType | null;
@@ -44,10 +45,8 @@ const ModalEditUser = ({
     setUsername(user?.username || "");
   }, [user]);
 
-  return (
-    <Modal
-      open={isOpen}
-      closeModal={closeModal}
+  const page = (
+    <ModalPage
       title={t("users.editUser")}
       content={[
         <div>
@@ -114,6 +113,8 @@ const ModalEditUser = ({
       ]}
     />
   );
+
+  return <Modal pages={[page]} open={isOpen} closeModal={closeModal} />;
 };
 
 export default ModalEditUser;

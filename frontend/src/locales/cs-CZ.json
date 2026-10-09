@@ -100,7 +100,8 @@
     },
 
     "languages": {
-      "yourLanguages": "Vaše jazyky",
+      "myLanguages": "Moje jazyky",
+      "sharedLanguages": "Sdílené jazyky",
       "addLanguage": "Přidat jazyk",
       "editLanguage": "Upravit jazyk",
       "name": "Název",

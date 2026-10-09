@@ -49,7 +49,7 @@ const ProfilePage = () => {
   return (
     <>
       <div className="h-screen-no-navbar-page flex w-full items-center justify-center">
-        <div className="border-brand-neutral-200 backdrop-blur-base p-base-lg rounded-base flex h-full max-h-154 w-full max-w-192 flex-col items-center justify-between border backdrop-brightness-95">
+        <div className="border-brand-neutral-200 backdrop-blur-base p-base-lg rounded-base flex h-full max-h-172 w-full max-w-192 flex-col items-center justify-between border backdrop-brightness-95">
           <div className="gap-base flex h-full flex-col items-center">
             <ModalTitle size="large" text={t("users.profile")} />
             <div className="mt-base flex h-full w-full flex-col items-center justify-center">
