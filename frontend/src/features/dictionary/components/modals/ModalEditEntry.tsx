@@ -13,6 +13,9 @@ import { useDictionaryGroups } from "../../hooks/useDictionaryGroups";
 import { useLanguageContext } from "../../../languages/contexts/languageProvider";
 import Loading from "../../../../components/Loading";
 import ModalPage from "../../../../components/ModalPage";
+import type { LanguageType } from "../../../languages/types";
+import { useLanguages } from "../../../languages/hooks/useLanguages";
+import useLanguage from "../../../languages/hooks/useLanguage";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
@@ -40,13 +43,25 @@ const ModalEditEntry = ({
 }: ModalEditEntryProps) => {
   const { t } = useTranslation();
 
-  const { language } = useLanguageContext();
+  const { language: languageId } = useLanguageContext();
+
+  const { language } = useLanguage();
+
+  const canEdit = useMemo(() => {
+    if (!language) return false;
+    return language.user_permissions?.can_edit;
+  }, [language]);
+
+  const canDelete = useMemo(() => {
+    if (!language) return false;
+    return language.user_permissions?.can_delete;
+  }, [language]);
 
   const {
     groups,
     isLoading: isLoading,
     error: error,
-  } = useDictionaryGroups(parseInt(language));
+  } = useDictionaryGroups(parseInt(languageId));
 
   const {
     content,
@@ -159,6 +174,7 @@ const ModalEditEntry = ({
           size="large"
           confirm
           autoWidth
+          disabled={!canDelete}
           onClick={() => {
             deleteEntry(entry!.id);
             closeModal();
@@ -168,6 +184,7 @@ const ModalEditEntry = ({
           text={t("edit")}
           size="large"
           autoWidth
+          disabled={!canEdit}
           onClick={() => {
             if (!validate()) return;
             editEntry(

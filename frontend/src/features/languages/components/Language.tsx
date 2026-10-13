@@ -96,16 +96,16 @@ const Language = ({
                   }}
                 />
               )}
-              {!!language.user_permissions?.can_share && (
-                <Icon
-                  name="users"
-                  className="size-6"
-                  onClick={(e) => {
-                    onClickShare();
-                    e.stopPropagation();
-                  }}
-                />
-              )}
+              {/* {!!language.user_permissions?.can_share && ( */}
+              <Icon
+                name="users"
+                className="size-6"
+                onClick={(e) => {
+                  onClickShare();
+                  e.stopPropagation();
+                }}
+              />
+              {/* )} */}
               <Icon
                 name="settings"
                 className="size-6"

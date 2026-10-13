@@ -9,6 +9,11 @@ export const fetchUserLanguages = async () => {
   return result.data;
 };
 
+export const fetchLanguage = async (languageId: number) => {
+  const result = await api.get<LanguageType>(`${PATH}/${languageId}`);
+  return result.data;
+};
+
 export type SharedLanguagesResponse = {
   languages: LanguageType[];
   requests: LanguageType[];

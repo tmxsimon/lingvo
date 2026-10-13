@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 import useModalGroup from "../../hooks/useModalGroup";
 import ModalTitle from "../../../../components/ModalTitle";
 import ModalPage from "../../../../components/ModalPage";
+import useLanguage from "../../../languages/hooks/useLanguage";
+import { useMemo } from "react";
 
 type ModalAddGroupProps = {
   isOpen: boolean;
@@ -21,6 +23,13 @@ const ModalAddGroup = ({
   const { t } = useTranslation();
 
   const { name, setName, validate } = useModalGroup();
+
+  const { language } = useLanguage();
+
+  const canWrite = useMemo(() => {
+    if (!language) return false;
+    return language.user_permissions?.can_write;
+  }, [language]);
 
   const page = (
     <ModalPage
@@ -42,6 +51,7 @@ const ModalAddGroup = ({
           text={t("add")}
           size="large"
           autoWidth
+          disabled={!canWrite}
           onClick={() => {
             if (!validate()) return;
             addGroup(name || "");

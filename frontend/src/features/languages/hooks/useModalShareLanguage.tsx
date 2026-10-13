@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { UserRoleType } from "../types";
 import type { SelectOptionType } from "../../../types";
-import { useLanguages } from "./useLanguage";
+import { useLanguages } from "./useLanguages";
 
 const useModalShareLanguage = (
   langaugeId: number,

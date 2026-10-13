@@ -2,6 +2,7 @@ from fastapi import APIRouter, Form, HTTPException, status, UploadFile, Body, Qu
 from src.dependencies import SessionDep, UserDep
 from .service import (
     get_available_users_for_language_db,
+    get_language_db,
     get_language_users_db,
     get_user_languages_db,
     get_shared_languages_db,
@@ -24,6 +25,8 @@ router = APIRouter(
     prefix="/languages",
     tags=["Languages"],
 )
+
+
 
 @router.get("/")
 async def get_user_languages(user = UserDep, session = SessionDep):
@@ -113,6 +116,18 @@ async def get_shared_languages(user = UserDep, session = SessionDep):
             detail="No languages found"
         )
     return {"languages": languages, "requests": requests}
+
+@router.get("/{language_id}")
+async def get_language(language_id: int, user = UserDep, session = SessionDep):
+    language = get_language_db(user=user, session=session, language_id=language_id)
+
+    if language is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Language not found"
+        )
+    
+    return language
 
 
 @router.get("/{language_id}/users")

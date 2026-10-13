@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLanguageContext } from "../contexts/languageProvider";
 import type { LanguageType } from "../types";
-import { useLanguages } from "./useLanguage";
+import { useLanguages } from "./useLanguages";
 import Language from "../components/Language";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";

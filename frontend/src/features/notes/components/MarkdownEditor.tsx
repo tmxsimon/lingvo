@@ -1,6 +1,8 @@
 import { MdEditor, type ToolbarNames } from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
 import { useTheme } from "../../../contexts/themeProvider";
+import useLanguage from "../../languages/hooks/useLanguage";
+import { useMemo } from "react";
 
 type MarkdownEditorProps = {
   value: string;
@@ -37,11 +39,19 @@ const MarkdownEditor = ({ value, onSave, onChange }: MarkdownEditorProps) => {
     "pageFullscreen",
   ];
 
+  const { language } = useLanguage();
+
+  const canEdit = useMemo(() => {
+    if (!language) return false;
+    return language.user_permissions?.can_edit;
+  }, [language]);
+
   return (
     <MdEditor
       value={value}
       onSave={onSave}
       onChange={onChange}
+      disabled={!canEdit}
       toolbars={toolbar}
       language="en-US"
       theme={theme === "dark" ? "dark" : "light"}

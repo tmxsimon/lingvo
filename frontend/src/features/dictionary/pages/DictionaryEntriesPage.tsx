@@ -13,6 +13,7 @@ import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
 import AddSearchPanel from "../../../components/other/AddSearchPanel";
 import Button from "../../../components/Button";
+import { useLanguages } from "../../languages/hooks/useLanguages";
 
 const DictionaryEntriesPage = () => {
   const { t } = useTranslation();

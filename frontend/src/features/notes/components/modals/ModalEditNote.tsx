@@ -9,6 +9,7 @@ import type { SelectOptionType } from "../../../../types";
 import useModalnote from "../../hooks/useModalNote";
 import ModalTitle from "../../../../components/ModalTitle";
 import ModalPage from "../../../../components/ModalPage";
+import useLanguage from "../../../languages/hooks/useLanguage";
 
 type ModalEditnoteProps = {
   note: NoteType | null;
@@ -54,6 +55,18 @@ const ModalEditnote = ({
     return opts;
   }, [groups]);
 
+  const { language } = useLanguage();
+
+  const canEdit = useMemo(() => {
+    if (!language) return false;
+    return language.user_permissions?.can_edit;
+  }, [language]);
+
+  const canDelete = useMemo(() => {
+    if (!language) return false;
+    return language.user_permissions?.can_delete;
+  }, [language]);
+
   const page = (
     <ModalPage
       title={t("notes.editNote")}
@@ -95,6 +108,7 @@ const ModalEditnote = ({
           size="large"
           confirm
           autoWidth
+          disabled={!canDelete}
           onClick={() => {
             deleteNote(note!.id);
             closeModal();
@@ -104,6 +118,7 @@ const ModalEditnote = ({
           text={t("edit")}
           size="large"
           autoWidth
+          disabled={!canEdit}
           onClick={() => {
             if (!validate()) return;
             editNote(note!.id, name || "", currentGroupOption.value as number);

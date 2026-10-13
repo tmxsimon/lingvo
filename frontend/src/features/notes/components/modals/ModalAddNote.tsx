@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import useModalNote from "../../hooks/useModalNote";
 import ModalTitle from "../../../../components/ModalTitle";
 import ModalPage from "../../../../components/ModalPage";
+import useLanguage from "../../../languages/hooks/useLanguage";
 
 type ModalAddEntryProps = {
   isOpen: boolean;
@@ -17,6 +18,10 @@ const ModalAddEntry = ({ isOpen, closeModal, addNote }: ModalAddEntryProps) => {
   const { t } = useTranslation();
 
   const { name, setName, validate } = useModalNote();
+
+  const { language } = useLanguage();
+
+  const canWrite = language?.user_permissions?.can_write;
 
   const page = (
     <ModalPage
@@ -38,6 +43,7 @@ const ModalAddEntry = ({ isOpen, closeModal, addNote }: ModalAddEntryProps) => {
           text={t("add")}
           size="large"
           autoWidth
+          disabled={!canWrite}
           onClick={() => {
             if (!validate()) return;
             addNote(name || "");

@@ -98,8 +98,6 @@ const LanguagesPage = () => {
       />
       <ModalShareLanguage
         isOpen={isOpenShare}
-        currentIndex={currentIndex}
-        setCurrentIndex={setCurrentIndex}
         closeModal={closeModalShare}
         language={chosenLanguage!}
       />

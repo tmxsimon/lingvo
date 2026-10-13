@@ -9,6 +9,26 @@ UPLOADS_URL = "assets/user_uploads/language_images"
 DEFAULT_IMAGE_URL = "assets/default_images/default_language.png"
 
 
+def get_language_db(user: User, session: Session, language_id: int):
+    user_permissions = session.exec(
+        select(LanguageUserPermissions).where(
+            LanguageUserPermissions.language_id == language_id,
+            LanguageUserPermissions.user_id == user.id
+        )
+    ).first()
+
+    if user_permissions is None:
+        return None
+
+    language = language_to_dict(user_permissions.language)
+
+    if language is None:
+        return None
+
+    language["user_permissions"] = user_permissions.dict()
+
+    return language
+
 def get_user_languages_db(user: User, session: Session):
     user_permissions = session.exec(
         select(LanguageUserPermissions).where(
@@ -181,7 +201,7 @@ def add_user_to_language_db(session: Session, language_id: int, grantor: User, u
     if grantor_permissions is None or not grantor_permissions.can_share:
         return None
 
-    permissions = create_user_role(role, language_id, grantor.id, user_id)
+    permissions = create_user_role(role, language_id, grantor.id, user_id, is_approved=False)
 
     session.add(permissions)
     session.commit()
@@ -228,9 +248,12 @@ def change_user_role_db(session: Session, language_id: int, grantor: User, user_
     if permissions is None:
         return None
 
+
+    is_approved = permissions.is_approved
+
     session.delete(permissions)
     
-    new_permissions = create_user_role(role, language_id, grantor.id, user_id)
+    new_permissions = create_user_role(role, language_id, grantor.id, user_id, is_approved)
 
     session.add(new_permissions)
     session.commit()

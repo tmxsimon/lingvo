@@ -29,8 +29,8 @@ const ModalEditLanguage = ({
   const { t } = useTranslation();
 
   const { name, setName, image, setImage, validate } = useModalLanguage();
-  const canDelete = Boolean(language?.user_permissions?.can_delete);
-  const canEdit = Boolean(language?.user_permissions?.can_edit);
+  const canDelete = Boolean(language?.user_permissions?.is_owner);
+  const canEdit = Boolean(language?.user_permissions?.can_edit_language);
 
   useEffect(() => {
     setName(language?.name || "");

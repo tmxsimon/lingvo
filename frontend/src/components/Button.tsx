@@ -51,10 +51,17 @@ const Button = ({
 
   const [textToDisplay, setTextToDisplay] = useState<string>(text);
   const [isClicked, setIsClicked] = useState<boolean>(false);
+
+  const handleClick = () => {
+    if (disabled) return;
+    onClick();
+    return;
+  };
+
   const handleConfirm = () => {
     if (disabled) return;
     if (isClicked) {
-      onClick();
+      handleClick();
       return;
     }
     setIsClicked(true);
@@ -78,7 +85,7 @@ const Button = ({
   return (
     <button
       className={`rounded-base-sm ${autoWidth ? "w-full" : ""} cursor-pointer ${underline ? "hover:underline" : ""} ${hoverEffect && !disabled ? "hover:brightness-103" : ""} ${activeEffect && !disabled ? "active:brightness-97" : ""} ${disabled ? "brightness-60 hover:brightness-63 active:brightness-57" : ""} ${className}`}
-      onClick={!confirm ? onClick : handleConfirm}
+      onClick={!confirm ? handleClick : handleConfirm}
       {...buttonProps}
     >
       <div className="flex h-full items-center justify-center">

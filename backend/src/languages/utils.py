@@ -38,7 +38,7 @@ def create_owner_permissions(language_id, grantor_id, user_id):
         is_approved=True
     )
 
-def create_collaborator_permissions(language_id, grantor_id, user_id):
+def create_collaborator_permissions(language_id, grantor_id, user_id, is_approved=False):
     return LanguageUserPermissions(
         language_id=language_id,
         grantor_id=grantor_id,
@@ -50,11 +50,11 @@ def create_collaborator_permissions(language_id, grantor_id, user_id):
         can_edit_permissions=False,
         can_edit_language=False,
         is_owner=False,
-        is_approved=False
+        is_approved=is_approved
     )
 
 # can add, edit, delete their own entries
-def create_default_user_permissions(language_id, grantor_id, user_id):
+def create_default_user_permissions(language_id, grantor_id, user_id, is_approved=False):
     return LanguageUserPermissions(
         language_id=language_id,
         grantor_id=grantor_id,
@@ -66,10 +66,10 @@ def create_default_user_permissions(language_id, grantor_id, user_id):
         can_edit_permissions=False,
         can_edit_language=False,
         is_owner=False,
-        is_approved=False
+        is_approved=is_approved
     )
 
-def create_viewer_permissions(language_id, grantor_id, user_id):
+def create_viewer_permissions(language_id, grantor_id, user_id, is_approved=False):
     return LanguageUserPermissions(
         language_id=language_id,
         grantor_id=grantor_id,
@@ -81,16 +81,16 @@ def create_viewer_permissions(language_id, grantor_id, user_id):
         can_edit_permissions=False,
         can_edit_language=False,
         is_owner=False,
-        is_approved=False
+        is_approved=is_approved
     )
 
-def create_user_role(role: LanguageRoleType, language_id: int, grantor_id: int, user_id: int) -> LanguageUserPermissions:
+def create_user_role(role: LanguageRoleType, language_id: int, grantor_id: int, user_id: int, is_approved: bool) -> LanguageUserPermissions:
     if role == LanguageRoleType.COLLABORATOR:
-        return create_collaborator_permissions(language_id, grantor_id, user_id)
+        return create_collaborator_permissions(language_id, grantor_id, user_id, is_approved)
     elif role == LanguageRoleType.DEFAULT:
-        return create_default_user_permissions(language_id, grantor_id, user_id)
+        return create_default_user_permissions(language_id, grantor_id, user_id, is_approved)
     elif role == LanguageRoleType.VIEWER:
-        return create_viewer_permissions(language_id, grantor_id, user_id)
+        return create_viewer_permissions(language_id, grantor_id, user_id, is_approved)
     else:
         raise ValueError(f"Invalid role: {role}")
 

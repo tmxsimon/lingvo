@@ -38,7 +38,7 @@ const ModalShareLanguage = ({
     removeUserFromLanguage,
   } = useModalShareLanguage(language?.id, isLanguageUsersEnabled);
 
-  const canShare = Boolean(language?.user_permissions?.can_share);
+  const canShare = language?.user_permissions?.can_share;
 
   const pages = [
     <ModalPage
@@ -87,7 +87,7 @@ const ModalShareLanguage = ({
           text={t("add")}
           size="large"
           autoWidth
-          disabled={!canShare}
+          disabled={!canShare || !currentUserOption.value}
           onClick={() => {
             addUserToLanguage.mutate({
               languageId: language.id,
@@ -147,6 +147,7 @@ const ModalShareLanguage = ({
           theme="danger"
           autoWidth
           confirm
+          disabled={!canShare || !currentUserOption.value}
           onClick={() => {
             removeUserFromLanguage.mutate({
               languageId: language.id,
@@ -159,7 +160,7 @@ const ModalShareLanguage = ({
           text={t("change")}
           size="large"
           autoWidth
-          disabled={!canShare}
+          disabled={!canShare || !currentUserOption.value}
           onClick={() => {
             changeUserRole.mutate({
               languageId: language.id,
