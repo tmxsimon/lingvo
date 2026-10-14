@@ -1,6 +1,7 @@
 {
   "translation": {
     "add": "Добавить",
+    "share": "Поделиться",
     "edit": "Изменить",
     "change": "Изменить",
     "delete": "Удалить",
@@ -107,10 +108,20 @@
     "languages": {
       "myLanguages": "Мои языки",
       "sharedLanguages": "Общие языки",
+      "shareLanguage": "Поделиться языком",
       "addLanguage": "Добавить язык",
       "editLanguage": "Редактировать язык",
       "name": "Название",
       "image": "Изображение",
+      "languageUsers": "Пользователи языка",
+
+      "roles": {
+        "roles": "Роли",
+        "viewer": "Просмотр",
+        "default": "По умолчанию",
+        "collaborator": "Сотрудник"
+      },
+      "manageUsers": "Управление пользователями",
 
       "validation": {
         "nameLength": "Название должно содержать от 1 до 16 символов"

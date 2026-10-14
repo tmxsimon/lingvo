@@ -1,6 +1,7 @@
 {
   "translation": {
     "add": "Přidat",
+    "share": "Sdílet",
     "edit": "Upravit",
     "change": "Změnit",
     "delete": "Smazat",
@@ -102,10 +103,20 @@
     "languages": {
       "myLanguages": "Moje jazyky",
       "sharedLanguages": "Sdílené jazyky",
+      "shareLanguage": "Sdílet jazyk",
       "addLanguage": "Přidat jazyk",
       "editLanguage": "Upravit jazyk",
       "name": "Název",
       "image": "Obrázek",
+      "languageUsers": "Uživatelé jazyka",
+
+      "roles": {
+        "roles": "Role",
+        "viewer": "Prohlížeč",
+        "default": "Výchozí",
+        "collaborator": "Spolupracovník"
+      },
+      "manageUsers": "Spravovat uživatele",
 
       "validation": {
         "nameLength": "Název musí mít 1 až 16 znaků"

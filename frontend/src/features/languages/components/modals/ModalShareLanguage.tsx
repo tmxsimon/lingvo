@@ -45,10 +45,10 @@ const ModalShareLanguage = ({
       onOpen={() => {
         setIsLanguageUsersEnabled(false);
       }}
-      title={t("user.myFriends")}
+      title={t("languages.shareLanguage")}
       content={[
         <div>
-          <ModalTitle text={t("user.myFriends")} />
+          <ModalTitle text={t("users.friends.myFriends")} />
           <Select
             value={
               (typeof currentUserOption !== "string" &&
@@ -65,7 +65,7 @@ const ModalShareLanguage = ({
           />
         </div>,
         <div>
-          <ModalTitle text={t("user.roles")} />
+          <ModalTitle text={t("languages.roles.roles")} />
           <Select
             value={
               (typeof currentRoleOption !== "string" &&
@@ -84,7 +84,7 @@ const ModalShareLanguage = ({
       ]}
       buttons={[
         <Button
-          text={t("add")}
+          text={t("share")}
           size="large"
           autoWidth
           disabled={!canShare || !currentUserOption.value}
@@ -103,10 +103,10 @@ const ModalShareLanguage = ({
       onOpen={() => {
         setIsLanguageUsersEnabled(true);
       }}
-      title={t("user.manageUsers")}
+      title={t("languages.manageUsers")}
       content={[
         <div>
-          <ModalTitle text={t("user.myFriends")} />
+          <ModalTitle text={t("languages.languageUsers")} />
           <Select
             value={
               (typeof currentUserOption !== "string" &&
@@ -123,7 +123,7 @@ const ModalShareLanguage = ({
           />
         </div>,
         <div>
-          <ModalTitle text={t("user.roles")} />
+          <ModalTitle text={t("languages.roles.roles")} />
           <Select
             value={
               (typeof currentRoleOption !== "string" &&

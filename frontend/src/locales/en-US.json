@@ -1,6 +1,7 @@
 {
   "translation": {
     "add": "Add",
+    "share": "Share",
     "edit": "Edit",
     "change": "Change",
     "delete": "Delete",
@@ -107,10 +108,20 @@
     "languages": {
       "myLanguages": "My languages",
       "sharedLanguages": "Shared languages",
+      "shareLanguage": "Share language",
       "addLanguage": "Add language",
       "editLanguage": "Edit language",
       "name": "Name",
       "image": "Image",
+      "languageUsers": "Language users",
+
+      "roles": {
+        "roles": "Roles",
+        "viewer": "Viewer",
+        "default": "Default",
+        "collaborator": "Collaborator"
+      },
+      "manageUsers": "Manage users",
 
       "validation": {
         "nameLength": "Name must be between 1 and 16 characters"
