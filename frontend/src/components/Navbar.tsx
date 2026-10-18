@@ -49,7 +49,7 @@ const NavbarLink = ({
 };
 
 // the code is pretty messy
-// i promise i'll fix it
+// i promise i'll fix it :))))
 const Navbar = () => {
   const navigate = useNavigate();
 
@@ -94,7 +94,7 @@ const Navbar = () => {
       return (
         <NavbarLink key={index} closeMenu={closeMenu} to={link.link}>
           <Icon
-            className="hover:text-brand-300 size-8"
+            className="hover:text-brand-300 size-6"
             name={link.iconName as iconsType}
           />
         </NavbarLink>
@@ -107,7 +107,7 @@ const Navbar = () => {
         return (
           <NavbarLink key={index} closeMenu={closeMenu} to={link.link}>
             <Icon
-              className="hover:text-brand-300 size-8"
+              className="hover:text-brand-300 size-6"
               name={link.iconName as iconsType}
             />
           </NavbarLink>
@@ -128,11 +128,11 @@ const Navbar = () => {
       >
         <Icon
           name="signOut"
-          className="hover:text-brand-300 size-8 rotate-180"
+          className="hover:text-brand-300 size-6 rotate-180"
         />
       </NavbarButton>
       <NavbarLink to={`/users/${user.id}`} closeMenu={closeMenu}>
-        <Icon name="user" className="hover:text-brand-300 size-8" />
+        <Icon name="user" className="hover:text-brand-300 size-6" />
       </NavbarLink>
     </>
   ) : (
@@ -142,14 +142,14 @@ const Navbar = () => {
         closeMenu={closeMenu}
         className="text-text-secondary hover:text-brand-300 cursor-pointer text-sm"
       >
-        <Icon name="signIn" className="hover:text-brand-300 size-8" />
+        <Icon name="signIn" className="hover:text-brand-300 size-6" />
       </NavbarLink>
       <NavbarLink
         to="/sign-up"
         closeMenu={closeMenu}
         className="text-text-secondary hover:text-brand-300 cursor-pointer text-sm"
       >
-        <Icon name="signUp" className="hover:text-brand-300 size-8" />
+        <Icon name="signUp" className="hover:text-brand-300 size-6" />
       </NavbarLink>
     </>
   );
@@ -186,7 +186,7 @@ const Navbar = () => {
               >
                 <Icon
                   name={isMenuOpened ? "close" : "menu"}
-                  className="z-100 size-8"
+                  className="z-100 size-6"
                 />
               </NavbarButton>
             </div>
@@ -207,7 +207,7 @@ const Navbar = () => {
           >
             <Icon
               name={isMenuOpened ? "close" : "menu"}
-              className="z-100 size-8"
+              className="z-100 size-6"
             />
           </NavbarButton>
           <div className="space-y-base backdrop-blur-base fixed inset-0 z-100 flex h-screen w-screen flex-col items-center justify-center backdrop-brightness-10 md:hidden">

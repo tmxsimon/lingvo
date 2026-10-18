@@ -28,7 +28,7 @@ const ReorderableItem = ({
         className="text-gray-neutral-300 hover:text-gray-neutral-500 size-6 cursor-pointer select-none"
         onPointerDown={(e) => controls.start(e)}
       />
-      <div className="flex w-full min-w-0 xs:text-base text-sm">{content}</div>
+      <div className="xs:text-base flex w-full min-w-0 text-sm">{content}</div>
       <div className="flex min-w-16 justify-end">
         {note && (
           <div
@@ -36,7 +36,7 @@ const ReorderableItem = ({
             data-tooltip-id="note-tooltip"
             data-tooltip-content={note}
           >
-            <Icon name="info" className="size-8" />
+            <Icon name="info" className="size-6" />
           </div>
         )}
         {buttons}

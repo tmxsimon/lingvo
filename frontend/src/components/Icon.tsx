@@ -10,7 +10,7 @@ export type IconProps = SVGProps<SVGSVGElement> & {
 const Icon = ({
   name,
   autoSize = false,
-  className = "size-8",
+  className = "size-6",
   ...iconProps
 }: IconProps) => {
   className += ` ${autoSize ? "stroke-current" : ""}`;

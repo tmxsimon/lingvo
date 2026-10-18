@@ -77,6 +77,7 @@ const ProfilePage = () => {
                   theme="brand"
                   style="primary"
                   text={t("users.friends.friends")}
+                  iconBack={<Icon name="friends" className="size-4" />}
                   onClick={() => navigate("friends")}
                 />
                 <div className="gap-base-sm flex w-full justify-center">

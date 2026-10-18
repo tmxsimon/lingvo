@@ -12,10 +12,10 @@ const NotesGroup = ({ group, onClickSettings }: NotesGroupProps) => {
   const buttons = (
     <>
       <button className="cursor-pointer" onClick={onClickSettings}>
-        <Icon name="settings" className="size-8" />
+        <Icon name="settings" className="size-6" />
       </button>
       <Link to={`${group.id}`}>
-        <Icon name="arrowRight" className="size-8" />
+        <Icon name="arrowRight" className="size-6" />
       </Link>
     </>
   );

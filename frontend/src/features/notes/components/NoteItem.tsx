@@ -12,10 +12,10 @@ const NoteItem = ({ note, onClickSettings }: NoteItemProps) => {
   const buttons = (
     <>
       <button className="cursor-pointer" onClick={onClickSettings}>
-        <Icon name="settings" className="size-8" />
+        <Icon name="settings" className="size-6" />
       </button>
       <Link to={`/notes/${note.group_id}/${note.id}`}>
-        <Icon name="arrowRight" className="size-8" />
+        <Icon name="arrowRight" className="size-6" />
       </Link>
     </>
   );

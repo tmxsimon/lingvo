@@ -17,7 +17,7 @@ const DictionaryEntry = ({ entry, onClickSettings }: DictionaryEntryProps) => {
 
   const buttons = (
     <button className="cursor-pointer" onClick={onClickSettings}>
-      <Icon name="settings" className="size-8" />
+      <Icon name="settings" className="size-6" />
     </button>
   );
 

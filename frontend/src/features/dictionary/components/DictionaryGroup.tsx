@@ -12,16 +12,20 @@ const DictionaryGroup = ({ group, onClickSettings }: DictionaryGroupProps) => {
   const buttons = (
     <>
       <button className="cursor-pointer" onClick={onClickSettings}>
-        <Icon name="settings" className="size-8" />
+        <Icon name="settings" className="size-6" />
       </button>
       <Link to={`${group.id}`} className="cursor-pointer">
-        <Icon name="arrowRight" className="size-8" />
+        <Icon name="arrowRight" className="size-6" />
       </Link>
     </>
   );
 
   return (
-    <ReorderableItem value={group} content={<div className="truncate">{group.name}</div>} buttons={buttons} />
+    <ReorderableItem
+      value={group}
+      content={<div className="truncate">{group.name}</div>}
+      buttons={buttons}
+    />
   );
 };
 
