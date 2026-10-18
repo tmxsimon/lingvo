@@ -119,7 +119,13 @@
         "roles": "Roles",
         "viewer": "Viewer",
         "default": "Default",
-        "collaborator": "Collaborator"
+        "collaborator": "Collaborator",
+
+        "descriptions": {
+          "viewer": "Viewer - view the language and its content",
+          "default": "Default - create and edit your own entries (WIP)",
+          "collaborator": "Collaborator - create and edit any entries"
+        }
       },
       "manageUsers": "Manage users",
 

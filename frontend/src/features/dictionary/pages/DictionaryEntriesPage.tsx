@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Tooltip } from "react-tooltip";
 import useModal from "../../../hooks/useModal";
 import DictionaryEntry from "../components/DictionaryEntry";
 import ModalAddEntry from "../components/modals/ModalAddEntry";
@@ -13,7 +12,7 @@ import { useLanguageContext } from "../../languages/contexts/languageProvider";
 import { Reorder } from "motion/react";
 import AddSearchPanel from "../../../components/other/AddSearchPanel";
 import Button from "../../../components/Button";
-import { useLanguages } from "../../languages/hooks/useLanguages";
+import Hint from "../../../components/Hint";
 
 const DictionaryEntriesPage = () => {
   const { t } = useTranslation();
@@ -115,7 +114,7 @@ const DictionaryEntriesPage = () => {
         </Reorder.Group>
       </div>
 
-      <Tooltip id="note-tooltip" className="z-50 max-w-92 break-all" />
+      <Hint id="note-tooltip" />
 
       {/* modals */}
       <ModalAddEntry

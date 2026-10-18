@@ -7,8 +7,7 @@ import AddSearchPanel from "../../../components/other/AddSearchPanel";
 import LanguagesPageSwitch from "../components/LanguagesPageSwitch";
 import useLanguagesPage from "../hooks/useLanguagesPage";
 import ModalShareLanguage from "../components/modals/ModalShareLanguage";
-import Button from "../../../components/Button";
-import Popup from "../../../components/Popup";
+import Hint from "../../../components/Hint";
 
 const LanguagesPage = () => {
   const { t } = useTranslation();
@@ -78,6 +77,8 @@ const LanguagesPage = () => {
           {sharedLanguagesList}
         </Reorder.Group>
       </div>
+
+      <Hint id="note-tooltip" />
 
       {/* modals */}
       <ModalAddLanguage

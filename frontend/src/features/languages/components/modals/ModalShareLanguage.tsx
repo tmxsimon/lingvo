@@ -8,6 +8,7 @@ import type { LanguageType } from "../../types";
 import ModalPage from "../../../../components/ModalPage";
 import { useState } from "react";
 import ModalPageIcon from "../../../../components/ModalPageIcon";
+import Hint from "../../../../components/Hint";
 
 type ModalShareLanguageProps = {
   isOpen: boolean;
@@ -38,6 +39,16 @@ const ModalShareLanguage = ({
     removeUserFromLanguage,
   } = useModalShareLanguage(language?.id, isLanguageUsersEnabled);
 
+  const rolesHint = (
+    <Hint id="roles-hint" width="large">
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <span>{t("languages.roles.descriptions.viewer")}</span>
+        <span>{t("languages.roles.descriptions.default")}</span>
+        <span>{t("languages.roles.descriptions.collaborator")}</span>
+      </div>
+    </Hint>
+  );
+
   const canShare = language?.user_permissions?.can_share;
 
   const pages = [
@@ -65,7 +76,7 @@ const ModalShareLanguage = ({
           />
         </div>,
         <div>
-          <ModalTitle text={t("languages.roles.roles")} />
+          <ModalTitle text={t("languages.roles.roles")} noteId="roles-hint" />
           <Select
             value={
               (typeof currentRoleOption !== "string" &&
@@ -123,7 +134,7 @@ const ModalShareLanguage = ({
           />
         </div>,
         <div>
-          <ModalTitle text={t("languages.roles.roles")} />
+          <ModalTitle text={t("languages.roles.roles")} noteId="roles-hint" />
           <Select
             value={
               (typeof currentRoleOption !== "string" &&
@@ -175,27 +186,31 @@ const ModalShareLanguage = ({
   ];
 
   return (
-    <Modal
-      pages={pages}
-      open={isOpen}
-      closeModal={() => {
-        closeModal();
-      }}
-      pagesIcons={[
-        <ModalPageIcon
-          name="signUp"
-          onClick={() => {
-            setIsLanguageUsersEnabled(false);
-          }}
-        />,
-        <ModalPageIcon
-          name="users"
-          onClick={() => {
-            setIsLanguageUsersEnabled(true);
-          }}
-        />,
-      ]}
-    />
+    <>
+      <Modal
+        pages={pages}
+        open={isOpen}
+        closeModal={() => {
+          closeModal();
+        }}
+        pagesIcons={[
+          <ModalPageIcon
+            name="signUp"
+            onClick={() => {
+              setIsLanguageUsersEnabled(false);
+            }}
+          />,
+          <ModalPageIcon
+            name="users"
+            onClick={() => {
+              setIsLanguageUsersEnabled(true);
+            }}
+          />,
+        ]}
+      />
+
+      {rolesHint}
+    </>
   );
 };
 

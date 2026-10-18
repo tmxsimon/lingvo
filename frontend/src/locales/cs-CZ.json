@@ -114,7 +114,13 @@
         "roles": "Role",
         "viewer": "Prohlížeč",
         "default": "Výchozí",
-        "collaborator": "Spolupracovník"
+        "collaborator": "Spolupracovník",
+
+        "descriptions": {
+          "viewer": "Prohlížeč - prohlížet jazyk a jeho obsah",
+          "default": "Výchozí - vytvářet a upravovat své vlastní záznamy (WIP)",
+          "collaborator": "Spolupracovník - vytvářet a upravovat jakékoli záznamy"
+        }
       },
       "manageUsers": "Spravovat uživatele",
 
