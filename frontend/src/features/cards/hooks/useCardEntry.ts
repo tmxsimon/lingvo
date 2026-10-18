@@ -7,6 +7,8 @@ import {
   type TemperatureActionType,
 } from "../../../hooks/useTemperature";
 
+const EMPTY_ENTRIES: DictionaryEntryType[] = [];
+
 // the code is TRASH but it works
 // TODO: fix the code
 export default function useCardEntry(
@@ -32,7 +34,7 @@ export default function useCardEntry(
     refetchOnWindowFocus: false,
   });
 
-  const entries: DictionaryEntryType[] = query.data?.entries ?? [];
+  const entries: DictionaryEntryType[] = query.data?.entries ?? EMPTY_ENTRIES;
   const group = query.data?.group ?? null;
   const { isLoading, error } = query;
 
