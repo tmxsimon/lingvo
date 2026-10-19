@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from src.dependencies import SessionDep
+from src.dependencies import SessionDep, UserDep
 from .service import (
     change_temperature_db,
     TemperatureActionEnum,
@@ -42,6 +42,7 @@ async def create_entry(
     translation: str,
     group_id: int,
     note: str | None = None,
+    user = UserDep,
     session = SessionDep
     ):
     entry = create_entry_db(
@@ -50,6 +51,7 @@ async def create_entry(
         translation=translation,
         note=note,
         temperature=100,
+        user=user,
         group_id=group_id
     )
     if entry is None:
@@ -145,10 +147,11 @@ async def get_group_and_entries(id: int | None = None, session = SessionDep):
 
 
 @router.post("/groups")
-async def create_group(language: int, name: str,  session = SessionDep):
+async def create_group(language: int, name: str, user = UserDep, session = SessionDep):
     group = create_group_db(
         language=language,
         name=name,
+        user=user,
         session=session
     )
     if group is None:

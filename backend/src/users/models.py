@@ -7,6 +7,10 @@ class User(SQLModel, table=True):
     hashed_password: str
     image_url: str | None = Field(default=None)
     is_public: bool = Field(default=True)
+    entries: list["DictionaryEntry"] = Relationship(back_populates="user", cascade_delete=True)
+    entries_groups: list["EntriesGroup"] = Relationship(back_populates="user", cascade_delete=True)
+    notes: list["Note"] = Relationship(back_populates="user", cascade_delete=True)
+    notes_groups: list["NotesGroup"] = Relationship(back_populates="user", cascade_delete=True)
     languages_permissions: list["LanguageUserPermissions"] = Relationship(
         back_populates="user",
         sa_relationship_kwargs={
@@ -39,6 +43,3 @@ class UserFriend(SQLModel, table=True):
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
-
-from src.languages.models import LanguageUserPermissions
-from src.languages.models import Language

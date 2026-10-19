@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status
-from src.dependencies import SessionDep
+from src.dependencies import SessionDep, UserDep
 from .service import (
     get_note_db,
     get_notes_db,
@@ -59,11 +59,13 @@ async def get_notes_by_group(language: int,  limit: int = 50, offset: int = 0, g
 async def create_note(
     name: str,
     group_id: int,
+    user = UserDep,
     session = SessionDep
     ):
     note = create_note_db(
         session = session,
         name=name,
+        user=user,
         group_id=group_id
     )
     if note is None:
@@ -140,10 +142,11 @@ async def get_group_and_notes(id: int | None = None, session = SessionDep):
 
 
 @router.post("/groups")
-async def create_group(language: int, name: str,  session = SessionDep):
+async def create_group(language: int, name: str, user = UserDep, session = SessionDep):
     group = create_group_db(
         language=language,
         name=name,
+        user=user,
         session=session
     )
     if group is None:

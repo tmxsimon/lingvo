@@ -7,6 +7,8 @@ class Note(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     name: str
     content: str
+    user_id: int = Field(foreign_key="user.id")
+    user: User = Relationship(back_populates="notes")
     group_id: int = Field(foreign_key="notes_group.id")
     group: NotesGroup = Relationship(back_populates="notes")
     position: int
@@ -19,6 +21,8 @@ class NotesGroup(SQLModel, table=True):
 
     id: int | None = Field(default=None, primary_key=True)
     name: str
+    user_id: int = Field(foreign_key="user.id")
+    user: User = Relationship(back_populates="notes_groups")
     language_id: int | None = Field(default=None, foreign_key="language.id")
     language: Language = Relationship(back_populates="notes_groups")
     notes: list["Note"] = Relationship(back_populates="group", cascade_delete=True)
@@ -28,3 +32,4 @@ class NotesGroup(SQLModel, table=True):
     )
     
 from src.languages.models import Language
+from src.users.models import User

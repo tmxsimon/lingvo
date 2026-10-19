@@ -1,4 +1,5 @@
 from enum import Enum
+from src.users.models import User
 from sqlmodel import Session, func, select
 from .models import Note, NotesGroup
 
@@ -37,6 +38,7 @@ def get_notes_by_group_db(session: Session, language: int, group_id: int | None 
     return notes
 
 def create_note_db(
+    user: User,
     session: Session,
     name: str,
     group_id: int,
@@ -53,6 +55,7 @@ def create_note_db(
         name=name,
         content="",
         group_id=group_id,
+        user_id=user.id,
         position=position
     )
     if note is None:
@@ -131,6 +134,7 @@ def get_groups_db(session: Session, language: int, limit: int = 50, offset: int 
     ).all()
 
 def create_group_db(
+    user: User,
     session: Session,
     name: str,
     language: int,
@@ -138,7 +142,7 @@ def create_group_db(
     max_position = session.exec(select(func.max(NotesGroup.position))).first()
     position = (max_position or 0) + 1
     
-    group = NotesGroup(language_id=language, name=name, position=position)
+    group = NotesGroup(language_id=language, name=name, position=position, user_id=user.id)
 
     if group is None:
         return None

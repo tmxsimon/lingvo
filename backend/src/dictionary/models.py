@@ -11,6 +11,8 @@ class DictionaryEntry(SQLModel, table=True):
     translation: str
     note: str | None = None
     temperature: int # 0 - 100 (%)
+    user_id: int = Field(foreign_key="user.id")
+    user: User = Relationship(back_populates="entries")
     group_id: int = Field(foreign_key="entries_group.id")
     group: EntriesGroup = Relationship(back_populates="entries")
     position: int
@@ -23,6 +25,8 @@ class EntriesGroup(SQLModel, table=True):
 
     id: int | None = Field(default=None, primary_key=True)
     name: str
+    user_id: int = Field(foreign_key="user.id")
+    user: User = Relationship(back_populates="entries_groups")
     language_id: int | None = Field(default=None, foreign_key="language.id")
     language: Language = Relationship(back_populates="entries_groups")
     entries: list["DictionaryEntry"] = Relationship(back_populates="group", cascade_delete=True)
@@ -32,3 +36,4 @@ class EntriesGroup(SQLModel, table=True):
     )
     
 from src.languages.models import Language
+from src.users.models import User

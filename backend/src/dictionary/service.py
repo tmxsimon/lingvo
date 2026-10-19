@@ -1,5 +1,6 @@
 from enum import Enum
 from sqlmodel import Session, func, select
+from src.users.models import User
 from .models import DictionaryEntry, EntriesGroup
 
 # entries
@@ -30,6 +31,7 @@ def get_entries_by_group_db(session: Session, language: int, group_id: int | Non
     return entries
 
 def create_entry_db(
+    user: User,
     session: Session,
     content: str,
     translation: str,
@@ -50,6 +52,7 @@ def create_entry_db(
         translation=translation,
         note=note,
         temperature=temperature,
+        user_id=user.id,
         group_id=group_id,
         position=position
     )
@@ -167,6 +170,7 @@ def get_groups_db(session: Session, language: int, limit: int = 50, offset: int 
     ).all()
 
 def create_group_db(
+    user: User,
     session: Session,
     name: str,
     language: int,
@@ -174,7 +178,7 @@ def create_group_db(
     max_position = session.exec(select(func.max(EntriesGroup.position))).first()
     position = (max_position or 0) + 1
     
-    group = EntriesGroup(language_id=language, name=name, position=position)
+    group = EntriesGroup(language_id=language, name=name, position=position, user_id=user.id)
 
     if group is None:
         return None
