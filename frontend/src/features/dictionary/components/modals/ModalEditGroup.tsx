@@ -9,6 +9,7 @@ import ModalTitle from "../../../../components/ModalTitle";
 import ModalPage from "../../../../components/ModalPage";
 import { useLanguageContext } from "../../../languages/contexts/languageProvider";
 import useLanguage from "../../../languages/hooks/useLanguage";
+import { useAuth } from "../../../users/contexts/authProvider";
 
 type ModalEditGroupProps = {
   group: DictionaryGroupType | null;
@@ -26,7 +27,7 @@ const ModalEditGroup = ({
   deleteGroup,
 }: ModalEditGroupProps) => {
   const { t } = useTranslation();
-
+  const { user } = useAuth();
   const { name, setName, validate } = useModalGroup();
 
   useEffect(() => {
@@ -35,8 +36,17 @@ const ModalEditGroup = ({
 
   const { language } = useLanguage();
 
-  const canDelete = language?.user_permissions?.can_delete;
-  const canEdit = language?.user_permissions?.can_edit;
+  const canEdit = useMemo(() => {
+    if (!language) return false;
+    const isOwnGroup = group?.user_id === user?.id;
+    return language.user_permissions?.can_edit || isOwnGroup;
+  }, [group]);
+
+  const canDelete = useMemo(() => {
+    if (!language) return false;
+    const isOwnGroup = group?.user_id === user?.id;
+    return language.user_permissions?.can_delete || isOwnGroup;
+  }, [group]);
 
   const page = (
     <ModalPage

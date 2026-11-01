@@ -17,6 +17,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import NotFoundPage from "./pages/NotFoundPage";
 import SearchFriendsPage from "./features/users/pages/SearchFriendsPage";
 import OwnFriendsPage from "./features/users/pages/OwnFriendsPage";
+import SearchLanguagesPage from "./features/languages/pages/SearchLanguagesPage";
 
 const App = () => {
   return (
@@ -28,13 +29,16 @@ const App = () => {
           <Route path="/sign-in" element={<SignInPage />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/users" element={<ProtectedRoute />}>
-              <Route path="search-friends" element={<SearchFriendsPage />} />
+              <Route path="search" element={<SearchFriendsPage />} />
               <Route path=":userId">
                 <Route index element={<ProfilePage />} />
                 <Route path="friends" element={<OwnFriendsPage />} />
               </Route>
             </Route>
-            <Route path="/languages" element={<LanguagesPage />} />
+            <Route path="/languages" element={<ProtectedRoute />}>
+              <Route index element={<LanguagesPage />} />
+              <Route path="search" element={<SearchLanguagesPage />} />
+            </Route>
           </Route>
           <Route path="/dictionary" element={<ProtectedRoute />}>
             <Route index element={<DictionaryGroupsPage />} />

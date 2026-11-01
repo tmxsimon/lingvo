@@ -15,9 +15,9 @@ const OwnFriendsPage = () => {
 
   return (
     <>
-      <div className="min-h-screen-no-navbar-page flex w-full max-w-192 flex-col items-center">
+      <div className="min-h-screen-no-navbar-page gap-base flex w-full max-w-192 flex-col items-center">
         <PageTitle title={t("users.friends.myFriends")} />
-        <div className="gap-base-sm my-base flex">
+        <div className="flex w-full max-w-72">
           <Search
             value={searchValue}
             placeholder={t("search")}

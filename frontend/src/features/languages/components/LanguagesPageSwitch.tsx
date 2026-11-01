@@ -13,13 +13,13 @@ const LanguagesPageSwitch = ({
   return (
     <div className="gap-base flex">
       <Button
-        text={t("languages.myLanguages")}
+        text={t("languages.languages")}
         style="tertiary"
         size="small"
         onClick={onClickLeftButton}
       />
       <Button
-        text={t("languages.sharedLanguages")}
+        text={t("languages.searchLanguages")}
         style="tertiary"
         size="small"
         onClick={onClickRightButton}

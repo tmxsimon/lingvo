@@ -35,3 +35,10 @@ export const fetchAvailableUsersForLanguage = async (languageId: number) => {
   );
   return result.data;
 };
+
+export const searchLanguages = async (name: string) => {
+  const result = await api.get<LanguageType[]>(`${PATH}/search`, {
+    params: { name },
+  });
+  return result.data;
+};

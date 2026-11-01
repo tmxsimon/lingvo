@@ -8,6 +8,7 @@ import useModalGroup from "../../hooks/useModalNotesGroup";
 import ModalTitle from "../../../../components/ModalTitle";
 import ModalPage from "../../../../components/ModalPage";
 import useLanguage from "../../../languages/hooks/useLanguage";
+import { useAuth } from "../../../users/contexts/authProvider";
 
 type ModalEditNotesGroupProps = {
   group: NotesGroupType | null;
@@ -25,20 +26,22 @@ const ModalEditNotesGroup = ({
   deleteGroup,
 }: ModalEditNotesGroupProps) => {
   const { t } = useTranslation();
-
+  const { user } = useAuth();
   const { name, setName, validate } = useModalGroup();
 
   const { language } = useLanguage();
 
   const canEdit = useMemo(() => {
     if (!language) return false;
-    return language.user_permissions?.can_edit;
-  }, [language]);
+    const isOwnGroup = group?.user_id === user?.id;
+    return language.user_permissions?.can_edit || isOwnGroup;
+  }, [group]);
 
   const canDelete = useMemo(() => {
     if (!language) return false;
-    return language.user_permissions?.can_delete;
-  }, [language]);
+    const isOwnGroup = group?.user_id === user?.id;
+    return language.user_permissions?.can_delete || isOwnGroup;
+  }, [group]);
 
   useEffect(() => {
     setName(group?.name || "");

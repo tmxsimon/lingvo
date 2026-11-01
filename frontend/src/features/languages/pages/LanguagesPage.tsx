@@ -8,9 +8,12 @@ import LanguagesPageSwitch from "../components/LanguagesPageSwitch";
 import useLanguagesPage from "../hooks/useLanguagesPage";
 import ModalShareLanguage from "../components/modals/ModalShareLanguage";
 import Hint from "../../../components/Hint";
+import { useNavigate } from "react-router-dom";
+import Loading from "../../../components/Loading";
 
 const LanguagesPage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const {
     isOpen: isOpenAdd,
@@ -24,8 +27,6 @@ const LanguagesPage = () => {
   } = useModal();
   const {
     isOpen: isOpenShare,
-    currentIndex,
-    setCurrentIndex,
     openModal: openModalShare,
     closeModal: closeModalShare,
   } = useModal();
@@ -37,12 +38,14 @@ const LanguagesPage = () => {
     editLanguage,
     deleteLanguage,
     reorderLanguages,
-    setIsMyLanguages,
     setLanguages,
     languages,
     languagesList,
     requestsList,
     sharedLanguagesList,
+    sharedLanguages,
+    requests,
+    isLoading,
     chosenLanguage,
   } = useLanguagesPage(openModalEdit, openModalShare);
 
@@ -55,27 +58,53 @@ const LanguagesPage = () => {
           onSearchChange={setSearchValue}
         />
         <LanguagesPageSwitch
-          onClickLeftButton={() => setIsMyLanguages(true)}
-          onClickRightButton={() => setIsMyLanguages(false)}
+          onClickLeftButton={() => navigate("/languages")}
+          onClickRightButton={() => navigate("/languages/search")}
         />
-        <Reorder.Group
-          axis="y"
-          values={languages}
-          onReorder={(newLanguages) => {
-            newLanguages.forEach((language, index) => {
-              language.position = newLanguages.length - index;
-            });
-            setLanguages(newLanguages);
-            const orderedIds = newLanguages.map((l) => l.id);
-
-            reorderLanguages.mutate(orderedIds);
-          }}
-          className="gap-base flex h-full w-full flex-col items-center"
-        >
-          {languagesList}
-          {requestsList}
-          {sharedLanguagesList}
-        </Reorder.Group>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="gap-base flex w-full flex-col items-center">
+            {requests.length > 0 && (
+              <>
+                <Reorder.Group
+                  values={requests}
+                  onReorder={() => {}}
+                  className="gap-base flex w-full flex-col items-center"
+                >
+                  {requestsList}
+                </Reorder.Group>
+              </>
+            )}
+            {sharedLanguages.length > 0 && (
+              <>
+                <Reorder.Group
+                  values={sharedLanguages}
+                  onReorder={() => {}}
+                  className="gap-base flex w-full flex-col items-center"
+                >
+                  {sharedLanguagesList}
+                </Reorder.Group>
+              </>
+            )}
+            <Reorder.Group
+              axis="y"
+              values={languages}
+              onReorder={(newLanguages) => {
+                newLanguages.forEach((language, index) => {
+                  language.position = newLanguages.length - index;
+                });
+                setLanguages(newLanguages);
+                reorderLanguages.mutate(
+                  newLanguages.map((language) => language.id),
+                );
+              }}
+              className="gap-base flex w-full flex-col items-center"
+            >
+              {languagesList}
+            </Reorder.Group>
+          </div>
+        )}
       </div>
 
       <Hint id="note-tooltip" />

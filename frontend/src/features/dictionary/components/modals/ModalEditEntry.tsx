@@ -13,9 +13,8 @@ import { useDictionaryGroups } from "../../hooks/useDictionaryGroups";
 import { useLanguageContext } from "../../../languages/contexts/languageProvider";
 import Loading from "../../../../components/Loading";
 import ModalPage from "../../../../components/ModalPage";
-import type { LanguageType } from "../../../languages/types";
-import { useLanguages } from "../../../languages/hooks/useLanguages";
 import useLanguage from "../../../languages/hooks/useLanguage";
+import { useAuth } from "../../../users/contexts/authProvider";
 
 type ModalEditEntryProps = {
   entry: DictionaryEntryType | null;
@@ -42,20 +41,21 @@ const ModalEditEntry = ({
   deleteEntry,
 }: ModalEditEntryProps) => {
   const { t } = useTranslation();
-
+  const { user } = useAuth();
   const { language: languageId } = useLanguageContext();
-
   const { language } = useLanguage();
 
   const canEdit = useMemo(() => {
     if (!language) return false;
-    return language.user_permissions?.can_edit;
-  }, [language]);
+    const isOwnEntry = entry?.user_id === user?.id;
+    return language.user_permissions?.can_edit || isOwnEntry;
+  }, [entry]);
 
   const canDelete = useMemo(() => {
     if (!language) return false;
-    return language.user_permissions?.can_delete;
-  }, [language]);
+    const isOwnEntry = entry?.user_id === user?.id;
+    return language.user_permissions?.can_delete || isOwnEntry;
+  }, [entry]);
 
   const {
     groups,

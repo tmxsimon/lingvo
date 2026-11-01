@@ -145,6 +145,13 @@ def update_language_db(
 
     return language
 
+def search_languages_db(
+    session: Session,
+    name: str
+):
+    languages = session.exec(select(Language).where(Language.name.contains(name))).all()
+    return languages
+
 def reorder_languages_db(session: Session, ordered_ids: list[int]):
     languages = session.exec(select(Language).where(Language.id.in_(ordered_ids))).all()
     language_map = {language.id: language for language in languages}

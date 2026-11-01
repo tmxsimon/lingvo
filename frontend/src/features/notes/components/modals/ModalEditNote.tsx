@@ -10,6 +10,7 @@ import useModalnote from "../../hooks/useModalNote";
 import ModalTitle from "../../../../components/ModalTitle";
 import ModalPage from "../../../../components/ModalPage";
 import useLanguage from "../../../languages/hooks/useLanguage";
+import { useAuth } from "../../../users/contexts/authProvider";
 
 type ModalEditnoteProps = {
   note: NoteType | null;
@@ -31,7 +32,7 @@ const ModalEditnote = ({
   deleteNote,
 }: ModalEditnoteProps) => {
   const { t } = useTranslation();
-
+  const { user } = useAuth();
   const { name, setName, validate } = useModalnote();
   const [currentGroupOption, setCurrentGroupOption] =
     useState<SelectOptionType>({
@@ -59,13 +60,15 @@ const ModalEditnote = ({
 
   const canEdit = useMemo(() => {
     if (!language) return false;
-    return language.user_permissions?.can_edit;
-  }, [language]);
+    const isOwnNote = note?.user_id === user?.id;
+    return language.user_permissions?.can_edit || isOwnNote;
+  }, [note]);
 
   const canDelete = useMemo(() => {
     if (!language) return false;
-    return language.user_permissions?.can_delete;
-  }, [language]);
+    const isOwnNote = note?.user_id === user?.id;
+    return language.user_permissions?.can_delete || isOwnNote;
+  }, [note]);
 
   const page = (
     <ModalPage

@@ -7,10 +7,11 @@ import { toast } from "react-toastify";
 
 type LanguageProps = {
   isRequest?: boolean;
+  isSearchResult?: boolean;
   language: LanguageType;
-  onClick: () => void;
-  onClickSettings: () => void;
-  onClickShare: () => void;
+  onClick?: () => void;
+  onClickSettings?: () => void;
+  onClickShare?: () => void;
   requestId?: number;
   onApproveRequest?: (permissionsId: number) => void;
   onRejectRequest?: (permissionsId: number) => void;
@@ -20,6 +21,7 @@ type LanguageProps = {
 
 const Language = ({
   isRequest = false,
+  isSearchResult = false,
   language,
   onClick,
   onClickSettings,
@@ -34,8 +36,8 @@ const Language = ({
   const { t } = useTranslation();
 
   const handleSelectLanguage = () => {
-    if (isRequest) return;
-    onClick();
+    if (isRequest || isSearchResult || !onClick) return;
+    onClick?.();
     toast.success(
       t("{{languageName}} был выбран", { languageName: language.name }),
     );
@@ -47,7 +49,7 @@ const Language = ({
       dragListener={false}
       dragControls={controls}
       onClick={handleSelectLanguage}
-      className={`p-base border-brand-neutral-200 backdrop-blur-base rounded-base-sm gap-base flex h-42 w-full max-w-152 ${!isRequest ? "cursor-pointer" : ""} border backdrop-brightness-95 sm:h-52`}
+      className={`p-base border-brand-neutral-200 backdrop-blur-base rounded-base-sm gap-base flex h-42 w-full max-w-152 ${onClick && !isRequest && !isSearchResult ? "cursor-pointer" : ""} border backdrop-brightness-95 sm:h-52`}
     >
       <img
         className="rounded-base-sm border-brand-neutral-200 aspect-square h-full border object-cover"
@@ -84,7 +86,7 @@ const Language = ({
               />
             </div>
           )}
-          {!isRequest && (
+          {!isRequest && !isSearchResult && (
             <div className="flex">
               {isLeavable && (
                 <Icon
@@ -101,7 +103,7 @@ const Language = ({
                 name="users"
                 className="size-6"
                 onClick={(e) => {
-                  onClickShare();
+                  onClickShare?.();
                   e.stopPropagation();
                 }}
               />

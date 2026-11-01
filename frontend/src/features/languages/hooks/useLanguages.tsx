@@ -5,6 +5,7 @@ import {
   fetchSharedLanguages,
   fetchLanguageUsers,
   fetchAvailableUsersForLanguage,
+  searchLanguages,
 } from "../services";
 import { useLanguageContext } from "../contexts/languageProvider";
 import { useState } from "react";
@@ -16,11 +17,14 @@ export function useLanguages(
   languageId: number | null = null,
   isMyLanguages: boolean = true,
   enabled: boolean = true,
+  includeSharedLanguages: boolean = false,
 ) {
   const queryClient = useQueryClient();
   const { changeLanguage } = useLanguageContext();
 
   const [searchValue, setSearchValue] = useState<string>("");
+
+  const [searchLanguagesValue, setSearchLanguagesValue] = useState<string>(""); // search for new langauges
 
   const invalidateLanguageSharingQueries = () =>
     Promise.all([
@@ -50,7 +54,7 @@ export function useLanguages(
     queryKey: ["languages-shared"],
     queryFn: () => fetchSharedLanguages(),
     retry: false,
-    enabled: !isMyLanguages && enabled,
+    enabled: (!isMyLanguages || includeSharedLanguages) && enabled,
   });
 
   const {
@@ -73,7 +77,18 @@ export function useLanguages(
     enabled: !!languageId && !enabled,
   });
 
-  const searchLanguages = searchValue
+  const {
+    data: languagesFound,
+    isLoading: isSearching,
+    error: searchError,
+    refetch: searchLanguagesRefetch,
+  } = useQuery({
+    queryKey: ["searchLanguages", searchLanguagesValue],
+    queryFn: () => searchLanguages(searchLanguagesValue),
+    enabled: !!searchLanguagesValue,
+  });
+
+  const filteredLanguages = searchValue
     ? languages?.filter((language) =>
         language.name.toLowerCase().includes(searchValue.toLowerCase()),
       )
@@ -137,6 +152,17 @@ export function useLanguages(
       changeLanguage("");
     },
   });
+
+  const handleSearchLanguages = (name: string) => {
+    const normalizedName = name.trim();
+
+    if (normalizedName === searchLanguagesValue) {
+      if (normalizedName) void searchLanguagesRefetch();
+      return;
+    }
+
+    setSearchLanguagesValue(normalizedName);
+  };
 
   const addUserToLanguage = useMutation({
     mutationFn: ({
@@ -217,12 +243,19 @@ export function useLanguages(
     isLoadingLanguages ||
     isLoadingShared ||
     isLoadingLanguageUsers ||
-    isLoadingAvailableUsers;
+    isLoadingAvailableUsers ||
+    isSearching;
   const error =
-    errorLanguages || errorShared || errorLanguageUsers || errorAvailableUsers;
+    errorLanguages ||
+    errorShared ||
+    errorLanguageUsers ||
+    errorAvailableUsers ||
+    searchError;
 
   return {
-    languages: searchLanguages,
+    languages: filteredLanguages,
+    languagesFound,
+    handleSearchLanguages,
     sharedLanguages,
     setSearchValue,
     isLoading,

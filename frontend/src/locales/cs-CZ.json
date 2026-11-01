@@ -101,7 +101,9 @@
     },
 
     "languages": {
+      "languages": "Jazyky",
       "myLanguages": "Moje jazyky",
+      "searchLanguages": "Hledat jazyky",
       "sharedLanguages": "Sdílené jazyky",
       "shareLanguage": "Sdílet jazyk",
       "addLanguage": "Přidat jazyk",
@@ -118,7 +120,7 @@
 
         "descriptions": {
           "viewer": "Prohlížeč - prohlížet jazyk a jeho obsah",
-          "default": "Výchozí - vytvářet a upravovat své vlastní záznamy (WIP)",
+          "default": "Výchozí - vytvářet a upravovat své vlastní záznamy",
           "collaborator": "Spolupracovník - vytvářet a upravovat jakékoli záznamy"
         }
       },

@@ -16,11 +16,8 @@ const useLanguagesPage = (
     null,
   );
 
-  const [isMyLanguages, setIsMyLanguages] = useState<boolean>(true);
   const { t } = useTranslation();
-  const pageTitle = isMyLanguages
-    ? t("languages.myLanguages")
-    : t("languages.sharedLanguages");
+  const pageTitle = t("languages.languages");
 
   const {
     languages: languagesFetched,
@@ -35,11 +32,11 @@ const useLanguagesPage = (
     reorderLanguages,
     isLoading,
     error,
-  } = useLanguages(null, isMyLanguages);
+  } = useLanguages(null, true, true, true);
 
   const [languages, setLanguages] = useState(languagesFetched || []);
-  const sharedLanguages = sharedLanguagesFetched?.languages;
-  const requests = sharedLanguagesFetched?.requests;
+  const sharedLanguages = sharedLanguagesFetched?.languages ?? [];
+  const requests = sharedLanguagesFetched?.requests ?? [];
 
   useEffect(() => {
     if (languagesFetched) {
@@ -56,89 +53,76 @@ const useLanguagesPage = (
 
   const handleRejectLanguage = (permissionsId: number) => {
     setChosenLanguage(null);
-    changeLanguage("");
     rejectLanguageRequest.mutate(permissionsId);
   };
 
   const languagesList =
-    isLoading ||
-    (!!isMyLanguages &&
-      languages?.map((language) => (
-        <Language
-          key={language.id}
-          language={language}
-          onClick={() => {
-            handleChangeLanguage(language.id);
-          }}
-          onClickSettings={() => {
-            setChosenLanguage(language);
-            openModalEdit();
-          }}
-          onClickShare={() => {
-            setChosenLanguage(language);
-            openModalShare();
-          }}
-        />
-      )));
+    languages?.map((language) => (
+      <Language
+        key={language.id}
+        language={language}
+        onClick={() => {
+          handleChangeLanguage(language.id);
+        }}
+        onClickSettings={() => {
+          setChosenLanguage(language);
+          openModalEdit();
+        }}
+        onClickShare={() => {
+          setChosenLanguage(language);
+          openModalShare();
+        }}
+      />
+    )) ?? [];
 
-  const sharedLanguagesList =
-    isLoading ||
-    (!isMyLanguages &&
-      sharedLanguages?.map((language) => (
-        <Language
-          key={language.id}
-          language={language}
-          onClick={() => {
-            handleChangeLanguage(language.id);
-          }}
-          onClickSettings={() => {
-            setChosenLanguage(language);
-            openModalEdit();
-          }}
-          onClickShare={() => {
-            setChosenLanguage(language);
-            openModalShare();
-          }}
-          onRejectRequest={(permissionsId) =>
-            handleRejectLanguage(permissionsId)
-          }
-          onLeaveClick={(languageId) => {
-            setChosenLanguage(null);
-            changeLanguage("");
-            leaveLanguage.mutate(languageId);
-          }}
-          isLeavable
-        />
-      )));
+  const sharedLanguagesList = sharedLanguages.map((language) => (
+    <Language
+      key={language.id}
+      language={language}
+      onClick={() => {
+        handleChangeLanguage(language.id);
+      }}
+      onClickSettings={() => {
+        setChosenLanguage(language);
+        openModalEdit();
+      }}
+      onClickShare={() => {
+        setChosenLanguage(language);
+        openModalShare();
+      }}
+      onRejectRequest={(permissionsId) => handleRejectLanguage(permissionsId)}
+      onLeaveClick={(languageId) => {
+        setChosenLanguage(null);
+        changeLanguage("");
+        leaveLanguage.mutate(languageId);
+      }}
+      isLeavable
+    />
+  ));
 
-  const requestsList =
-    isLoading ||
-    (!isMyLanguages &&
-      requests?.map((language) => (
-        <Language
-          key={language.id}
-          language={language}
-          isRequest
-          requestId={language.request_id}
-          onApproveRequest={(permissionsId) => {
-            approveLanguageRequest.mutate(permissionsId);
-          }}
-          onClick={() => {
-            handleChangeLanguage(language.id);
-          }}
-          onClickSettings={() => {
-            setChosenLanguage(language);
-            openModalEdit();
-          }}
-          onClickShare={() => {
-            setChosenLanguage(language);
-            openModalShare();
-          }}
-          onRejectRequest={(permissionsId) =>
-            handleRejectLanguage(permissionsId)
-          }
-        />
-      )));
+  const requestsList = requests.map((language) => (
+    <Language
+      key={language.id}
+      language={language}
+      isRequest
+      requestId={language.request_id}
+      onApproveRequest={(permissionsId) => {
+        approveLanguageRequest.mutate(permissionsId);
+      }}
+      onClick={() => {
+        handleChangeLanguage(language.id);
+      }}
+      onClickSettings={() => {
+        setChosenLanguage(language);
+        openModalEdit();
+      }}
+      onClickShare={() => {
+        setChosenLanguage(language);
+        openModalShare();
+      }}
+      onRejectRequest={(permissionsId) => handleRejectLanguage(permissionsId)}
+    />
+  ));
 
   return {
     pageTitle,
@@ -147,12 +131,14 @@ const useLanguagesPage = (
     editLanguage,
     deleteLanguage,
     reorderLanguages,
-    setIsMyLanguages,
     setLanguages,
     languages,
     languagesList,
     sharedLanguagesList,
     requestsList,
+    sharedLanguages,
+    requests,
+    isLoading,
     handleChangeLanguage,
     chosenLanguage,
     setChosenLanguage,

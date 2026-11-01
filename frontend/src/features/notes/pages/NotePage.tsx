@@ -56,6 +56,7 @@ const NotePage = () => {
 
       <div className="h-full w-full">
         <MarkdownEditor
+          note={note!}
           value={value}
           onSave={() => editNote.mutate({ id: note!.id, content: value })}
           onChange={(val) => {

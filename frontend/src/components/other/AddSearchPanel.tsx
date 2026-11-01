@@ -38,7 +38,7 @@ const AddSearchPanel = ({
   return (
     <div className="flex w-full flex-col items-center">
       <PageTitleWithButton title={title!} button={button} />
-      <div className="gap-base mt-base-sm flex w-full items-center justify-center">
+      <div className="gap-base mt-base flex w-full max-w-72 items-center">
         {onAddClick && (
           <IconButton
             icon={<Icon name="plus" />}
@@ -47,6 +47,7 @@ const AddSearchPanel = ({
           />
         )}
         <Search
+          className="flex-1"
           placeholder={t("search")}
           onChange={(e) => onSearchChange(e.target.value)}
         />

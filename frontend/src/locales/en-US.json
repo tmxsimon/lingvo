@@ -106,7 +106,9 @@
     },
 
     "languages": {
+      "languages": "Languages",
       "myLanguages": "My languages",
+      "searchLanguages": "Search languages",
       "sharedLanguages": "Shared languages",
       "shareLanguage": "Share language",
       "addLanguage": "Add language",
@@ -123,7 +125,7 @@
 
         "descriptions": {
           "viewer": "Viewer - view the language and its content",
-          "default": "Default - create and edit your own entries (WIP)",
+          "default": "Default - create and edit your own entries",
           "collaborator": "Collaborator - create and edit any entries"
         }
       },

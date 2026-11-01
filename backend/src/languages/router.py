@@ -10,6 +10,7 @@ from .service import (
     delete_language_db,
     leave_language_db,
     remove_user_from_language_db,
+    search_languages_db,
     update_language_db,
     reorder_languages_db,
     add_user_to_language_db,
@@ -104,6 +105,22 @@ async def update_language(
         )
     
     return language
+
+
+@router.get("/search")
+def search_languages(
+    name: str,
+    session = SessionDep
+):
+    languages = search_languages_db(session, name)
+
+    if languages is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No languages found"
+        )
+    
+    return languages
 
 
 @router.get("/shared")

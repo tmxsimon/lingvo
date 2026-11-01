@@ -3,15 +3,24 @@ import "md-editor-rt/lib/style.css";
 import { useTheme } from "../../../contexts/themeProvider";
 import useLanguage from "../../languages/hooks/useLanguage";
 import { useMemo } from "react";
+import type { NoteType } from "../types";
+import { useAuth } from "../../users/contexts/authProvider";
 
 type MarkdownEditorProps = {
+  note: NoteType;
   value: string;
   onSave?: () => void;
   onChange: (value: string) => void;
 };
 
-const MarkdownEditor = ({ value, onSave, onChange }: MarkdownEditorProps) => {
+const MarkdownEditor = ({
+  note,
+  value,
+  onSave,
+  onChange,
+}: MarkdownEditorProps) => {
   const { theme } = useTheme();
+  const { user } = useAuth();
 
   const toolbar: ToolbarNames[] = [
     "bold",
@@ -43,8 +52,9 @@ const MarkdownEditor = ({ value, onSave, onChange }: MarkdownEditorProps) => {
 
   const canEdit = useMemo(() => {
     if (!language) return false;
-    return language.user_permissions?.can_edit;
-  }, [language]);
+    const isOwnNote = note?.user_id === user?.id;
+    return language.user_permissions?.can_edit || isOwnNote;
+  }, [note]);
 
   return (
     <MdEditor
