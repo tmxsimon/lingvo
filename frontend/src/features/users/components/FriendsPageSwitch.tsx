@@ -18,7 +18,7 @@ const FriendsPageSwitch = () => {
         text={t("users.friends.searchFriends")}
         style="tertiary"
         size="small"
-        onClick={() => navigate("/users/search-friends")}
+        onClick={() => navigate("/users/search")}
       />
     </div>
   );
