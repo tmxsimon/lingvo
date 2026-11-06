@@ -13,7 +13,7 @@ const SearchWithButton = ({ onSearch }: SearchWithButtonProps) => {
   const [value, setValue] = useState<string>("");
 
   return (
-    <div className="gap-base flex w-full max-w-72">
+    <div className="gap-base-sm flex w-full max-w-72">
       <Search
         className="flex-1"
         value={value}
