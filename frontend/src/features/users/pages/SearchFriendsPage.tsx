@@ -17,7 +17,7 @@ const SearchFriendsPage = () => {
     <>
       <div className="min-h-screen-no-navbar-page gap-base flex w-full max-w-192 flex-col items-center">
         <PageTitle title={t("users.friends.searchFriends")} />
-        <SearchWithButton onSearch={(value) => searchFriends(value)} />
+        <SearchWithButton onSearch={(value) => searchFriends(value)} autoFocus />
         <FriendsPageSwitch />
         <div className="mt-base gap-base flex w-full flex-col items-center justify-between">
           {friendsFoundItems}

@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import useModalGroup from "../../hooks/useModalGroup";
 import ModalTitle from "../../../../components/ModalTitle";
 import ModalPage from "../../../../components/ModalPage";
-import { useLanguageContext } from "../../../languages/contexts/languageProvider";
 import useLanguage from "../../../languages/hooks/useLanguage";
 import { useAuth } from "../../../users/contexts/authProvider";
 
@@ -48,6 +47,12 @@ const ModalEditGroup = ({
     return language.user_permissions?.can_delete || isOwnGroup;
   }, [group]);
 
+  const handleEditGroup = () => {
+    if (!validate() && !canEdit) return;
+    editGroup(group!.id, name || "");
+    closeModal();
+  }
+
   const page = (
     <ModalPage
       title={t("dictionary.editGroup")}
@@ -62,6 +67,7 @@ const ModalEditGroup = ({
             minLength={1}
             maxLength={30}
             required
+            autoFocus
           />
         </div>,
       ]}
@@ -83,13 +89,10 @@ const ModalEditGroup = ({
           size="large"
           autoWidth
           disabled={!canEdit}
-          onClick={() => {
-            if (!validate()) return;
-            editGroup(group!.id, name || "");
-            closeModal();
-          }}
+          onClick={handleEditGroup}
         />,
       ]}
+      onPressEnter={handleEditGroup}
     />
   );
 

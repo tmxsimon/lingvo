@@ -70,6 +70,13 @@ const ModalEditnote = ({
     return language.user_permissions?.can_delete || isOwnNote;
   }, [note]);
 
+  const handleEditNote = () => {
+    if (!validate() && !canEdit) return;
+    editNote(note!.id, name || "", currentGroupOption.value as number);
+    closeModal();
+  }
+
+
   const page = (
     <ModalPage
       title={t("notes.editNote")}
@@ -84,6 +91,7 @@ const ModalEditnote = ({
             minLength={1}
             maxLength={30}
             required
+            autoFocus
           />
         </div>,
         <div>
@@ -122,13 +130,10 @@ const ModalEditnote = ({
           size="large"
           autoWidth
           disabled={!canEdit}
-          onClick={() => {
-            if (!validate()) return;
-            editNote(note!.id, name || "", currentGroupOption.value as number);
-            closeModal();
-          }}
+          onClick={handleEditNote}
         />,
       ]}
+      onPressEnter={handleEditNote}
     />
   );
 

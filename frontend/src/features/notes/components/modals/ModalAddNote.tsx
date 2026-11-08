@@ -22,6 +22,12 @@ const ModalAddEntry = ({ isOpen, closeModal, addNote }: ModalAddEntryProps) => {
   const { language } = useLanguage();
 
   const canWrite = language?.user_permissions?.can_write;
+  const handleAddNote = () => {
+    if (!validate() && !canWrite) return;
+    addNote(name || "");
+    resetStateValues([setName]);
+    closeModal();
+  }
 
   const page = (
     <ModalPage
@@ -35,6 +41,7 @@ const ModalAddEntry = ({ isOpen, closeModal, addNote }: ModalAddEntryProps) => {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
+            autoFocus
           />
         </div>,
       ]}
@@ -44,14 +51,10 @@ const ModalAddEntry = ({ isOpen, closeModal, addNote }: ModalAddEntryProps) => {
           size="large"
           autoWidth
           disabled={!canWrite}
-          onClick={() => {
-            if (!validate()) return;
-            addNote(name || "");
-            resetStateValues([setName]);
-            closeModal();
-          }}
+          onClick={handleAddNote}
         />,
       ]}
+      onPressEnter={handleAddNote}
     />
   );
 

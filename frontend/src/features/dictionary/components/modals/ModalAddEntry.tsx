@@ -39,6 +39,13 @@ const ModalAddEntry = ({
     return language.user_permissions?.can_write;
   }, [language]);
 
+  const handleAddEntry = () => {
+    if (!validate() && !canWrite) return;
+    addEntry(content || "", translation || "", note);
+    resetStateValues([setContent, setTranslation, setNote]);
+    closeModal();
+  }
+
   const page = (
     <ModalPage
       title={t("dictionary.addEntry")}
@@ -51,6 +58,7 @@ const ModalAddEntry = ({
             required
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            autoFocus
           />
         </div>,
         <div>
@@ -78,14 +86,10 @@ const ModalAddEntry = ({
           size="large"
           autoWidth
           disabled={!canWrite}
-          onClick={() => {
-            if (!validate()) return;
-            addEntry(content || "", translation || "", note);
-            resetStateValues([setContent, setTranslation, setNote]);
-            closeModal();
-          }}
+          onClick={() => handleAddEntry()}
         />,
       ]}
+      onPressEnter={handleAddEntry}
     />
   );
 

@@ -11,7 +11,6 @@ import ModalPage from "../../../../components/ModalPage";
 
 type ModalEditLanguageProps = {
   language: LanguageType | null;
-  // canDelete: boolean;
   isOpen: boolean;
   closeModal: () => void;
   editLanguage: (id: number, name: string, image: File) => void;
@@ -24,17 +23,23 @@ const ModalEditLanguage = ({
   closeModal,
   editLanguage,
   deleteLanguage,
-  // canDelete,
 }: ModalEditLanguageProps) => {
   const { t } = useTranslation();
 
   const { name, setName, image, setImage, validate } = useModalLanguage();
   const canDelete = Boolean(language?.user_permissions?.is_owner);
-  const canEdit = Boolean(language?.user_permissions?.can_edit_language);
+  const canEditLanguage = Boolean(language?.user_permissions?.can_edit_language);
 
   useEffect(() => {
     setName(language?.name || "");
   }, [language]);
+
+  const handleEditLanguage = () => {
+    if (!validate() && !canEditLanguage) return;
+    editLanguage(language!.id, name || "", image!);
+    setImage(null);
+    closeModal();
+  }
 
   const page = (
     <ModalPage
@@ -50,6 +55,7 @@ const ModalEditLanguage = ({
             minLength={1}
             maxLength={30}
             required
+            autoFocus
           />
         </div>,
         <div>
@@ -85,15 +91,11 @@ const ModalEditLanguage = ({
           text={t("edit")}
           size="large"
           autoWidth
-          disabled={!canEdit}
-          onClick={() => {
-            if (!validate() || !canEdit) return;
-            editLanguage(language!.id, name || "", image!);
-            setImage(null);
-            closeModal();
-          }}
+          disabled={!canEditLanguage}
+          onClick={handleEditLanguage}
         />,
       ]}
+      onPressEnter={handleEditLanguage}
     />
   );
 

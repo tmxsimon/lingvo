@@ -21,6 +21,13 @@ const ModalAddLanguage = ({
   const { t } = useTranslation();
 
   const { name, setName, image, setImage, validate } = useModalLanguage();
+  const handleAddLanguage = () => {
+    if (!validate()) return;
+    addLanguage(name, image!);
+    setName("");
+    setImage(null);
+    closeModal();
+  }
 
   const page = (
     <ModalPage
@@ -34,6 +41,7 @@ const ModalAddLanguage = ({
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
+            autoFocus
           />
         </div>,
         <div>
@@ -55,15 +63,10 @@ const ModalAddLanguage = ({
           text={t("add")}
           size="large"
           autoWidth
-          onClick={() => {
-            if (!validate()) return;
-            addLanguage(name, image!);
-            setName("");
-            setImage(null);
-            closeModal();
-          }}
+          onClick={handleAddLanguage}
         />,
       ]}
+      onPressEnter={handleAddLanguage}
     />
   );
 

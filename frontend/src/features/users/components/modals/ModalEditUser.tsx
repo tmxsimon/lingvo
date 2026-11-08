@@ -45,6 +45,12 @@ const ModalEditUser = ({
     setUsername(user?.username || "");
   }, [user]);
 
+  const handleEditUser = () => {
+    if (!validate()) return;
+    editUser(user!.id, username || "", password || "", image!);
+    closeModal();
+  }
+
   const page = (
     <ModalPage
       title={t("users.editUser")}
@@ -59,6 +65,7 @@ const ModalEditUser = ({
             minLength={1}
             maxLength={30}
             required
+            autoFocus
           />
         </div>,
         <div>
@@ -104,13 +111,10 @@ const ModalEditUser = ({
           text={t("edit")}
           size="large"
           autoWidth
-          onClick={() => {
-            if (!validate()) return;
-            editUser(user!.id, username || "", password || "", image!);
-            closeModal();
-          }}
+          onClick={handleEditUser}
         />,
       ]}
+      onPressEnter={handleEditUser}
     />
   );
 

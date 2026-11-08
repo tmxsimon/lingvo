@@ -63,6 +63,19 @@ const ModalEditEntry = ({
     error: error,
   } = useDictionaryGroups(parseInt(languageId));
 
+  const handleEditEntry = () => {
+    if (!validate() && !canEdit) return;
+    editEntry(
+      entry!.id,
+      currentGroupOption.value as number,
+      content || "",
+      translation || "",
+      note,
+      temperature,
+    );
+    closeModal();
+  }
+
   const {
     content,
     setContent,
@@ -75,6 +88,7 @@ const ModalEditEntry = ({
     changeTemperature: changeTemperatureLocal,
     validate,
   } = useModalEntry();
+
   const [currentGroupOption, setCurrentGroupOption] =
     useState<SelectOptionType>({
       value: groups.find((g) => g.id === entry?.group_id)?.id,
@@ -117,6 +131,7 @@ const ModalEditEntry = ({
             minLength={1}
             maxLength={30}
             required
+            autoFocus
           />
         </div>,
         <div>
@@ -185,20 +200,10 @@ const ModalEditEntry = ({
           size="large"
           autoWidth
           disabled={!canEdit}
-          onClick={() => {
-            if (!validate()) return;
-            editEntry(
-              entry!.id,
-              currentGroupOption.value as number,
-              content || "",
-              translation || "",
-              note,
-              temperature,
-            );
-            closeModal();
-          }}
+          onClick={handleEditEntry}
         />,
       ]}
+      onPressEnter={handleEditEntry}
     />
   );
 

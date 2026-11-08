@@ -6,9 +6,10 @@ import { useTranslation } from "react-i18next";
 
 type SearchWithButtonProps = {
   onSearch: (value: string) => void;
+  autoFocus?: boolean;
 };
 
-const SearchWithButton = ({ onSearch }: SearchWithButtonProps) => {
+const SearchWithButton = ({ onSearch, autoFocus }: SearchWithButtonProps) => {
   const { t } = useTranslation();
   const [value, setValue] = useState<string>("");
 
@@ -19,6 +20,7 @@ const SearchWithButton = ({ onSearch }: SearchWithButtonProps) => {
         value={value}
         placeholder={t("search")}
         onChange={(e) => setValue(e.target.value)}
+        autoFocus={autoFocus}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             onSearch(value);
