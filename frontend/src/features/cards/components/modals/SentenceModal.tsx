@@ -30,6 +30,7 @@ const SentenceModal = ({
         <Input
           value={value}
           onChange={(e) => setValue(e.currentTarget.value)}
+          autoFocus
         />
       </div>
     </div>,
@@ -45,7 +46,7 @@ const SentenceModal = ({
     <Button text={t("close")} onClick={handleClose} autoWidth />,
   ];
 
-  const page = <ModalPage content={content} buttons={buttons} />;
+  const page = <ModalPage content={content} buttons={buttons} onPressEnter={handleClose} />;
 
   return (
     <Modal

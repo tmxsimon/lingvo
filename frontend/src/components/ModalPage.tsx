@@ -5,7 +5,7 @@ type ModalPageProps = {
   content: React.ReactNode[];
   buttons: React.ReactNode[];
   centeredButtons?: boolean;
-  onOpen?: () => void;
+  onPressEnter?: () => void;
 };
 
 const ModalPage = ({
@@ -13,8 +13,23 @@ const ModalPage = ({
   content,
   buttons,
   centeredButtons,
-  onOpen,
+  onPressEnter,
 }: ModalPageProps) => {
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter" && onPressEnter) {
+        onPressEnter();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onPressEnter]);
+
   return (
     <>
       <div className="top-base text-brand-neutral-300 absolute self-center">

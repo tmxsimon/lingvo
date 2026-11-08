@@ -20,6 +20,7 @@ const SignInPage = () => {
         value={username}
         onChange={(event) => setUsername(event.target.value)}
         required
+        autoFocus
       />
     </div>,
     <div>

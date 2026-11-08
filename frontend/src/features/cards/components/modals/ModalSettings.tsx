@@ -68,6 +68,18 @@ const ModalChangeGroup = ({
     options.push({ value: group.id, text: group.name });
   });
 
+  const handleChangeSettings = () => {
+    if (!validate()) return;
+    changeGroupId(
+      (typeof currentGroupOption !== "string" &&
+        (currentGroupOption?.value as number)) ||
+        "",
+    );
+    handleChangeDuration(durationSecondsInput);
+    handleChangeSentenceMode(isSentenceModeInput);
+    closeModal();
+  }
+
   const page = (
     <ModalPage
       title={t("settings")}
@@ -112,19 +124,10 @@ const ModalChangeGroup = ({
           text={t("change")}
           size="large"
           autoWidth
-          onClick={() => {
-            if (!validate()) return;
-            changeGroupId(
-              (typeof currentGroupOption !== "string" &&
-                (currentGroupOption?.value as number)) ||
-                "",
-            );
-            handleChangeDuration(durationSecondsInput);
-            handleChangeSentenceMode(isSentenceModeInput);
-            closeModal();
-          }}
+          onClick={handleChangeSettings}
         />,
       ]}
+      onPressEnter={handleChangeSettings}
     />
   );
 

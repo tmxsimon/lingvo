@@ -21,7 +21,7 @@ const SearchLanguagesPage = () => {
     <>
       <div className="min-h-screen-no-navbar-page gap-base flex w-full max-w-192 flex-col items-center">
         <PageTitle title={t("languages.searchLanguages")} />
-        <SearchWithButton onSearch={(value) => handleSearchLanguages(value)} />
+        <SearchWithButton onSearch={(value) => handleSearchLanguages(value)} autoFocus />
         <LanguagesPageSwitch
           onClickLeftButton={() => navigate("/languages")}
           onClickRightButton={() => navigate("/languages/search")}

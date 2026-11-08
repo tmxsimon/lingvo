@@ -26,6 +26,12 @@ const ModalAddGroup = ({
   const { language } = useLanguage();
 
   const canWrite = language?.user_permissions?.can_write;
+  const handleAddGroup = () => {
+    if (!validate() && !canWrite) return;
+    addGroup(name || "");
+    resetStateValues([setName]);
+    closeModal();
+  }
 
   const page = (
     <ModalPage
@@ -39,6 +45,7 @@ const ModalAddGroup = ({
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
+            autoFocus
           />
         </div>,
       ]}
@@ -48,14 +55,10 @@ const ModalAddGroup = ({
           size="large"
           autoWidth
           disabled={!canWrite}
-          onClick={() => {
-            if (!validate()) return;
-            addGroup(name || "");
-            resetStateValues([setName]);
-            closeModal();
-          }}
+          onClick={handleAddGroup}
         />,
       ]}
+      onPressEnter={handleAddGroup}
     />
   );
 

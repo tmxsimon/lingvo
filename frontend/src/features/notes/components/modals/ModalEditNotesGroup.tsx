@@ -47,6 +47,12 @@ const ModalEditNotesGroup = ({
     setName(group?.name || "");
   }, [group]);
 
+  const handleEditGroup = () => {
+    if (!validate() && !canEdit) return;
+    editGroup(group!.id, name || "");
+    closeModal();
+  }
+
   const page = (
     <ModalPage
       title={t("notes.editGroup")}
@@ -61,6 +67,7 @@ const ModalEditNotesGroup = ({
             minLength={1}
             maxLength={30}
             required
+            autoFocus
           />
         </div>,
       ]}
@@ -82,13 +89,10 @@ const ModalEditNotesGroup = ({
           size="large"
           autoWidth
           disabled={!canEdit}
-          onClick={() => {
-            if (!validate()) return;
-            editGroup(group!.id, name || "");
-            closeModal();
-          }}
+          onClick={handleEditGroup}
         />,
       ]}
+      onPressEnter={handleEditGroup}
     />
   );
 

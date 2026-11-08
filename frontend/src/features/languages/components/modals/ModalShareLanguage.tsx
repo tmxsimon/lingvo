@@ -51,11 +51,29 @@ const ModalShareLanguage = ({
 
   const canShare = language?.user_permissions?.can_share;
 
+  const handleShareLanguage = () => {
+    if (!canShare || !currentUserOption.value) return;
+    addUserToLanguage.mutate({
+      languageId: language.id,
+      userId,
+      role,
+    });
+    closeModal();
+  }
+
+  const handleChangeUserRole = () => {
+    if (!canShare || !currentUserOption.value) return;
+    changeUserRole.mutate({
+      languageId: language.id,
+      userId,
+      role,
+    });
+    closeModal();
+  }
+
+
   const pages = [
     <ModalPage
-      onOpen={() => {
-        setIsLanguageUsersEnabled(false);
-      }}
       title={t("languages.shareLanguage")}
       content={[
         <div>
@@ -99,21 +117,12 @@ const ModalShareLanguage = ({
           size="large"
           autoWidth
           disabled={!canShare || !currentUserOption.value}
-          onClick={() => {
-            addUserToLanguage.mutate({
-              languageId: language.id,
-              userId,
-              role,
-            });
-            closeModal();
-          }}
+          onClick={handleShareLanguage}
         />,
       ]}
+      onPressEnter={handleShareLanguage}
     />,
     <ModalPage
-      onOpen={() => {
-        setIsLanguageUsersEnabled(true);
-      }}
       title={t("languages.manageUsers")}
       content={[
         <div>
@@ -172,16 +181,10 @@ const ModalShareLanguage = ({
           size="large"
           autoWidth
           disabled={!canShare || !currentUserOption.value}
-          onClick={() => {
-            changeUserRole.mutate({
-              languageId: language.id,
-              userId,
-              role,
-            });
-            closeModal();
-          }}
+          onClick={handleChangeUserRole}
         />,
       ]}
+      onPressEnter={handleChangeUserRole}
     />,
   ];
 
